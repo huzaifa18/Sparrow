@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <include layout="@layout/home_action_bar" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizntal_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp">
+
+        <RelativeLayout
+            android:id="@+id/center_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp">
+
+            <FrameLayout
+                android:id="@+id/fram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+
+                android:background="@drawable/black_border_shape"
+                android:padding="2dp">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/story_image_pro"
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
+
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_girl" />
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/test"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/ic_add_circle_black_24dp" />
+
+            <TextView
+                android:id="@+id/story_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="66dp"
+                android:padding="1dp"
+                android:text="@string/your_story"
+                android:textSize="12sp" />
+
+
+            <!--<ImageView-->
+            <!--android:id="@+id/story_plus"-->
+            <!--android:layout_width="10dp"-->
+            <!--android:layout_height="10dp"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--app:srcCompat="@drawable/ic_add_circle_black_24dp"-->
+            <!--/>-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/story_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/fram"
+                android:padding="5dp">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </RelativeLayout>
+
+    </HorizontalScrollView>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/status_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/navigation"
+        android:layout_below="@id/horizntal_scroll">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
+
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/dialog_toolbar"-->
+    <!--android:layout_height="52dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:minHeight="?attr/actionBarSize"-->
+    <!--android:background="?attr/colorPrimary" />-->
+
+    <ListView
+        android:id="@+id/group_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+
+        android:choiceMode="multipleChoice"
+        android:dividerHeight="1dp"
+        android:fadingEdge="none"
+        android:isScrollContainer="false"
+        android:paddingTop="5dp">
+
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/btnHolderLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--<Button-->
+        <!--android:id="@+id/dialog_ok_button"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:paddingRight="1dp"-->
+        <!--android:paddingLeft="1dp"-->
+        <!--android:textSize="17dp"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:text="Ok"-->
+        <!--android:clickable="true"/>-->
+    </LinearLayout>
+
+</LinearLayout>

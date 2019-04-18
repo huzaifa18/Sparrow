@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">Sparrow</string>
+
+
+    <string name="set">Set your profile picture</string>
+    <string name="choose">Choose a option for setting your profile</string>
+
+
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="instagram">Instagram</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="skip">Skip</string>
+
+    <string name="phone">Phone number</string>
+    <string name="password">Password</string>
+
+
+    <string name="boy">Boy</string>
+    <string name="girl">Girl</string>
+    <string name="or">OR</string>
+
+    <string name="show">Show password</string>
+    <string name="forgot">Forgot password</string>
+    <string name="friendship">Friendship</string>
+    <string name="login">Login</string>
+    <string name="fb_login">Facebook Login</string>
+    <string name="create">Create Account</string>
+    <string name="creating">Creating a new Account</string>
+    <string name="acount_detail">Account Detail</string>
+
+
+    <string name="otp">Verification Code</string>
+    <string name="seet">Set profile picture</string>
+    <string name="verify_acc">Verify Account</string>
+
+
+    <string name="verify">Account Verification Details</string>
+
+    <string name="confirm_detail">The code sent your mobile for confirming this contact number belong to you or not</string>
+
+    <string name="creating_title_text">Dont be worry about  giving you Phone number beacuse this phone number is not going to be publicly</string>
+    <string name="country">Country</string>
+    <string name="dod">Do you want to verify your account></string>
+
+    <string name="well">We are welling such your type of person but unfortunately here is a small issue. To your name, your name was already taken, you can change your name anytime</string>
+    <string name="first_name">First Name</string>
+    <string name="your_story">Your story</string>
+    <string name="surname">Surname</string>
+    <string name="id_number">ID Card Number</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="code">Enter your Code</string>
+    <string name="ver">Account verification</string>
+    <string name="privacy">Queen match media privacy and policy</string>
+
+    <string name="already_account_login">Already have an account? Login </string>
+
+    <string name="signing">By signing in, you are agreeing to our</string>
+
+    <string name="Phone">Surname</string>
+    <string name="search">Search</string>
+    <string name="join">Join</string>
+    <string name="home">Sparrow</string>
+    <string name="find">Find Friends</string>
+
+
+    <string name="invite">INVITE</string>
+
+    <string name="welcome">Welcome to queen match" " </string>
+    <string name="user">username </string>
+    <string name="usercoma">username, </string>
+
+    <string name="hi">Hi" "</string>
+
+    <string name="next">Next" "</string>
+    <string name="update">Update" "</string>
+
+    <string name="confirmation">Confirmation code</string>
+
+
+    <string name="terms">Terms &amp; conditions ""</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="and">and ""</string>
+
+
+    <string name="fullname">Full name</string>
+
+    <string name="dob">Date of birth</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+</resources>
