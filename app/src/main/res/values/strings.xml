@@ -30,10 +30,13 @@
     <string name="creating">Creating a new Account</string>
     <string name="acount_detail">Account Detail</string>
 
-
+    <string name="name">Faisal Razzaq commented on a post that you are tagged in</string>
+    <string name="post">Yesterday 19:26</string>
     <string name="otp">Verification Code</string>
     <string name="seet">Set profile picture</string>
     <string name="verify_acc">Verify Account</string>
+
+    <string name="vera">We are <b><i>so</i></b> glad to see you.</string>
 
 
     <string name="verify">Account Verification Details</string>
@@ -85,6 +88,11 @@
 
 
     <string name="fullname">Full name</string>
+
+    <string name="discussion">Discussion</string>
+    <string name="notify">Notification</string>
+    <string name="account">Account</string>
+    <string name="social">Social</string>
 
     <string name="dob">Date of birth</string>
     <string name="title_activity_home">HomeActivity</string>

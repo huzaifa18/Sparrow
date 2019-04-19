@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="match_parent">
+
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar_custom_noti"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/background_splash_color"-->
+        <!--android:minHeight="?attr/actionBarSize">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/toolbar_title_noti"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:text="@string/find"-->
+            <!--android:textColor="@color/colorwhite"-->
+            <!--android:textSize="22sp"-->
+            <!--android:textStyle="bold" />-->
+
+    <!--</android.support.v7.widget.Toolbar>-->
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/invite_noti"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_margin="20dp"-->
+
+        <!--android:text="@string/invite"-->
+        <!--android:textColor="@color/colorwhite"-->
+
+        <!--/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/next_textview_noti"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_margin="20dp"-->
+        <!--android:text="@string/next"-->
+        <!--android:textAllCaps="true"-->
+        <!--android:textColor="@color/colorwhite" />-->
+
+
+    <!--<View-->
+        <!--android:id="@+id/border_view_noti"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+
+        <!--android:layout_below="@id/toolbar_custom"-->
+        <!--android:background="@color/colorwhite" />-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/border_view"-->
+        <!--android:background="@drawable/background_splash_color"-->
+        <!--android:padding="10dp"-->
+        <!--android:paddingTop="2dp"-->
+        <!--android:visibility="gone">-->
+
+
+        <!--<android.support.v7.widget.SearchView-->
+            <!--android:id="@+id/search_bar_edit_text_noti"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="38dp"-->
+            <!--android:layout_weight="1"-->
+
+
+            <!--android:hint="@string/search"-->
+            <!--android:textColorHint="@color/colorwhite" />-->
+
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/find_recycler_view_noti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:padding="4dp" />
+
+        <!--<ImageButton-->
+        <!--android:id="@+id/search_bar_voice_icon"-->
+        <!--android:layout_width="32dp"-->
+        <!--android:layout_height="32dp"-->
+        <!--android:background="@drawable/tick" />-->
+
+
+
+</RelativeLayout>

@@ -7,55 +7,69 @@
     android:gravity="center_vertical"
     android:padding="10dp"
     android:weightSum="1">
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.6">
+        android:layout_weight="0.5">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_seo" />
 
-        <TextView
-            android:id="@+id/title_home"
+        <android.support.v7.widget.SearchView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:text="@string/home"
-            android:textStyle="bold"/>
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.SearchView>
+
         <!---->
         <!--<TextView-->
-            <!--android:id="@+id/name"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="10dp"-->
-            <!--android:text="@string/invite"-->
-            <!--android:textColor="#000"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textStyle="bold"-->
-            <!--app:fontFamily="@font/allan_bold" />-->
+        <!--android:id="@+id/name"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:text="@string/invite"-->
+        <!--android:textColor="#000"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textStyle="bold"-->
+        <!--app:fontFamily="@font/allan_bold" />-->
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.5"
         android:gravity="end">
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_action_tv" />
+            android:layout_weight="0.1"
+            android:background="@null"
+            app:srcCompat="@drawable/ic_sendd" />
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/camera"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            app:srcCompat="@drawable/ic_action_name" />
+            android:background="@null"
+            app:srcCompat="@drawable/ic_cameraa"
+            android:layout_weight="0.1"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.1"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_action_tv" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            app:srcCompat="@drawable/ic_seo" />
+
+
+
+
+
     </LinearLayout>
+
 </LinearLayout>

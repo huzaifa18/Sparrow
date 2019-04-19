@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
@@ -79,7 +80,9 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext, R.layout.custom_dialog);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+                alertDialog.setMessage("asdf");
+
                 alertDialog.show();
 
             }
@@ -108,7 +111,8 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
 
         CircleImageView user_img;
         TextView name, location;
-        ImageButton more, like, coment, share, save;
+        ImageButton more, like, coment, save;
+        ImageView share;
         SquareImageView imgpost;
         CardView cardView;
 
