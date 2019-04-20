@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view_discuss"
+    android:layout_width="wrap_content"
+    android:layout_height="140dp"
+    android:padding="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/discussion_background">
+
+        <ImageView
+            android:id="@+id/img_discuss"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:padding="1dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/img2" />
+
+        <!--<ImageView-->
+        <!--android:id="@+id/img_discuss"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:layout_weight="1"-->
+        <!--android:src="@drawable/demo"-->
+        <!--/>-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/img_discuss"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:layout_weight="1"-->
+        <!--android:src="@drawable/demo"-->
+        <!--/>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/country_name"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="13sp"-->
+        <!--android:text="@string/hello_world"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:layout_below="@+id/country_photo"-->
+        <!--android:paddingBottom="8dp"-->
+        <!--android:paddingTop="8dp"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="#1976D2"/>-->
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
