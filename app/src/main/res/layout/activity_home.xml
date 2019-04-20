@@ -70,7 +70,7 @@
                             android:layout_height="52dp"
 
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/ic_girl" />
+                            app:srcCompat="@drawable/ic_girl" />
 
 
                     </FrameLayout>
@@ -81,7 +81,7 @@
                         android:layout_height="14dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="50dp"
-                        android:src="@drawable/ic_add_circle_black_24dp" />
+                        app:srcCompat="@drawable/ic_add_circle_black_24dp" />
 
                     <TextView
                         android:id="@+id/story_username"
@@ -98,8 +98,8 @@
                         android:id="@+id/story_recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@id/navigation"
-                        android:layout_toRightOf="@id/fram">
+                        android:layout_toRightOf="@id/fram"
+                        tools:ignore="NotSibling">
 
 
                     </android.support.v7.widget.RecyclerView>

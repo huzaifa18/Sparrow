@@ -1,13 +1,10 @@
 package Fragments;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,11 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.bracketsol.sparrow.Model.Adapter.FindFriendAdapter;
 import com.example.bracketsol.sparrow.Model.Adapter.NotificationAdapter;
-import com.example.bracketsol.sparrow.Model.FindFriendModel;
 import com.example.bracketsol.sparrow.Model.NotificationModel;
 import com.example.bracketsol.sparrow.R;
 
@@ -78,14 +72,14 @@ public class NotificationFragment extends Fragment {
 
         recyclerView.setLayoutManager(manager);
 
-        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25","We are <b><i>so</i></b> glad to see you"));
-        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_man, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25","Faisal Razzaq commented on a post that you are tagged in"));
-        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_man3, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25","Faisal Razzaq commented on a post that you are tagged in"));
-        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_target, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25","Faisal Razzaq commented on a post that you are tagged in"));
-        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_seo, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25","Faisal Razzaq commented on a post that you are tagged in"));
-        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_team, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25","Faisal Razzaq commented on a post that you are tagged in"));
-        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_man, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25","Faisal Razzaq commented on a post that you are tagged in"));
-        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25","Faisal Razzaq commented on a post that you are tagged in"));
+        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
+        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_man, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "Faisal Razzaq commented on a post that you are tagged in"));
+        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_man3, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "Faisal Razzaq commented on a post that you are tagged in"));
+        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_target, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "Faisal Razzaq commented on a post that you are tagged in"));
+        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_seo, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "Faisal Razzaq commented on a post that you are tagged in"));
+        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_team, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "Faisal Razzaq commented on a post that you are tagged in"));
+        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_man, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "Faisal Razzaq commented on a post that you are tagged in"));
+        notificationModelArrayList.add(new NotificationModel(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "Faisal Razzaq commented on a post that you are tagged in"));
     }
 
 //
@@ -121,6 +115,6 @@ public class NotificationFragment extends Fragment {
 //            super.onPostExecute(result);
 //            //this method will be running on UI thread
 //        }
-    }
+}
 
 

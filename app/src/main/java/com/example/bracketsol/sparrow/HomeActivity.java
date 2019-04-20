@@ -19,6 +19,7 @@ import com.example.bracketsol.sparrow.Model.StoryModel;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Fragments.DiscussionFragment;
 import Fragments.NotificationFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -55,6 +56,13 @@ public class HomeActivity extends AppCompatActivity {
 
                     return true;
                 case R.id.navigation_social:
+                    fragmentTransaction
+                            //.beginTransaction()
+                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                            .replace(R.id.frame_container, new DiscussionFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
 
                     return true;
                 case R.id.navigation_discussion:
@@ -73,9 +81,11 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         fragmentManager = getSupportFragmentManager();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setSelectedItemId(R.id.navigation_home);
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
