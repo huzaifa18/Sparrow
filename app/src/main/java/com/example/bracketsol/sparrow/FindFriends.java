@@ -55,7 +55,7 @@ public class FindFriends extends AppCompatActivity {
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        new AsyncCaller().execute();
+        //new AsyncCaller().execute();
     }
 
     private class AsyncCaller extends AsyncTask<Void, Void, Void> {
