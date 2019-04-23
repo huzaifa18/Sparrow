@@ -5,10 +5,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,10 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".SignUp"></activity>
         <activity
             android:name=".HomeActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:label="@string/title_activity_home"></activity>
+            android:label="@string/title_activity_home"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Splash"
             android:theme="@style/AppTheme">
@@ -31,30 +35,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".AccountDetail"
-            android:label="@string/acount_detail"></activity>
+            android:label="@string/acount_detail" />
         <activity
             android:name=".CreateAccount"
-            android:label="@string/create"></activity>
-        <activity android:name=".Login"></activity>
+            android:label="@string/create" />
+        <activity android:name=".Login" />
         <activity
             android:name=".OtpVerification"
-            android:label="@string/otp"></activity>
+            android:label="@string/otp" />
         <activity
             android:name=".SetProfilePicture"
-            android:label="@string/seet"></activity>
+            android:label="@string/seet" />
         <activity
             android:name=".VerificationDetails"
-            android:label="@string/verify"></activity>
+            android:label="@string/verify" />
         <activity
             android:name=".VerificationAccount"
-            android:label="@string/ver"></activity>
+            android:label="@string/ver" />
         <activity
             android:name=".Welcome"
             android:label="@string/welcome" />
-        <activity android:name=".FindFriends"></activity>
+        <activity android:name=".FindFriends" />
     </application>
 
 </manifest>

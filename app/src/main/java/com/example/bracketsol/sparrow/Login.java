@@ -1,12 +1,14 @@
 package com.example.bracketsol.sparrow;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -14,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
 
 import org.json.JSONException;
@@ -21,6 +24,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by bracketsol on 4/12/2019.
@@ -29,13 +34,15 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
 
 
+    private static View view;
     TextInputEditText username, password;
     Button nextButton;
     String getname, getpass;
-
+    ProgressBar simpleProgressBar;
+    Handler handler;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login);
@@ -45,6 +52,9 @@ public class Login extends AppCompatActivity {
         password = findViewById(R.id.password);
 
         nextButton = findViewById(R.id.login_button);
+        handler = new Handler();
+
+        simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
 
 
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +66,31 @@ public class Login extends AppCompatActivity {
 
                 Log.e("TAG", getname + getpass);
 
-                callLoginService(username.getText().toString(), password.getText().toString());
+
+                //simpleProgressBar.setVisibility(View.VISIBLE);
+
+
+// Create and start a new Thread
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            Thread.sleep(2000);
+                        } catch (Exception e) {
+                        } // Just catch the InterruptedException
+
+                        // Now we use the Handler to post back to the main thread
+                        handler.post(new Runnable() {
+                            public void run() {
+                                // Set the View's visibility back on the main UI Thread
+                                simpleProgressBar.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                }).start();
+
+                checkValidate();
+
+
 //                JsonParser parser = new JsonParser();
 //                JSONObject object = new JSONObject();
 //
@@ -242,11 +276,13 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void callLoginService(final String username, final String password) {
+    private void callLoginService(final String user, final String pass) {
 
         // Tag used to cancel the request
         String cancel_req_tag = "register";
         //show pregress here
+
+        Toast.makeText(this, "" + user + pass, Toast.LENGTH_SHORT).show();
 
 
         StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/auth/login", new Response.Listener<String>() {
@@ -254,6 +290,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "Login Response: " + response.toString());
+
 
                 try {
 
@@ -264,23 +301,8 @@ public class Login extends AppCompatActivity {
                     String message = jObj.getString("message");
 
 
-                    JSONObject user = jObj.getJSONObject("user");
-
-                    String id = user.getString("_id");
-                    String username = user.getString("username");
-                    String email = user.getString("email");
-                    String password = user.getString("password");
-                    String phone_no = user.getString("phone_no");
-                    String profession = user.getString("profession");
-                    String picture_url = user.getString("picture_url");
-                    String created_at = user.getString("created_at");
-
-                    Log.e("TAG",id);
-
-                    String token = jObj.getString("token");
-
-
                     Log.e("TAG", "Message: " + message);
+                    simpleProgressBar.setVisibility(View.VISIBLE);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -295,6 +317,7 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         "Server Connection Fail", Toast.LENGTH_LONG).show();
                 //hid pregress here
+                simpleProgressBar.setVisibility(View.VISIBLE);
             }
         }) {
 
@@ -303,8 +326,8 @@ public class Login extends AppCompatActivity {
                 // Posting params to register url
 
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("password", password);
+                params.put("username", user);
+                params.put("password", pass);
 
                 return params;
             }
@@ -317,6 +340,115 @@ public class Login extends AppCompatActivity {
         // Adding request to request queue
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
     }
+
+//    private void callLoginService(final String username, final String password) {
+//
+//        Log.e("TAG", "Login Response:awre " );
+//
+//        // Tag used to cancel the request
+//        String cancel_req_tag = "register";
+//        //show pregress here
+//
+//
+//        StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/auth/login", new Response.Listener<String>() {
+//
+//            @Override
+//            public void onResponse(String response) {
+//                Log.e("TAG", "Login Response: " + response.toString());
+//
+//                try {
+//
+//                    JSONObject jObj = new JSONObject(response);
+//
+//                    //boolean error = jObj.getBoolean("error");
+//
+//                    String message = jObj.getString("message");
+//                    Log.e("TAG", "Message: " + message);
+//
+//                    JSONObject user = jObj.getJSONObject("user");
+//
+//                    String id = user.getString("_id");
+//                    String username = user.getString("username");
+//                    String email = user.getString("email");
+//                    String password = user.getString("password");
+//                    String phone_no = user.getString("phone_no");
+//                    String profession = user.getString("profession");
+//                    String picture_url = user.getString("picture_url");
+//                    String created_at = user.getString("created_at");
+//
+//                    Log.e("TAG", id+username+email+password+phone_no+profession+picture_url+created_at);
+//
+//                    JSONObject token = jObj.getJSONObject("token");
+//                    String gettoken = token.getString("token");
+//
+//                    Log.e("TAG",gettoken);
+//
+//                    //String gettoken = token.get
+//
+//
+//                    Log.e("TAG", "Message: " + message);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }, new Response.ErrorListener() {
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e("TAG", "Error: " + error);
+//                Toast.makeText(getApplicationContext(),
+//                        "Server Connection Fail", Toast.LENGTH_LONG).show();
+//                //hid pregress here
+//            }
+//        }) {
+//
+//            @Override
+//            protected Map<String, String> getParams() {
+//                // Posting params to register url
+//
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("username", username);
+//                params.put("password", password);
+//                Log.e("TAG", "parameter "+username+password );
+//
+//                return params;
+//            }
+//        };
+//
+//        strReq.setRetryPolicy(new DefaultRetryPolicy(
+//                20000,
+//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//        // Adding request to request queue
+//        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
+//    }
+
+
+    private void checkValidate() {
+        Pattern p = Pattern.compile(Utils.regEx);
+        Matcher m = p.matcher(getname);
+
+        // Check if all strings are null or not
+        if (getname.equals("") || getname.length() == 0
+                || getpass.equals("") || getpass.length() == 0) {
+            simpleProgressBar.setVisibility(View.VISIBLE);
+
+
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+        } else if (!m.find()) {
+            Toast.makeText(this, "Your Email Id is Invalid", Toast.LENGTH_SHORT).show();
+            simpleProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            Toast.makeText(this, "Do SignUp.", Toast.LENGTH_SHORT)
+                    .show();
+            simpleProgressBar.setVisibility(View.VISIBLE);
+            callLoginService(username.getText().toString(), password.getText().toString());
+        }
+    }
+
 }
+
 
 

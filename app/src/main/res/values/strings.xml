@@ -62,6 +62,7 @@
     <string name="signing">By signing in, you are agreeing to our</string>
 
     <string name="Phone">Surname</string>
+    <string name="up">Sign up</string>
     <string name="search">Search</string>
     <string name="join">Join</string>
     <string name="home">Sparrow</string>
@@ -71,7 +72,8 @@
     <string name="invite">INVITE</string>
 
     <string name="welcome">Welcome to queen match" " </string>
-    <string name="user">username </string>
+    <string name="user">Username </string>
+    <string name="email">Email </string>
     <string name="usercoma">username, </string>
 
     <string name="hi">Hi" "</string>
