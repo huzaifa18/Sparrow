@@ -1,10 +1,11 @@
-package com.example.bracketsol.sparrow.Model.Adapter;
+package com.example.bracketsol.sparrow.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,19 +17,25 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> {
+public class TryStoryAdapter extends RecyclerView.Adapter<TryStoryAdapter.ViewHolder> {
 
     protected Itemlistener itemlistener;
     ArrayList<StoryModel> storyAdapterArrayList;
+
+    private boolean isFirstTime = true;
     Context mContext;
 
-    public StoryAdapter(Context mContext,ArrayList<StoryModel> storyAdapterArrayList) {
+
+
+    public TryStoryAdapter(Context mContext, ArrayList<StoryModel> storyAdapterArrayList) {
+        //Collections.reverse(storyAdapterArrayList);
         this.storyAdapterArrayList = storyAdapterArrayList;
         this.mContext = mContext;
     }
 
     @Override
-    public StoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TryStoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.story_row_layout, parent, false);
         return new ViewHolder(view);
@@ -36,6 +43,20 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+//        storyAdapterArrayList.get(storyAdapterArrayList.lastIndexOf(position));
+//        Toast.makeText(mContext, ""+storyAdapterArrayList.get(storyAdapterArrayList.lastIndexOf(position)), Toast.LENGTH_SHORT).show();
+
+        switch(position){
+            case 10:
+                holder.add.setVisibility(View.GONE);
+                break;
+        }
+        holder.add.setVisibility(View.INVISIBLE);
+
+
+        //holder.add.setVisibility(View.GONE);
+
         holder.setData(storyAdapterArrayList.get(position));
         StoryModel storyModel = storyAdapterArrayList.get(position);
         holder.rowRelativelayout.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +71,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
+
         return storyAdapterArrayList.size();
     }
 
@@ -61,6 +83,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
         CircleImageView story_profile;
         TextView user_name;
+        ImageView add;
         RelativeLayout rowRelativelayout;
         StoryModel item;
 
@@ -70,6 +93,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
             story_profile = itemView.findViewById(R.id.story_image_pro);
             user_name = itemView.findViewById(R.id.story_username);
             rowRelativelayout = itemView.findViewById(R.id.relativeLayout_row);
+
+            //add = itemView.findViewById(R.id.test);
         }
 
         public void setData(StoryModel item) {

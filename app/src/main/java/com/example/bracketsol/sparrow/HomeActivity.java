@@ -11,8 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
-import com.example.bracketsol.sparrow.Model.Adapter.StatusPostAdapter;
-import com.example.bracketsol.sparrow.Model.Adapter.StoryAdapter;
+import com.example.bracketsol.sparrow.Adapter.StatusPostAdapter;
+import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.Model.StoryModel;
 

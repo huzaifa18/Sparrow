@@ -122,18 +122,26 @@ public class VerificationDetails extends AppCompatActivity {
                     JSONObject jObj = new JSONObject(response);
 
                     //boolean error = jObj.getBoolean("error");
-
+                    StringBuilder sb = new StringBuilder();
 
                     String message = jObj.getString("error");
+                    String message_two = jObj.getString("message");
+
+                    Log.e("TAG", "MessageTwo: " + message_two);
+                    sb.append(message_two);
 
                     Log.e("TAG", "Message: " + message);
-                    StringBuilder sb = new StringBuilder();
                     sb.append(message);
 
 
-                    if (message == "0") {
+                    if (message.equals("0")) {
                         Toast.makeText(VerificationDetails.this, "Successfully registered" + message, Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(VerificationDetails.this, Login.class);
+                        startActivity(intent);
                     }
+
+
 //                    if(message.equals(0)){
 //                        Toast.makeText(VerificationDetails.this, "Successfully registered", Toast.LENGTH_SHORT).show();
 //                    }
@@ -147,7 +155,14 @@ public class VerificationDetails extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("TAG", "Error: " + error.getMessage());
+                Log.e("TAG", "Error: " + error);
+
+                //JSONObject jObj = new JSONObject(response);
+
+                //boolean error = jObj.getBoolean("error");
+                StringBuilder sb = new StringBuilder();
+
+
                 Toast.makeText(getApplicationContext(),
                         "Server Connection Fail", Toast.LENGTH_LONG).show();
                 //hid pregress here

@@ -75,7 +75,7 @@
                     android:layout_centerInParent="true"
                     android:padding="1dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img2" />
+                    android:src="@drawable/demo" />
 
             </LinearLayout>
 

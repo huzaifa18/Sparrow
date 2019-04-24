@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -43,6 +44,7 @@ public class CreateAccount extends AppCompatActivity {
     AlphaAnimation outAnimation;
 
     FrameLayout progressBarHolder;
+    TextView login_txt;
 
 
     @Override
@@ -53,6 +55,14 @@ public class CreateAccount extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
+        login_txt = findViewById(R.id.already_login_text);
+        login_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CreateAccount.this,Login.class);
+                startActivity(intent);
+            }
+        });
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

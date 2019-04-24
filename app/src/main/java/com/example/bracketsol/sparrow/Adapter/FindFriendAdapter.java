@@ -1,5 +1,6 @@
-package com.example.bracketsol.sparrow.Model.Adapter;
+package com.example.bracketsol.sparrow.Adapter;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,6 +43,9 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Vi
 //                .load(data.getImg_url())
 //                .into(Vholder.imageView);
 
+
+
+
         Vholder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +53,13 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Vi
 //                Intent intent = new Intent(v.getContext(), PlaceDetails.class);
 //                mContext.startActivity(intent);
                 Toast.makeText(mContext, position + " is clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Vholder.plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeAt(position);
             }
         });
     }
@@ -75,7 +86,7 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Vi
             super(v);
             v.setOnClickListener(this);
             first = (TextView) v.findViewById(R.id.name_txtview);
-            second = (TextView) v.findViewById(R.id.subname_txtview);
+            second = (TextView) v.findViewById(R.id.mutual_txtview);
 
             profile = v.findViewById(R.id.friend_image);
             plus = v.findViewById(R.id.friendship_btn);
@@ -99,5 +110,13 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Vi
                 mListener.onItemClick(item);
             }
         }
+
+
     }
+    public void removeAt(int position) {
+        mValues.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mValues.size());
+    }
+
 }

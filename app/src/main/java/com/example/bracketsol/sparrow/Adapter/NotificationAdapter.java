@@ -1,23 +1,20 @@
-package com.example.bracketsol.sparrow.Model.Adapter;
+package com.example.bracketsol.sparrow.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bracketsol.sparrow.Model.FindFriendModel;
 import com.example.bracketsol.sparrow.Model.NotificationModel;
 import com.example.bracketsol.sparrow.R;
 
 import java.util.ArrayList;
 
-import Fragments.NotificationFragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {

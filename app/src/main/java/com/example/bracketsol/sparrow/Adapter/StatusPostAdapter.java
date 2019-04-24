@@ -1,4 +1,4 @@
-package com.example.bracketsol.sparrow.Model.Adapter;
+package com.example.bracketsol.sparrow.Adapter;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

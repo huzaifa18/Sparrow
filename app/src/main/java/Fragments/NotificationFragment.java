@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bracketsol.sparrow.Model.Adapter.NotificationAdapter;
+import com.example.bracketsol.sparrow.Adapter.NotificationAdapter;
 import com.example.bracketsol.sparrow.Model.NotificationModel;
 import com.example.bracketsol.sparrow.R;
 
