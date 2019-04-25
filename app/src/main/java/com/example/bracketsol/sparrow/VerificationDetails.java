@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
@@ -60,6 +61,51 @@ public class VerificationDetails extends AppCompatActivity {
         email = findViewById(R.id.up_email);
         password = findViewById(R.id.up_password);
 
+        username.setOnKeyListener(new View.OnKeyListener() {
+
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on Enter key press
+                    username.clearFocus();
+                    email.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+        email.setOnKeyListener(new View.OnKeyListener() {
+
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on Enter key press
+                    email.clearFocus();
+                    phone.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        phone.setOnKeyListener(new View.OnKeyListener() {
+
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER))
+                {
+                    // Perform action on Enter key press
+                    phone.clearFocus();
+                    password.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -139,6 +185,8 @@ public class VerificationDetails extends AppCompatActivity {
 
                         Intent intent = new Intent(VerificationDetails.this, Login.class);
                         startActivity(intent);
+                    } else {
+                        Toast.makeText(VerificationDetails.this, "username or phone number already exists", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -213,7 +261,7 @@ public class VerificationDetails extends AppCompatActivity {
 //                    .show();
 //
         } else {
-            Toast.makeText(this, "Do sign up", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Do sign up", Toast.LENGTH_SHORT).show();
             SignUp(username.getText().toString(), email.getText().toString(), phone.getText().toString(), password.getText().toString());
         }
 

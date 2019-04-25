@@ -19,9 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.bracketsol.sparrow.Adapter.FindFriendAdapter;
 import com.example.bracketsol.sparrow.Adapter.FindFriendAdapterTry;
-import com.example.bracketsol.sparrow.Model.FindFriendModel;
 import com.example.bracketsol.sparrow.Model.FindFriendModelTry;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
 
@@ -30,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FindFriends extends AppCompatActivity {
 
@@ -68,13 +68,6 @@ public class FindFriends extends AppCompatActivity {
         GetAll();
     }
 
-    @Override
-    protected void onResume() {
-        // TODO Auto-generated method stub
-        super.onResume();
-        //new AsyncCaller().execute();
-    }
-
     private void GetAll() {
 
         Log.e("TAG", "inside get all");
@@ -100,7 +93,7 @@ public class FindFriends extends AppCompatActivity {
 
                         //getting product object from json array
                         JSONObject product = array.getJSONObject(i);
-                        Log.e("TAG", "mess" + product.getString("_id"));
+                        Log.e("TAG", "mess" + product.getInt("_id"));
                         Log.e("TAG", "mess" + product.getString("username"));
                         Log.e("TAG", "mess" + product.getString("email"));
                         Log.e("TAG", "mess" + product.getString("password"));
@@ -136,6 +129,12 @@ public class FindFriends extends AppCompatActivity {
                 Log.e("TAG", "Error: " + error);
                 Toast.makeText(getApplicationContext(),
                         "Server Connection Fail", Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+                Log.e("TAG", "Error: " + error
+                        + "\nStatus Code " + error.networkResponse.statusCode
+                        + "\nCause " + error.getCause()
+                        + "\nnetworkResponse " + error.networkResponse.data.toString()
+                        + "\nmessage" + error.getMessage());
                 //hid pregress here
             }
         }) {
@@ -145,9 +144,6 @@ public class FindFriends extends AppCompatActivity {
 //                // Posting params to register url
 //
 //                Map<String, String> params = new HashMap<String, String>();
-//                params.put("username", username);
-//                params.put("password", password);
-//                params.put("email", email);
 //
 //                return params;
 //            }

@@ -6,10 +6,12 @@ import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -39,6 +41,7 @@ public class Login extends AppCompatActivity {
     private static View view;
     TextInputEditText username, password;
     Button nextButton;
+            TextView createAccounttxt;
     String getname, getpass;
     ProgressBar simpleProgressBar;
     Handler handler;
@@ -52,6 +55,46 @@ public class Login extends AppCompatActivity {
         //init
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        createAccounttxt = findViewById(R.id.create_account_textview);
+        createAccounttxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainIntent = new Intent(Login.this,VerificationDetails.class);
+                startActivity(mainIntent);
+            }
+        });
+
+
+        username.setOnKeyListener(new View.OnKeyListener() {
+
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER))
+                {
+                    // Perform action on Enter key press
+                    username.clearFocus();
+                    password.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+//        password.setOnKeyListener(new View.OnKeyListener() {
+//
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//
+//                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+//                        (keyCode == KeyEvent.KEYCODE_ENTER))
+//                {
+//                    // Perform action on Enter key press
+//                    // check for username - password correctness here
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         nextButton = findViewById(R.id.login_button);
         handler = new Handler();
@@ -318,6 +361,7 @@ public class Login extends AppCompatActivity {
 
                     Prefs.addPrefsForLogin(getApplicationContext(), userid, username, email, phone, password);
 
+
                     Log.e("TAG", "" + Prefs.getUserIDFromPref(Login.this));
 
                     //Log.e("TAG",""+);
@@ -327,7 +371,7 @@ public class Login extends AppCompatActivity {
                     simpleProgressBar.setVisibility(View.VISIBLE);
 
 
-                    Intent intent = new Intent(Login.this, FindFriends.class);
+                    Intent intent = new Intent(Login.this, Welcome.class);
                     startActivity(intent);
 
                 } catch (JSONException e) {
@@ -348,12 +392,18 @@ public class Login extends AppCompatActivity {
         }) {
 
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams()
+
+
+
+            {
                 // Posting params to register url
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("username", user);
                 params.put("password", pass);
+
+
 
                 return params;
             }

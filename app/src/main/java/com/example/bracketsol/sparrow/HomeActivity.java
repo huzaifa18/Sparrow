@@ -1,5 +1,6 @@
 package com.example.bracketsol.sparrow;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
+import com.example.bracketsol.sparrow.Activities.ChatsListingMain;
 import com.example.bracketsol.sparrow.Adapter.StatusPostAdapter;
 import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
@@ -33,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
     StoryAdapter storyAdapter;
     StatusPostAdapter statusPostAdapter;
     LinearLayoutManager manager;
+
+    ImageButton chatbtn;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -91,6 +97,8 @@ public class HomeActivity extends AppCompatActivity {
 
         storyRecyclerview = findViewById(R.id.story_recyclerview);
         statuspostRecyclerview = findViewById(R.id.status_recyclerview);
+
+        chatbtn = findViewById(R.id.chat_ib);
         storyArraylist = new ArrayList<StoryModel>();
         statusArraylist = new ArrayList<StatusPostingModel>();
 //
@@ -144,7 +152,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //
         //
-
+GoToChat();
 
     }
 
@@ -174,13 +182,17 @@ public class HomeActivity extends AppCompatActivity {
         return false;
     }
 
-//
-//    public void addList(ArrayList<StoryModel> items) {
-//        storyArraylist.addAll(0, items);
-//
-//        storyRecyclerview.smoothScrollToPosition(0);
-//        storyAdapter.notifyDataSetChanged();
-//
-//    }
 
+
+    public void GoToChat (){
+
+        chatbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ChatsListingMain.class);
+                startActivity(intent);
+            }
+        });
+
+    }
 }

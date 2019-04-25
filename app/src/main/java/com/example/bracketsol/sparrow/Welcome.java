@@ -38,7 +38,7 @@ public class Welcome extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Welcome.this,VerificationDetails.class);
+                Intent intent = new Intent(Welcome.this,SetProfilePicture.class);
                 startActivity(intent);
             }
         });

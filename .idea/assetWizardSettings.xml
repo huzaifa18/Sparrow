@@ -195,9 +195,12 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_more_horiz_black_24dp" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="height" value="453" />
+                            <entry key="outputName" value="ic_share" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Lenovo\Downloads\cancel.svg" />
+                            <entry key="sourceFile" value="C:\Users\Lenovo\Downloads\share.svg" />
+                            <entry key="width" value="453" />
                           </map>
                         </option>
                       </PersistentState>

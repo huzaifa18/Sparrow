@@ -26,7 +26,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(Splash.this,CreateAccount.class);
+                Intent mainIntent = new Intent(Splash.this,Login.class);
                startActivity(mainIntent);
                 finish();
             }

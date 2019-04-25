@@ -28,7 +28,7 @@ public class SetProfilePicture extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -44,7 +44,7 @@ public class SetProfilePicture extends AppCompatActivity {
             public void onClick(View v) {
 
                 Log.e("checkk","setprofile");
-                Intent intent = new Intent(SetProfilePicture.this,VerificationAccount.class);
+                Intent intent = new Intent(SetProfilePicture.this,FindFriends.class);
                 startActivity(intent);
             }
         });
