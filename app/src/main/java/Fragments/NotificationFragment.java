@@ -82,39 +82,6 @@ public class NotificationFragment extends Fragment {
         notificationModelArrayList.add(new NotificationModel(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "Faisal Razzaq commented on a post that you are tagged in"));
     }
 
-//
-//    @Override
-//    public void onResume() {
-//        // TODO Auto-generated method stub
-//        super.onResume();
-//        new AsyncCaller().execute();
-//    }
-//
-//    private class AsyncCaller extends AsyncTask<Void, Void, Void> {
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//
-//
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... params) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                     }
-//            });
-//            //this method will be running on background thread so don't update UI frome here
-//            //do your long running http tasks here,you dont want to pass argument and u can access the parent class' variable url over here
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            super.onPostExecute(result);
-//            //this method will be running on UI thread
-//        }
 }
 
 
