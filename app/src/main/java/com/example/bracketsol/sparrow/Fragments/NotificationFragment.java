@@ -1,4 +1,4 @@
-package Fragments;
+package com.example.bracketsol.sparrow.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;

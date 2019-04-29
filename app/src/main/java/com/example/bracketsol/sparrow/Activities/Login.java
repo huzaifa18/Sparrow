@@ -1,4 +1,4 @@
-package com.example.bracketsol.sparrow;
+package com.example.bracketsol.sparrow.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
@@ -59,7 +60,7 @@ public class Login extends AppCompatActivity {
         createAccounttxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mainIntent = new Intent(Login.this,VerificationDetails.class);
+                Intent mainIntent = new Intent(Login.this, VerificationDetails.class);
                 startActivity(mainIntent);
             }
         });

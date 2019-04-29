@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bracketsol.sparrow.FindFriends">
+    tools:context="com.example.bracketsol.sparrow.Activities.FindFriends">
 
 
     <include layout="@layout/custom_toolbar_find_friend"/>

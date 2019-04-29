@@ -1,4 +1,4 @@
-package com.example.bracketsol.sparrow;
+package com.example.bracketsol.sparrow.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -6,20 +6,24 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.example.bracketsol.sparrow.R;
 
 /**
  * Created by bracketsol on 4/12/2019.
  */
 
-public class Welcome extends AppCompatActivity {
+public class OtpVerification extends AppCompatActivity {
     Toolbar toolbar;
-    Button nextButton;
+
+    ImageButton nextButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome);
+        setContentView(R.layout.otp_verification);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -38,7 +42,7 @@ public class Welcome extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Welcome.this,SetProfilePicture.class);
+                Intent intent = new Intent(OtpVerification.this, Login.class);
                 startActivity(intent);
             }
         });

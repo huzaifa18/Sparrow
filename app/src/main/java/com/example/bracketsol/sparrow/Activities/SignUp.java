@@ -1,4 +1,4 @@
-package com.example.bracketsol.sparrow;
+package com.example.bracketsol.sparrow.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
 
 import org.json.JSONException;

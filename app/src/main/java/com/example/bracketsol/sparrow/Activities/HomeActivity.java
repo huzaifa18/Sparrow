@@ -1,4 +1,4 @@
-package com.example.bracketsol.sparrow;
+package com.example.bracketsol.sparrow.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,17 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.bracketsol.sparrow.Activities.ChatsListingMain;
 import com.example.bracketsol.sparrow.Adapter.StatusPostAdapter;
 import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
+import com.example.bracketsol.sparrow.DisFragment;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.Model.StoryModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import Fragments.DiscussionFragment;
-import Fragments.NotificationFragment;
+import com.example.bracketsol.sparrow.Fragments.DiscussionFragment;
+import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
+import com.example.bracketsol.sparrow.R;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -49,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    Intent i = new Intent(HomeActivity.this, MyPreferencesActivity.class);
+                    startActivity(i);
 
                     return true;
                 case R.id.navigation_account:
@@ -73,10 +76,15 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_discussion:
 
+
                     return true;
                 case R.id.navigation_notification:
-//                    fragment = new NotificationFragment();
-//                    loadFragment(fragment);
+                    fragmentTransaction
+                            //.beginTransaction()
+                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                            .replace(R.id.frame_container, new DisFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                     return true;
             }
             return false;

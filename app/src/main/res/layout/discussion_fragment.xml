@@ -10,14 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/dis_recycler_view_two"
-        android:layout_width="match_parent"
+    <TextView
         android:layout_below="@id/dis_recycler_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical" />
+        android:text="asdlfkjfkljs"/>
+
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/dis_recycler_view_two"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_below="@id/dis_recycler_view"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scrollbars="horizontal_single_rowthree" />-->
 
 
 </RelativeLayout>

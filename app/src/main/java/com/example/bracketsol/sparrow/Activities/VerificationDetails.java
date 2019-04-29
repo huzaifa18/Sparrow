@@ -1,4 +1,4 @@
-package com.example.bracketsol.sparrow;
+package com.example.bracketsol.sparrow.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
 

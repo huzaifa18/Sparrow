@@ -1,4 +1,4 @@
-package com.example.bracketsol.sparrow;
+package com.example.bracketsol.sparrow.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,8 +19,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.bracketsol.sparrow.Adapter.FindFriendAdapterTry;
-import com.example.bracketsol.sparrow.Model.FindFriendModelTry;
+import com.example.bracketsol.sparrow.Adapter.FindFriendAdapter;
+import com.example.bracketsol.sparrow.Model.FindFriendModel;
+import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
 
 import org.json.JSONArray;
@@ -28,16 +29,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FindFriends extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView toolbarTextView_next;
     RecyclerView recyclerView;
-    ArrayList<FindFriendModelTry> resarrayList;
-    FindFriendAdapterTry resadapter;
+    ArrayList<FindFriendModel> resarrayList;
+    FindFriendAdapter resadapter;
     LinearLayoutManager manager;
 
     @Override
@@ -64,7 +63,7 @@ public class FindFriends extends AppCompatActivity {
             }
         });
         recyclerView = findViewById(R.id.find_recycler_view);
-        resarrayList = new ArrayList<FindFriendModelTry>();
+        resarrayList = new ArrayList<FindFriendModel>();
         GetAll();
     }
 
@@ -99,15 +98,15 @@ public class FindFriends extends AppCompatActivity {
                         Log.e("TAG", "mess" + product.getString("password"));
 
 
-                        resarrayList.add(new FindFriendModelTry(R.drawable.ic_seo, product.getString("username"), product.getString("email")));
+                        resarrayList.add(new FindFriendModel(R.drawable.ic_seo, product.getString("username"), product.getString("email")));
 
                         //resarrayList.add(new FindFriendModel(R.drawable.ic_seo, R.drawable.frndship_btn_selector, R.drawable.frndship_btn_selector, product.getString("username"), product.getString("email")));
                     }
-                    resadapter = new FindFriendAdapterTry(FindFriends.this, resarrayList);
+                    resadapter = new FindFriendAdapter(FindFriends.this, resarrayList);
                     recyclerView.setAdapter(resadapter);
                     manager = new LinearLayoutManager(FindFriends.this, LinearLayoutManager.VERTICAL, true);
                     ItemTouchHelper itemTouchHelper = new
-                            ItemTouchHelper(new FindFriendAdapterTry.SwipeToDeleteCallback(resadapter));
+                            ItemTouchHelper(new FindFriendAdapter.SwipeToDeleteCallback(resadapter));
                     itemTouchHelper.attachToRecyclerView(recyclerView);
                     recyclerView.setLayoutManager(manager);
 

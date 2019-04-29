@@ -8,8 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:typeface">serif</item>
         <item name="colorControlNormal">@color/colorwhite</item>
+        <item name="actionMenuTextColor">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/colorAccent</item>
+
+
     </style>
 
+    <style name="AppTheme.App">
+        ...
+        <item name="actionMenuTextColor">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/colorAccent</item>
+
+        ...
+    </style>
+
+    <style name="Widget.Holo.Light.PopupMenu" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionMenuTextColor">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/colorAccent</item>
+
+
+    </style>
     <style parent="@android:style/Widget.Holo.ActionBar" name="MyActionBar"/>
     <!--<style name="MyAppTheme" parent="Theme.MaterialComponents.Light">-->
     <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->

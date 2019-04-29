@@ -1,60 +1,73 @@
 package com.example.bracketsol.sparrow.Model;
 
-/**
- * Created by bracketsol on 4/16/2019.
- */
-
 public class FindFriendModel {
 
+    int profileUrl,id;
+    String username, mutualfriend,email,phone;
 
-    int imgid,imgplus,imgminus;
-    String name,subname;
-
-    public FindFriendModel(int imgid, int imgplus, int imgminus, String name, String subname) {
-        this.imgid = imgid;
-        this.imgplus = imgplus;
-        this.imgminus = imgminus;
-        this.name = name;
-        this.subname = subname;
+    public FindFriendModel() {
     }
 
-    public int getImgid() {
-        return imgid;
+    public FindFriendModel(int profileUrl, String username, String mutualfriend) {
+        this.profileUrl = profileUrl;
+        this.username = username;
+        this.mutualfriend = mutualfriend;
     }
 
-    public void setImgid(int imgid) {
-        this.imgid = imgid;
+    public FindFriendModel(int profileUrl, int id, String username, String mutualfriend, String email, String phone) {
+        this.profileUrl = profileUrl;
+        this.id = id;
+        this.username = username;
+        this.mutualfriend = mutualfriend;
+        this.email = email;
+        this.phone = phone;
     }
 
-    public int getImgplus() {
-        return imgplus;
+    public int getProfileUrl() {
+        return profileUrl;
     }
 
-    public void setImgplus(int imgplus) {
-        this.imgplus = imgplus;
+    public void setProfileUrl(int profileUrl) {
+        this.profileUrl = profileUrl;
     }
 
-    public int getImgminus() {
-        return imgminus;
+    public int getId() {
+        return id;
     }
 
-    public void setImgminus(int imgminus) {
-        this.imgminus = imgminus;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getSubname() {
-        return subname;
+    public String getMutualfriend() {
+        return mutualfriend;
     }
 
-    public void setSubname(String subname) {
-        this.subname = subname;
+    public void setMutualfriend(String mutualfriend) {
+        this.mutualfriend = mutualfriend;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

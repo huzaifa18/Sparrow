@@ -1,6 +1,5 @@
-package com.example.bracketsol.sparrow;
+package com.example.bracketsol.sparrow.Activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +7,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+
+import com.example.bracketsol.sparrow.R;
 
 public class Splash extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(Splash.this,Login.class);
+                Intent mainIntent = new Intent(Splash.this, Login.class);
                startActivity(mainIntent);
                 finish();
             }
