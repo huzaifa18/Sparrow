@@ -26,6 +26,7 @@ import java.util.Collections;
 import com.example.bracketsol.sparrow.Fragments.DiscussionFragment;
 import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
 import com.example.bracketsol.sparrow.R;
+import com.example.bracketsol.sparrow.SetFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -50,8 +51,13 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    Intent i = new Intent(HomeActivity.this, MyPreferencesActivity.class);
-                    startActivity(i);
+                    fragmentTransaction
+                            //.beginTransaction()
+                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                            .replace(R.id.frame_container, new SetFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
 
                     return true;
                 case R.id.navigation_account:
