@@ -15,25 +15,29 @@ import retrofit2.http.POST;
 public interface ApiInterface {
 
 
-    @FormUrlEncoded
-    @POST("users/register")
-    Call<ResponseBody> Register(@Field("username") String name,
-                                @Field("email") String email,
-                                @Field("password") String password);
+
+
 
 
 //    @FormUrlEncoded
+//    @POST("users/register")
+//    Call<ResponseBody> Register(@Field("username") String name,
+//                                @Field("email") String email,
+//                                @Field("password") String password);
+//
+//
+////    @FormUrlEncoded
+////    @POST("auth/login")
+////    Call<User> Login(@Field("username") String username,
+////                     @Field("password") String password);
+//
+//
+//    @Headers("Content-Type: application/json")
 //    @POST("auth/login")
-//    Call<User> Login(@Field("username") String username,
-//                     @Field("password") String password);
-
-
-    @Headers("Content-Type: application/json")
-    @POST("auth/login")
-    Call<User> Login(@Body JSONObject body);
-
-
-//    Call<ResponseBody> Login(@Body User user);
+//    Call<User> Login(@Body JSONObject body);
+//
+//
+////    Call<ResponseBody> Login(@Body User user);
 
 
 }
