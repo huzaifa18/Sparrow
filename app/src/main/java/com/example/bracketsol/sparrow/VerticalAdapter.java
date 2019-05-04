@@ -49,7 +49,7 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.MyView
             image = (ImageView) itemView.findViewById(R.id.image);
             title = (TextView) itemView.findViewById(R.id.title);
             pro_img = itemView.findViewById(R.id.profile_image);
-            cardView = itemView.findViewById(R.id.card_horizontal_three);
+            //cardView = itemView.findViewById(R.id.card_horizontal_three);
         }
     }
 }

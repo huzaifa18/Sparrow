@@ -53,9 +53,9 @@ public class HomeTry extends Fragment {
 //                    fragmentTransaction.addToBackStack(null);
 //                    fragmentTransaction.commit();
 
-
-                    return true;
-                case R.id.navigation_social:
+//
+//                    return true;
+//                case R.id.navigation_social:
 //                    fragmentTransaction
 //                            //.beginTransaction()
 //                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)

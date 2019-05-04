@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import com.example.bracketsol.sparrow.Adapter.StatusPostAdapter;
 import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
 import com.example.bracketsol.sparrow.DisFragment;
+import com.example.bracketsol.sparrow.Fragments.PrrofileFragment;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.Model.StoryModel;
 
@@ -51,40 +52,52 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    fragmentTransaction
-                            //.beginTransaction()
-                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                            .replace(R.id.frame_container, new SetFragment());
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-
-
+//                    fragmentTransaction
+//                            //.beginTransaction()
+//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+//                            .replace(R.id.frame_container, new SetFragment());
+//                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_account:
-                    fragmentTransaction
-                            //.beginTransaction()
-                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                            .replace(R.id.frame_container, new NotificationFragment());
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+//                    fragmentTransaction
+//                            //.beginTransaction()
+//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+//                            .replace(R.id.frame_container, new NotificationFragment());
+//                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.commit();
 
 
-                    return true;
-                case R.id.navigation_social:
-                    fragmentTransaction
-                            //.beginTransaction()
-                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                            .replace(R.id.frame_container, new DiscussionFragment());
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+//                    return true;
+//                case R.id.navigation_social:
+//                    fragmentTransaction
+//                            //.beginTransaction()
+//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+//                            .replace(R.id.frame_container, new DiscussionFragment());
+//                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.commit();
 
 
                     return true;
                 case R.id.navigation_discussion:
+                    fragmentTransaction
+                            //.beginTransaction()
+                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                            .replace(R.id.frame_container, new PrrofileFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
 
 
                     return true;
-                case R.id.navigation_notification:
+//                case R.id.navigation_notification:
+//                    fragmentTransaction
+//                            //.beginTransaction()
+//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+//                            .replace(R.id.frame_container, new DisFragment());
+//                    fragmentTransaction.addToBackStack(null);
+//                    fragmentTransaction.commit();
+//                    return true;
+                case R.id.navigation_profile:
                     fragmentTransaction
                             //.beginTransaction()
                             //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
@@ -92,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     return true;
+
             }
             return false;
         }

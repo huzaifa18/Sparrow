@@ -23,9 +23,24 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/account" />
 
-    <item
-        android:id="@+id/navigation_social"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/social" />
+    <!--<item-->
+        <!--android:id="@+id/navigation_social"-->
+        <!--android:icon="@android:drawable/ic_menu_search"-->
+        <!--android:title="Discussion" />-->
 
+    <!--<item-->
+        <!--android:id="@+id/navigation_library"-->
+        <!--android:icon="@drawable/ic_home_black_24dp"-->
+        <!--android:title="@string/title_home" />-->
+
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/account" />
+
+    <!--<item-->
+        <!--android:id="@+id/navigation_setting"-->
+        <!--android:icon="@android:drawable/ic_menu_search"-->
+        <!--android:title="@string/social" />-->
 </menu>
