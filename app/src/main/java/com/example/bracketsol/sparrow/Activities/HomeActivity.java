@@ -185,8 +185,6 @@ GoToChat();
     }
 
     private boolean loadFragment(Fragment fragment) {
-
-
         //switching fragment
 
         NotificationFragment notificationFragment = new NotificationFragment();

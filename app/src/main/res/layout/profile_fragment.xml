@@ -34,6 +34,7 @@
                 android:id="@+id/pro_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:clickable="true"
 
                 android:layout_margin="5dp"
                 android:scaleType="fitXY"

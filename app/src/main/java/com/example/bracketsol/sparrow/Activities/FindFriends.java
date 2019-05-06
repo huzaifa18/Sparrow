@@ -68,28 +68,19 @@ public class FindFriends extends AppCompatActivity {
     }
 
     private void GetAll() {
-
         Log.e("TAG", "inside get all");
         // Tag used to cancel the request
         String cancel_req_tag = "register";
         //show pregress here
-
-
         StringRequest strReq = new StringRequest(Request.Method.GET, "https://social-funda.herokuapp.com/api/users/", new Response.Listener<String>() {
-
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "Get all Response: " + response.toString());
-
                 try {
-
                     JSONObject jObj = new JSONObject(response);
-
                     JSONArray array = jObj.getJSONArray("users");
-
                     //Log.e("TAG", "mess" +array.length());
                     for (int i = 0; i < array.length(); i++) {
-
                         //getting product object from json array
                         JSONObject product = array.getJSONObject(i);
                         Log.e("TAG", "mess" + product.getInt("_id"));
@@ -97,9 +88,7 @@ public class FindFriends extends AppCompatActivity {
                         Log.e("TAG", "mess" + product.getString("email"));
                         Log.e("TAG", "mess" + product.getString("password"));
 
-
                         resarrayList.add(new FindFriendModel(R.drawable.ic_seo, product.getString("username"), product.getString("email")));
-
                         //resarrayList.add(new FindFriendModel(R.drawable.ic_seo, R.drawable.frndship_btn_selector, R.drawable.frndship_btn_selector, product.getString("username"), product.getString("email")));
                     }
                     resadapter = new FindFriendAdapter(FindFriends.this, resarrayList);
@@ -109,20 +98,15 @@ public class FindFriends extends AppCompatActivity {
                             ItemTouchHelper(new FindFriendAdapter.SwipeToDeleteCallback(resadapter));
                     itemTouchHelper.attachToRecyclerView(recyclerView);
                     recyclerView.setLayoutManager(manager);
-
                     boolean error = jObj.getBoolean("error");
-
                     String message = jObj.getString("message");
-
                     Log.e("TAG", "Message: " + message);
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("TAG", "Error: " + error);
@@ -136,17 +120,7 @@ public class FindFriends extends AppCompatActivity {
                         + "\nmessage" + error.getMessage());
                 //hid pregress here
             }
-        }) {
-//
-//            @Override
-//            protected Map<String, String> getParams() {
-//                // Posting params to register url
-//
-//                Map<String, String> params = new HashMap<String, String>();
-//
-//                return params;
-//            }
-        };
+        });
 
         strReq.setRetryPolicy(new DefaultRetryPolicy(
                 20000,
@@ -160,8 +134,6 @@ public class FindFriends extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-
         }
 
         @Override
@@ -172,20 +144,8 @@ public class FindFriends extends AppCompatActivity {
 
 
 //                    resarrayList.add(new FindFriendModel(R.drawable.ic_icons8_administrator_male, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Ali haider", "98 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_man, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Usman Anwar", "54 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_man3, R.drawable.frndship_btn_selector, R.drawable.final_selector, "kainaat gul", "1 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_girl, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Rizwan mughal", "2 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_target, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Javed ali", "9 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_team, R.drawable.frndship_btn_selector, R.drawable.final_selector, "haseeb imtiaz", "6 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_seo, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Wiliayat jutt", "5 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_girl, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Aftab hussain", "22 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_target, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Sadaf noreen", "12 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_icons8_administrator_male, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Iqbal jutt", "0 mutual friend"));
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_man3, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Memoona iqbal", "23 mutual friend"));
                 }
             });
-            //this method will be running on background thread so don't update UI frome here
-            //do your long running http tasks here,you dont want to pass argument and u can access the parent class' variable url over here
             return null;
         }
 
