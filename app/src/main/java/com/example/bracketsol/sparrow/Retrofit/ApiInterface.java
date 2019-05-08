@@ -9,8 +9,10 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -40,4 +42,11 @@ public interface ApiInterface {
 ////    Call<ResponseBody> Login(@Body User user);
 
 
+    @GET("api/messages/chat/")
+    Call<ResponseBody> getAllMessage();
+
+
+    @GET("api/messages/chat-specific/")
+    Call<ResponseBody> getSpecificMessage(@Query("sender_id") int sender_id,
+                                          @Query("receiver_id") int receiver_id);
 }

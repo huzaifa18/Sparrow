@@ -360,7 +360,10 @@ public class Login extends AppCompatActivity {
                     String phone = userdata.getString("phone_no");
                     String password = userdata.getString("password");
 
-                    Prefs.addPrefsForLogin(getApplicationContext(), userid, username, email, phone, password);
+                    String auth = jObj.getString("token");
+                    Log.e("TAG",""+auth);
+
+                    Prefs.addPrefsForLogin(getApplicationContext(), userid, username, email, phone, password,auth);
 
 
                     Log.e("TAG", "" + Prefs.getUserIDFromPref(Login.this));
@@ -368,6 +371,7 @@ public class Login extends AppCompatActivity {
                     //Log.e("TAG",""+);
 
                     Toast.makeText(Login.this, "" + userdata.getInt("_id"), Toast.LENGTH_SHORT).show();
+
 
                     simpleProgressBar.setVisibility(View.VISIBLE);
 

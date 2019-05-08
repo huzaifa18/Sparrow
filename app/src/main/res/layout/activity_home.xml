@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Activities.HomeActivity">
 
-    <include layout="@layout/home_action_bar" />
+    <include layout="@layout/home_toolbar" />
 
     <FrameLayout
         android:id="@+id/frame_container"

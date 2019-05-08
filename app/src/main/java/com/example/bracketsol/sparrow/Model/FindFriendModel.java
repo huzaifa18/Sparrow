@@ -14,6 +14,12 @@ public class FindFriendModel {
         this.mutualfriend = mutualfriend;
     }
 
+    public FindFriendModel(int profileUrl, int id, String username) {
+        this.profileUrl = profileUrl;
+        this.id = id;
+        this.username = username;
+    }
+
     public FindFriendModel(int profileUrl, int id, String username, String mutualfriend, String email, String phone) {
         this.profileUrl = profileUrl;
         this.id = id;

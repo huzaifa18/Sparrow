@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.bracketsol.sparrow.R;
+import com.example.bracketsol.sparrow.Utils.Prefs;
 
 /**
  * Created by bracketsol on 4/12/2019.
@@ -22,6 +23,7 @@ public class Welcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome);
+        Toast.makeText(Welcome.this, "" + Prefs.getUserToken(Welcome.this), Toast.LENGTH_SHORT).show();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);

@@ -18,6 +18,7 @@ import com.example.bracketsol.sparrow.Adapter.StatusPostAdapter;
 import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
 import com.example.bracketsol.sparrow.DisFragment;
 import com.example.bracketsol.sparrow.Fragments.PrrofileFragment;
+import com.example.bracketsol.sparrow.MessageActivity.ChatsListingMain;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.Model.StoryModel;
 
@@ -28,6 +29,7 @@ import com.example.bracketsol.sparrow.Fragments.DiscussionFragment;
 import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.SetFragment;
+import com.example.bracketsol.sparrow.SocketChat.AddUserActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -215,8 +217,11 @@ GoToChat();
         chatbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//
                 Intent intent = new Intent(HomeActivity.this, ChatsListingMain.class);
                 startActivity(intent);
+//                Intent intent = new Intent(HomeActivity.this, ChatsListingMain.class);
+//                startActivity(intent);
             }
         });
 

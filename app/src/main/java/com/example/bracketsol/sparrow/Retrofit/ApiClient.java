@@ -1,5 +1,6 @@
 package com.example.bracketsol.sparrow.Retrofit;
 
+import com.example.bracketsol.sparrow.Interceptor.HeaderInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,10 +12,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static String Base_URL = "http://social-funda.herokuapp.com/api/";
+    public static String Base_URL = "http://social-funda.herokuapp.com/";
     private static Retrofit retrofit = null;
 
     static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .addInterceptor(new HeaderInterceptor())
             .connectTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
