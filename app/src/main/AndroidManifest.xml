@@ -63,7 +63,7 @@
         <activity
             android:name=".MessageActivity.ChatsListingMain"
             android:label="@string/mess" />
-        <activity android:name=".Activities.ChatActivityMain" />
+        <activity android:name=".MessageActivity.ChatActivityMain" />
         <activity
             android:name=".Activities.VerificationDetails"
             android:label="@string/verify" />

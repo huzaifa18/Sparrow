@@ -4,9 +4,9 @@ public class MessageFormat {
 
     private String Username;
     private String Message;
-    private String UniqueId;
+    private int UniqueId;
 
-    public MessageFormat(String uniqueId, String username, String message) {
+    public MessageFormat(int uniqueId, String username, String message) {
         Username = username;
         Message = message;
         UniqueId = uniqueId;
@@ -28,11 +28,11 @@ public class MessageFormat {
         Message = message;
     }
 
-    public String getUniqueId() {
+    public int getUniqueId() {
         return UniqueId;
     }
 
-    public void setUniqueId(String uniqueId) {
+    public void setUniqueId(int uniqueId) {
         UniqueId = uniqueId;
     }
 }

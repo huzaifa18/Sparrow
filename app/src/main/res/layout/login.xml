@@ -53,7 +53,7 @@
                         android:background="@drawable/btn_shape_login"
                         android:maxLines="1"
                         android:nextFocusForward="@string/password"
-                        android:text="designer@gmail.com"
+                        android:text="tester@gmail.com"
                         android:textStyle="bold" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -83,7 +83,7 @@
                         android:background="@drawable/btn_shape_login"
                         android:inputType="textPassword"
                         android:nextFocusForward="@id/login_button"
-                        android:text="designer"
+                        android:text="tester"
                         android:textStyle="bold" />
 
                 </android.support.design.widget.TextInputLayout>

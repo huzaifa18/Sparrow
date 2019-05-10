@@ -23,10 +23,13 @@ import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -46,6 +49,7 @@ public class Login extends AppCompatActivity {
     String getname, getpass;
     ProgressBar simpleProgressBar;
     Handler handler;
+    private Socket mSocket;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -56,6 +60,10 @@ public class Login extends AppCompatActivity {
         //init
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        try {
+            mSocket = IO.socket("https://social-funda.herokuapp.com/");
+        } catch (URISyntaxException e) {
+        }
         createAccounttxt = findViewById(R.id.create_account_textview);
         createAccounttxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,6 +372,17 @@ public class Login extends AppCompatActivity {
                     Log.e("TAG",""+auth);
 
                     Prefs.addPrefsForLogin(getApplicationContext(), userid, username, email, phone, password,auth);
+
+                    mSocket.connect();
+                    JSONObject getUnameforOnline = new JSONObject();
+                    try {
+                        getUnameforOnline.put("room","global");
+                        getUnameforOnline.put("user",username);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    mSocket.emit("online", getUnameforOnline);
+                    Log.i("TAG", "sendMessage: 1" + mSocket.emit("join private chat", getUnameforOnline));
 
 
                     Log.e("TAG", "" + Prefs.getUserIDFromPref(Login.this));

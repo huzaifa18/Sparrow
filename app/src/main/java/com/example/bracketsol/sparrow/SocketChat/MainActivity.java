@@ -55,14 +55,11 @@ public class MainActivity extends AppCompatActivity {
                         username = data.getString("username");
                         message = data.getString("message");
                         id = data.getString("uniqueId");
-
                         Log.i(TAG, "run: " + username + message + id);
-
-                        MessageFormat format = new MessageFormat(id, username, message);
+                        //MessageFormat format = new MessageFormat(id, username, message);
                         Log.i(TAG, "run:4 ");
-                        messageAdapter.add(format);
+                        //messageAdapter.add(format);
                         Log.i(TAG, "run:5 ");
-
                     } catch (Exception e) {
                         return;
                     }
@@ -91,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    MessageFormat format = new MessageFormat(null, username, null);
-                    messageAdapter.add(format);
+                    //MessageFormat format = new MessageFormat(null, username, null);
+                    //messageAdapter.add(format);
                     messageListView.smoothScrollToPosition(0);
                     messageListView.scrollTo(0, messageAdapter.getCount() - 1);
                     Log.i(TAG, "run: " + username);
@@ -231,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         messageListView = findViewById(R.id.messageListView);
 
         List<MessageFormat> messageFormatList = new ArrayList<>();
-        messageAdapter = new MessageAdapter(this, R.layout.socket_item_message, messageFormatList);
+       // messageAdapter = new MessageAdapter(this, R.layout.socket_item_message, messageFormatList);
         messageListView.setAdapter(messageAdapter);
 
         onTypeButtonEnable();

@@ -4,31 +4,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bracketsol.sparrow.Activities.ChatActivityMain;
 import com.example.bracketsol.sparrow.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GetAllMessageAdapter extends RecyclerView.Adapter<GetAllMessageAdapter.ViewHolder> {
 
+    public RelativeLayout viewBackground, viewForeground;
     protected GetAllMessageAdapter.ItemListener mListener;
     ArrayList<MessageListModel> mValues;
     Context mContext;
-    public RelativeLayout viewBackground, viewForeground;
 
     public GetAllMessageAdapter(Context context, ArrayList<MessageListModel> values) {
         mValues = values;
@@ -52,16 +48,17 @@ public class GetAllMessageAdapter extends RecyclerView.Adapter<GetAllMessageAdap
         Vholder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(mContext, "" + data.getSender_id() + data.getUsername() + data.getProfileUrl(), Toast.LENGTH_SHORT).show();
 
-
-
-
-                Toast.makeText(mContext, ""+data.getSender_id()+data.getUsername()+data.getProfileUrl(), Toast.LENGTH_SHORT).show();
+                Log.i("TAG","senderid : "+data.getSender_id());
+                Log.i("TAG","getUsername : "+data.getUsername() );
+                Log.i("TAG","getReceiverid : "+data.getReceiverid());
 
                 Intent intent = new Intent(mContext, ChatActivityMain.class);
                 intent.putExtra("username", data.getUsername());
                 intent.putExtra("profileurl", data.getProfileUrl());
                 intent.putExtra("senderid", data.getSender_id());
+                intent.putExtra("receiverid", data.getReceiverid());
 
                 mContext.startActivity(intent);
 
@@ -77,14 +74,41 @@ public class GetAllMessageAdapter extends RecyclerView.Adapter<GetAllMessageAdap
         return mValues.size();
     }
 
+    public void removeAt(int position) {
+        mValues.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mValues.size());
+    }
+
     public interface ItemListener {
         void onItemClick(MessageListModel item);
+    }
+
+    public static class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+        private GetAllMessageAdapter mAdapter;
+
+        public SwipeToDeleteCallback(GetAllMessageAdapter adapter) {
+            super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+            mAdapter = adapter;
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getAdapterPosition();
+            mAdapter.removeAt(position);
+
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CircleImageView profile;
-        TextView uname,date,message;
+        TextView uname, date, message;
         LinearLayout linearLayout;
         MessageListModel item;
 
@@ -92,8 +116,8 @@ public class GetAllMessageAdapter extends RecyclerView.Adapter<GetAllMessageAdap
             super(v);
             v.setOnClickListener(this);
             uname = (TextView) v.findViewById(R.id.name_tv);
-            message= (TextView) v.findViewById(R.id.recent_tv);
-            date= (TextView) v.findViewById(R.id.time_tv);
+            message = (TextView) v.findViewById(R.id.recent_tv);
+            date = (TextView) v.findViewById(R.id.time_tv);
             profile = v.findViewById(R.id.friend_image);
             linearLayout = (LinearLayout) v.findViewById(R.id.linear_layoutt);
 
@@ -114,34 +138,6 @@ public class GetAllMessageAdapter extends RecyclerView.Adapter<GetAllMessageAdap
             if (mListener != null) {
                 mListener.onItemClick(item);
             }
-        }
-    }
-
-    public void removeAt(int position) {
-        mValues.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mValues.size());
-    }
-
-
-    public static class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
-        private GetAllMessageAdapter mAdapter;
-
-        public SwipeToDeleteCallback(GetAllMessageAdapter adapter) {
-            super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-            mAdapter = adapter;
-        }
-
-        @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            int position = viewHolder.getAdapterPosition();
-            mAdapter.removeAt(position);
-
         }
     }
 }
