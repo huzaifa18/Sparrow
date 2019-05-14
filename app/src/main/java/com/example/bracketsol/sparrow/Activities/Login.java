@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
     private static View view;
     TextInputEditText username, password;
     Button nextButton;
-            TextView createAccounttxt;
+    TextView createAccounttxt;
     String getname, getpass;
     ProgressBar simpleProgressBar;
     Handler handler;
@@ -79,8 +79,7 @@ public class Login extends AppCompatActivity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER))
-                {
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on Enter key press
                     username.clearFocus();
                     password.requestFocus();
@@ -89,46 +88,22 @@ public class Login extends AppCompatActivity {
                 return false;
             }
         });
-
-//        password.setOnKeyListener(new View.OnKeyListener() {
-//
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//
-//                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-//                        (keyCode == KeyEvent.KEYCODE_ENTER))
-//                {
-//                    // Perform action on Enter key press
-//                    // check for username - password correctness here
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-
         nextButton = findViewById(R.id.login_button);
         handler = new Handler();
 
         simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
-
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 getname = username.getText().toString();
                 getpass = password.getText().toString();
-
-                //Log.e("TAG", getname + getpass);
-
-
-                //simpleProgressBar.setVisibility(View.VISIBLE);
                 checkValidate();
 
-// Create and start a new Thread
                 new Thread(new Runnable() {
                     public void run() {
                         try {
-                            Thread.sleep(2000);
+                            Thread.sleep(5000);
                         } catch (Exception e) {
                         } // Just catch the InterruptedException
 
@@ -141,226 +116,27 @@ public class Login extends AppCompatActivity {
                         });
                     }
                 }).start();
-
-
-//                JsonParser parser = new JsonParser();
-//                JSONObject object = new JSONObject();
-//
-//                try {
-//                    object.put("username", getname);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                try {
-//                    object.put("password", "waqas100");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                Call<User> call = apiInterface.Login(object);
-//
-//                call.enqueue(new Callback<User>() {
-//                    @Override
-//                    public void onResponse(Call<User> call, Response<User> response) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<User> call, Throwable t) {
-//
-//                    }
-//                });
-//
-////
-//                apiInterface.Login(object).toString();
-////
-
-
-//                RequestBody username = RequestBody.create(MediaType.parse("text/plain"), getname);
-//                String pass= RequestBody.create(MediaType.parse("text/plain"), getpass);
-
-//                Gson gson = new GsonBuilder()
-//                        .setLenient()
-//                        .create();
-//
-//                OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-//                        .connectTimeout(220, TimeUnit.SECONDS)
-//                        .readTimeout(220, TimeUnit.SECONDS)
-//                        .writeTimeout(220, TimeUnit.SECONDS)
-//                        .build();
-//
-//                //creating retrofit object
-//                Retrofit retrofit = new Retrofit.Builder()
-//                        .baseUrl("http://social-funda.herokuapp.com/api/")
-//                        .client(okHttpClient)
-//                        .addConverterFactory(GsonConverterFactory.create(gson))
-//                        .build();
-//
-//
-//                //apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-//
-//                Toast.makeText(Login.this, "ok" + getpass + getname, Toast.LENGTH_SHORT).show();
-//
-//
-//                ApiInterface service = retrofit.create(ApiInterface.class);
-//
-//
-//                Call<User> call = service.Login(getname, getpass);
-//
-//
-//                Log.e("check11", "message" + call.request().body().toString());
-//
-//                call.enqueue(new Callback<User>() {
-//                    @Override
-//                    public void onResponse(Call<User> call, Response<User> response) {
-//                        Toast.makeText(Login.this, "dfkmdlf", Toast.LENGTH_SHORT).show();
-//                        if (response.isSuccessful())
-//                            Log.e("check11", "message" + response.body().message);
-//
-//                        {
-//                            Toast.makeText(Login.this, "" + response, Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<User> call, Throwable t) {
-//                        Log.e("check11", "checkval failure" + t.getMessage());
-//
-//                    }
-//                });
-//
-////                User user = new User("1", getname, getpass);
-////                Call<ResponseBody> call = apiInterface.Login(user);
-////                call.enqueue(new Callback<ResponseBody>() {
-////                    @Override
-////                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-////
-////                        if (response.isSuccessful()) {
-////                            ResponseBody jsonResponse = response.body();
-////                            Toast.makeText(Login.this, "okkkkkkkkkkkkk", Toast.LENGTH_SHORT).show();
-////                        } else {
-////                            Toast.makeText(Login.this, "not", Toast.LENGTH_SHORT).show();
-////                        }
-////
-////                        Toast.makeText(Login.this, "ok", Toast.LENGTH_SHORT).show();
-////                        try {
-////                            String resString = response.body().string();
-////
-////                            Log.e("check11", "message" + response);
-////                            Toast.makeText(Login.this, "" + response, Toast.LENGTH_SHORT).show();
-////
-////                            JSONObject resJson = new JSONObject(resString);
-////                            Toast.makeText(Login.this, "ok" + getpass + getname, Toast.LENGTH_SHORT).show();
-////                            Toast.makeText(Login.this, "" + resJson.getString("message"), Toast.LENGTH_LONG).show();
-////
-////                            //Log.e("check11", "message" + resJson.getJSONObject("data"));
-////                            if (resJson.getJSONObject("data") != null) {
-////                                JSONObject data = resJson.getJSONObject("data");
-////                                Log.e("check11", "message" + resJson.getJSONObject("user"));
-////                                Toast.makeText(Login.this, "" + getname + getpass, Toast.LENGTH_SHORT).show();
-////                                Intent intent = new Intent(Login.this, FindFriends.class);
-////                                startActivity(intent);
-////
-//////                            SaveSharedPreference.getInstance(getContext()).setLoggedIn(getContext(), true);
-//////                            Intent intent = new Intent(getContext(), HomeActivity.class);
-//////                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
-//////                            startActivity(intent);
-////
-//////                            Intent intent = new Intent(getContext(), HomeActivity.class);
-//////
-////// startActivity(intent);
-////
-//////                            SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-//////                            SharedPreferences.Editor editor = sharedPreferences.edit();
-//////                            Gson gson = new Gson();
-//////                            User user = new User(data.getInt("id"), data.getString("name"), data.getString("email"), data.getString("phone"), data.getString("cnic"), data.getString("img_url"), data.getString("type"), data.getString("status") );
-//////                            String json = gson.toJson(user);
-//////                            editor.putString(USER_PREF, json);
-//////                            editor.apply();
-////
-//////                            User user = new User(data.getInt("id"), data.getString("name"), data.getString("email"), data.getString("phone"), data.getString("cnic"), data.getString("img_url"), data.getString("type"), data.getString("status"));
-//////                            //User user = new User(12, "asdfas", "asd@asdf.com", "456", "4546", "asdf", "asdf", "asdf");
-//////
-//////                            SaveSharedPreference.getInstance(getContext()).addUsertoPref(user);
-//////                            //saveSharedPreference.addUsertoPref(user);
-////                                //saveSharedPreference.getStudent();
-////                                //saveSharedPreference.addUsertoPref(user);
-//////                            user.getId();
-//////                            user.getFullName();
-//////
-//////                            Toast.makeText(getContext(), ""+json, Toast.LENGTH_SHORT).show();
-//////                            Toast.makeText(getContext(), ""+user.getFullName()+user.getId(), Toast.LENGTH_SHORT).show();
-////
-////                            } else {
-////                                Toast.makeText(Login.this, "asdfe", Toast.LENGTH_SHORT).show();
-////                            }
-////
-////
-////                        } catch (IOException e) {
-////                            e.printStackTrace();
-////                            Log.e("check11", "checkval onresponse" + e.getMessage());
-////
-////
-////                        } catch (JSONException e) {
-////                            e.printStackTrace();
-////                            Log.e("check11", "checkval onresponse" + e.getMessage());
-////
-////                        }
-////                        //User user = response.body();
-////                        //Toast.makeText(getActivity(), "response"+ user, Toast.LENGTH_SHORT).show();
-////                    }
-////
-////                    @Override
-////                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-////
-////                        Log.e("check11", "checkval failure" + t.getMessage());
-////                        Toast.makeText(Login.this, "error" + t.getMessage(), Toast.LENGTH_SHORT).show();
-////                    }
-////                });
-////
-////
-////            }
-////        });
-
-
             }
         });
     }
 
     private void callLoginService(final String user, final String pass) {
 
-        // Tag used to cancel the request
         String cancel_req_tag = "register";
-        //show pregress here
-
-        //Toast.makeText(this, "" + user + pass, Toast.LENGTH_SHORT).show();
-
-
         StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/auth/login", new Response.Listener<String>() {
-
             @Override
             public void onResponse(String response) {
-                //Log.e("TAG", "Login Response: " + response.toString());
-
-
                 try {
-
                     JSONObject jObj = new JSONObject(response);
-
                     String message = jObj.getString("message");
-
-
                     Log.e("TAG", "Message: " + message);
+
+                    Toast.makeText(Login.this, ""+message, Toast.LENGTH_SHORT).show();
+                    simpleProgressBar.setVisibility(View.GONE);
 
                     String user = jObj.getString("user");
                     Log.e("TAG", "Message: " + user);
-
-                    //int userid = jObj.getInt("_id");
-
                     JSONObject userdata = jObj.getJSONObject("user");
-
-                    //Log.e("TAG",""+userdata);
 
                     int userid = userdata.getInt("_id");
                     String username = userdata.getString("username");
@@ -369,39 +145,30 @@ public class Login extends AppCompatActivity {
                     String password = userdata.getString("password");
 
                     String auth = jObj.getString("token");
-                    Log.e("TAG",""+auth);
+                    Log.e("TAG", "" + auth);
 
-                    Prefs.addPrefsForLogin(getApplicationContext(), userid, username, email, phone, password,auth);
+                    Prefs.addPrefsForLogin(getApplicationContext(), userid, username, email, phone, password, auth);
 
                     mSocket.connect();
                     JSONObject getUnameforOnline = new JSONObject();
                     try {
-                        getUnameforOnline.put("room","global");
-                        getUnameforOnline.put("user",username);
+                        getUnameforOnline.put("room", "global");
+                        getUnameforOnline.put("user", username);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     mSocket.emit("online", getUnameforOnline);
                     Log.i("TAG", "sendMessage: 1" + mSocket.emit("join private chat", getUnameforOnline));
 
-
                     Log.e("TAG", "" + Prefs.getUserIDFromPref(Login.this));
-
-                    //Log.e("TAG",""+);
-
                     Toast.makeText(Login.this, "" + userdata.getInt("_id"), Toast.LENGTH_SHORT).show();
-
-
                     simpleProgressBar.setVisibility(View.VISIBLE);
-
-
-                    Intent intent = new Intent(Login.this, Welcome.class);
+                    Intent intent = new Intent(Login.this, HomeActivity.class);
                     startActivity(intent);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
 
@@ -409,26 +176,17 @@ public class Login extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.e("TAG", "Error: " + error);
                 Toast.makeText(getApplicationContext(),
-                        "Server Connection Fail", Toast.LENGTH_LONG).show();
+                        "No internet, Please try again later", Toast.LENGTH_LONG).show();
                 //hid pregress here
-                simpleProgressBar.setVisibility(View.VISIBLE);
+                simpleProgressBar.setVisibility(View.GONE);
             }
         }) {
 
             @Override
-            protected Map<String, String> getParams()
-
-
-
-            {
-                // Posting params to register url
-
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("username", user);
                 params.put("password", pass);
-
-
-
                 return params;
             }
         };
@@ -453,11 +211,10 @@ public class Login extends AppCompatActivity {
 
 
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-        } else if (!m.find()) {
-            Toast.makeText(this, "Your Email Id is Invalid", Toast.LENGTH_SHORT).show();
-            simpleProgressBar.setVisibility(View.VISIBLE);
+            simpleProgressBar.setVisibility(View.GONE);
+
         } else {
-            Toast.makeText(this, "Sign in successful.", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "Ok auth.", Toast.LENGTH_SHORT)
                     .show();
             simpleProgressBar.setVisibility(View.VISIBLE);
             callLoginService(username.getText().toString(), password.getText().toString());

@@ -38,4 +38,13 @@
         android:textSize="18sp"
         android:text="How are you doing? This is a long message that should probably wrap."
         />
+    <ImageView
+        android:id="@+id/their_image"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:layout_below="@+id/message_body"
+        android:layout_alignParentLeft="true"/>
+
 </RelativeLayout>

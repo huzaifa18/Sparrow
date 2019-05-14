@@ -3,7 +3,17 @@ package com.example.bracketsol.sparrow.MessageActivity;
 public class MessageListModel {
 
     int profileUrl,sender_id,receiverid;
-    String username,message,date;
+    String username,message,date,url;
+
+    public MessageListModel(int profileUrl, int sender_id, int receiverid, String username, String message, String date, String url) {
+        this.profileUrl = profileUrl;
+        this.sender_id = sender_id;
+        this.receiverid = receiverid;
+        this.username = username;
+        this.message = message;
+        this.date = date;
+        this.url = url;
+    }
 
     public MessageListModel(int profileUrl, int sender_id, int receiverid, String username, String message, String date) {
         this.profileUrl = profileUrl;
@@ -12,6 +22,14 @@ public class MessageListModel {
         this.username = username;
         this.message = message;
         this.date = date;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public int getProfileUrl() {

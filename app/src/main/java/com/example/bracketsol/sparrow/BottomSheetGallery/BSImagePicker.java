@@ -39,6 +39,7 @@ import android.widget.TextView;
 import com.asksira.bsimagepicker.ImageTileAdapter;
 import com.example.bracketsol.sparrow.BuildConfig;
 import com.example.bracketsol.sparrow.R;
+import com.example.bracketsol.sparrow.SocketChat.MessageFormat;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,7 +89,7 @@ public class BSImagePicker extends BottomSheetDialogFragment implements LoaderMa
     }
     private OnSingleImageSelectedListener onSingleImageSelectedListener;
     public interface OnMultiImageSelectedListener {
-        void onMultiImageSelected(List<Uri> uriList, String tag);
+        void onMultiImageSelected(List<Uri> messageFormatList , String tag);
     }
     private OnMultiImageSelectedListener onMultiImageSelectedListener;
 

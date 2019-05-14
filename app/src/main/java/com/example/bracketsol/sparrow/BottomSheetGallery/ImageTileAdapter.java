@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.bracketsol.sparrow.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,6 +50,10 @@ public class ImageTileAdapter extends RecyclerView.Adapter<ImageTileAdapter.Base
     }
     private OnOverSelectListener onOverSelectListener;
 
+    public ImageTileAdapter(Context context) {
+        this.context = context;
+    }
+
     public ImageTileAdapter(Context context, boolean isMultiSelect, boolean showCameraTile, boolean showGalleryTile) {
         super();
         this.context = context;
@@ -73,18 +78,18 @@ public class ImageTileAdapter extends RecyclerView.Adapter<ImageTileAdapter.Base
     public ImageTileAdapter.BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEWTYPE_CAMERA:
-                return new CameraTileViewHolder(LayoutInflater.from(context).inflate(com.asksira.bsimagepicker.R.layout.item_picker_camera_tile, parent, false));
+                return new CameraTileViewHolder(LayoutInflater.from(context).inflate(R.layout.item_picker_camera_tile, parent, false));
             case VIEWTYPE_GALLERY:
-                return new GalleryTileViewHolder(LayoutInflater.from(context).inflate(com.asksira.bsimagepicker.R.layout.item_picker_gallery_tile, parent, false));
+                return new GalleryTileViewHolder(LayoutInflater.from(context).inflate(R.layout.item_picker_gallery_tile, parent, false));
             case VIEWTYPE_DUMMY:
-                return new DummyViewHolder(LayoutInflater.from(context).inflate(com.asksira.bsimagepicker.R.layout.item_picker_dummy_tile, parent, false));
+                return new DummyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_picker_dummy_tile, parent, false));
             case VIEWTYPE_BOTTOM_SPACE:
                 View view = new View(context);
                 ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, GalleryUtils.dp2px(48));
                 view.setLayoutParams(lp);
                 return new DummyViewHolder(view);
             default:
-                return new ImageTileViewHolder(LayoutInflater.from(context).inflate(com.asksira.bsimagepicker.R.layout.item_picker_image_tile, parent, false));
+                return new ImageTileViewHolder(LayoutInflater.from(context).inflate(R.layout.item_picker_image_tile, parent, false));
         }
     }
 
@@ -211,9 +216,9 @@ public class ImageTileAdapter extends RecyclerView.Adapter<ImageTileAdapter.Base
 
         public ImageTileViewHolder(View itemView) {
             super(itemView);
-            ivImage = itemView.findViewById(com.asksira.bsimagepicker.R.id.item_imageTile);
-            darken = itemView.findViewById(com.asksira.bsimagepicker.R.id.imageTile_selected_darken);
-            ivTick = itemView.findViewById(com.asksira.bsimagepicker.R.id.imageTile_selected);
+            ivImage = itemView.findViewById(R.id.item_imageTile);
+            darken = itemView.findViewById(R.id.imageTile_selected_darken);
+            ivTick = itemView.findViewById(R.id.imageTile_selected);
             if (!isMultiSelect) {
                 itemView.setOnClickListener(imageTileOnClickListener);
             } else {

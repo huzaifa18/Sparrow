@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bracketsol.sparrow.MessageActivity.ChatActivityMain;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Utils.Prefs;
@@ -18,6 +20,7 @@ import java.util.List;
 public class MessageAdapter extends ArrayAdapter<MessageFormat> {
 
     Context mcontext;
+
     public MessageAdapter(ChatActivityMain context, int resource, List<MessageFormat> objects) {
 
         super((Context) context, resource, objects);
@@ -30,46 +33,82 @@ public class MessageAdapter extends ArrayAdapter<MessageFormat> {
 
         MessageFormat message = getItem(position);
 
-        Log.e("TAG", "ok"+message.getMessage());
-        Log.e("TAG", "ok"+message.getUsername());
-        Log.e("TAG", "ok"+message.getUniqueId());
+        Log.e("TAG", "ok" + message.getMessage());
+        Log.e("TAG", "ok" + message.getUsername());
+        Log.e("TAG", "ok" + message.getUniqueId());
 
-        if(TextUtils.isEmpty(message.getMessage())){
+        if (TextUtils.isEmpty(message.getMessage())) {
 
 
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.socket_user_connected, parent, false);
 
             TextView messageText = convertView.findViewById(R.id.message_body);
+            ImageView imageView = convertView.findViewById(R.id.my_image);
 
             Log.i(MainActivity.TAG, "getView: is empty ");
             String userConnected = message.getUsername();
             messageText.setText(userConnected);
 
 
-
-        }else if(message.getUniqueId()!= Prefs.getUserIDFromPref(mcontext)){
+        } else if (message.getUniqueId() != Prefs.getUserIDFromPref(mcontext)) {
             Log.i(MainActivity.TAG, "getView: " + message.getUniqueId() + " " + MainActivity.uniqueId);
 
 
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.my_message, parent, false);
             TextView messageText = convertView.findViewById(R.id.message_body);
+            ImageView imageView = convertView.findViewById(R.id.my_image);
+
+
+            if (message.getImg()!= null && !message.getImg().isEmpty()) {
+                imageView.setVisibility(View.VISIBLE);
+                Glide.with(mcontext).load(message.getImg()).into(imageView);
+
+            } else {
+                imageView.setVisibility(View.GONE);
+
+            }
+
+            Glide.with(mcontext)
+                    .load(message.getImg())
+                    .into(imageView);
             messageText.setText(message.getMessage());
 
-        }else {
+
+        } else {
             Log.i(MainActivity.TAG, "getView: is not empty");
 
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.their_message, parent, false);
 
             TextView messageText = convertView.findViewById(R.id.message_body);
+            ImageView imageView = convertView.findViewById(R.id.their_image);
             TextView usernameText = (TextView) convertView.findViewById(R.id.name);
+
 
             messageText.setVisibility(View.VISIBLE);
             usernameText.setVisibility(View.VISIBLE);
 
             messageText.setText(message.getMessage());
             usernameText.setText(message.getUsername());
-        }
+            if (message.getImg()!= null && !message.getImg().isEmpty()) {
+                imageView.setVisibility(View.VISIBLE);
+                Glide.with(mcontext).load(message.getImg()).into(imageView);
 
+                messageText.setVisibility(View.VISIBLE);
+                usernameText.setVisibility(View.VISIBLE);
+
+                messageText.setText(message.getMessage());
+                usernameText.setText(message.getUsername());
+            } else {
+                imageView.setVisibility(View.GONE);
+                messageText.setVisibility(View.VISIBLE);
+                usernameText.setVisibility(View.VISIBLE);
+
+                messageText.setText(message.getMessage());
+                usernameText.setText(message.getUsername());
+
+
+            }
+        }
         return convertView;
     }
 }
