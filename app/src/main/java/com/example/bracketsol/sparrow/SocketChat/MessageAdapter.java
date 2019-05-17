@@ -2,16 +2,21 @@ package com.example.bracketsol.sparrow.SocketChat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.bracketsol.sparrow.MessageActivity.ChatActivityMain;
+import com.example.bracketsol.sparrow.MyApp;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 
@@ -57,11 +62,14 @@ public class MessageAdapter extends ArrayAdapter<MessageFormat> {
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.my_message, parent, false);
             TextView messageText = convertView.findViewById(R.id.message_body);
             ImageView imageView = convertView.findViewById(R.id.my_image);
-
+            Log.i("users","my message"+message.getUniqueId()+message.getUsername());
 
             if (message.getImg()!= null && !message.getImg().isEmpty()) {
                 imageView.setVisibility(View.VISIBLE);
-                Glide.with(mcontext).load(message.getImg()).into(imageView);
+                byte[] decodedString = Base64.decode(message.getImg(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Log.i("users","my message"+message.getMessage());
+                Glide.with(mcontext).load(decodedByte).into(imageView);
 
             } else {
                 imageView.setVisibility(View.GONE);
@@ -91,7 +99,10 @@ public class MessageAdapter extends ArrayAdapter<MessageFormat> {
             usernameText.setText(message.getUsername());
             if (message.getImg()!= null && !message.getImg().isEmpty()) {
                 imageView.setVisibility(View.VISIBLE);
-                Glide.with(mcontext).load(message.getImg()).into(imageView);
+                byte[] decodedString = Base64.decode(message.getImg(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Glide.with(mcontext).load(decodedByte).into(imageView);
+
 
                 messageText.setVisibility(View.VISIBLE);
                 usernameText.setVisibility(View.VISIBLE);

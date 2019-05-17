@@ -159,26 +159,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
 
         }
     }
-//
-//    public class ListGroup {
-//        public Dialog CreateGroupDialog(Context context, ArrayList<FindFriendModel> arrayList) {
-//            final Dialog dialog = new Dialog(context);
-//            dialog.setContentView(R.layout.custom_dialog);
-//
-//            LayoutInflater li = LayoutInflater.from(context);
-//            View view = li.inflate(R.layout.custom_dialog, null);
-//            Toolbar toolbar = (Toolbar) view.findViewById(R.id.dialog_toolbar);
-//            // The following line has no effect...
-//            toolbar.setTitle("List Group");
-//
-//            dialog.setCancelable(false);
-//            ListView listView = (ListView) dialog.findViewById(R.id.group_listview);
-//            CustomAdapter customAdapter = new CustomAdapter(context, R.layout.list_object, arrayList);
-//            listView.setAdapter(customAdapter);
-//            return dialog;
-//
-//
-//        }
+
 
 }
 

@@ -4,7 +4,7 @@ public class MessageFormat {
 
     private String Username;
     private String Message;
-    private String img;
+    private String img,mime,filename;
     private int UniqueId;
 
     public MessageFormat(int uniqueId,String username, String message, String img ) {
@@ -14,10 +14,36 @@ public class MessageFormat {
         UniqueId = uniqueId;
     }
 
+
+    public MessageFormat( int uniqueId,String username, String message, String img, String mime, String filename) {
+        Username = username;
+        Message = message;
+        this.img = img;
+        this.mime = mime;
+        this.filename = filename;
+        UniqueId = uniqueId;
+    }
+
     public MessageFormat(int uniqueId, String username, String message) {
         Username = username;
         Message = message;
         UniqueId = uniqueId;
+    }
+
+    public String getMime() {
+        return mime;
+    }
+
+    public void setMime(String mime) {
+        this.mime = mime;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getImg() {

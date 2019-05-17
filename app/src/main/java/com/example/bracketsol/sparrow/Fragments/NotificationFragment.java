@@ -37,24 +37,6 @@ public class NotificationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //toolbar = getActivity().findViewById(R.id.toolbar_custom_noti);
-        //((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        //toolbarTextView_next = getView().findViewById(R.id.next_textview_noti);
-//        toolbarTextView_next.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(context, "ok", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        toolbar.setTitleTextColor(Color.WHITE);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getActivity().finish();
-//                Toast.makeText(context, "Back clicked!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         view = (View) inflater.inflate(R.layout.notification_fragment, container, false);
         init();

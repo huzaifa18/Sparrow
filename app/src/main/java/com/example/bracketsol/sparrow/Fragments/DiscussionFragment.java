@@ -33,6 +33,7 @@ public class DiscussionFragment extends Fragment {
     Context context;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
 
+
     public DiscussionFragment() {
 
     }

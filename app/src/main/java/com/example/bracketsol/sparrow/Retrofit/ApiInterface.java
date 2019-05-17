@@ -45,6 +45,9 @@ public interface ApiInterface {
     @GET("api/messages/chat/")
     Call<ResponseBody> getAllMessage();
 
+    @GET("api/announcements/announcement")
+    Call<ResponseBody> getSocialLife();
+
 
     @GET("api/messages/chat-specific/")
     Call<ResponseBody> getSpecificMessage(@Query("sender_id") int sender_id,

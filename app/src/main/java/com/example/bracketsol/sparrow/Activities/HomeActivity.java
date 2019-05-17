@@ -29,6 +29,7 @@ import com.example.bracketsol.sparrow.Fragments.DiscussionFragment;
 import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.SetFragment;
+import com.example.bracketsol.sparrow.SocialLife.SocialLifeFragment;
 import com.example.bracketsol.sparrow.SocketChat.AddUserActivity;
 
 public class HomeActivity extends AppCompatActivity {
@@ -103,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
                     fragmentTransaction
                             //.beginTransaction()
                             //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                            .replace(R.id.frame_container, new DisFragment());
+                            .replace(R.id.frame_container, new SocialLifeFragment());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     return true;
