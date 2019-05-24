@@ -10,10 +10,18 @@
         <item name="colorControlNormal">@color/colorwhite</item>
         <item name="actionMenuTextColor">@color/colorAccent</item>
         <item name="android:actionMenuTextColor">@color/colorAccent</item>
-
-
     </style>
 
+    <style name="DialogTheme" parent="android:Theme.Dialog">
+
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <!-- No backgrounds, titles or window float -->
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+    <style name="CallActivityTheme" parent="android:Theme.Black"/>
     <style name="AppTheme.App">
         ...
         <item name="actionMenuTextColor">@color/colorAccent</item>

@@ -19,6 +19,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 allprojects {
     repositories {
@@ -69,14 +73,20 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    
+
     implementation("com.github.bumptech.glide:glide:4.7.1") {
         exclude group: "com.android.support"
 
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
-
     //SOCKET
     implementation 'com.github.nkzawa:socket.io-client:0.3.0'
+
+    //webrtc
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'org.webrtc:google-webrtc:1.0.27771'
+    implementation project(path: ':webtc')
+    implementation 'org.jetbrains:annotations:15.0'
 }

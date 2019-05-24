@@ -144,7 +144,7 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/facebook_btn"
+                    android:id="@+id/facebook_btn_signin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/or_textview"

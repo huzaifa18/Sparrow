@@ -23,6 +23,8 @@ import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
+import com.example.bracketsol.sparrow.webrtcc.CallActivity;
+import com.example.bracketsol.sparrow.webrtcc.ConnectActivity;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
@@ -44,7 +46,7 @@ public class Login extends AppCompatActivity {
 
     private static View view;
     TextInputEditText username, password;
-    Button nextButton;
+    Button nextButton,fb_btn;
     TextView createAccounttxt;
     String getname, getpass;
     ProgressBar simpleProgressBar;
@@ -60,6 +62,7 @@ public class Login extends AppCompatActivity {
         //init
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        fb_btn = findViewById(R.id.facebook_btn_signin);
         try {
             mSocket = IO.socket("https://social-funda.herokuapp.com/");
         } catch (URISyntaxException e) {
@@ -70,6 +73,14 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 Intent mainIntent = new Intent(Login.this, VerificationDetails.class);
                 startActivity(mainIntent);
+            }
+        });
+
+        fb_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, ConnectActivity.class);
+                startActivity(intent);
             }
         });
 
