@@ -36,7 +36,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.asksira.bsimagepicker.ImageTileAdapter;
 import com.example.bracketsol.sparrow.BuildConfig;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.SocketChat.MessageFormat;

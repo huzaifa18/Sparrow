@@ -10,27 +10,26 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.bracketsol.sparrow.Adapter.StatusPostAdapter;
 import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
+import com.example.bracketsol.sparrow.Classes.BottomNavigationViewHelper;
 import com.example.bracketsol.sparrow.DisFragment;
+import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
 import com.example.bracketsol.sparrow.Fragments.PrrofileFragment;
 import com.example.bracketsol.sparrow.MessageActivity.ChatsListingMain;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.Model.StoryModel;
+import com.example.bracketsol.sparrow.R;
+import com.example.bracketsol.sparrow.SocialLife.SocialLifeFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import com.example.bracketsol.sparrow.Fragments.DiscussionFragment;
-import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
-import com.example.bracketsol.sparrow.R;
-import com.example.bracketsol.sparrow.SetFragment;
-import com.example.bracketsol.sparrow.SocialLife.SocialLifeFragment;
-import com.example.bracketsol.sparrow.SocketChat.AddUserActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -46,12 +45,15 @@ public class HomeActivity extends AppCompatActivity {
 
     ImageButton chatbtn;
 
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            ;
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
@@ -70,23 +72,14 @@ public class HomeActivity extends AppCompatActivity {
 //                    fragmentTransaction.addToBackStack(null);
 //                    fragmentTransaction.commit();
 
-
 //                    return true;
-//                case R.id.navigation_social:
-//                    fragmentTransaction
-//                            //.beginTransaction()
-//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-//                            .replace(R.id.frame_container, new DiscussionFragment());
-//                    fragmentTransaction.addToBackStack(null);
-//                    fragmentTransaction.commit();
-
 
                     return true;
                 case R.id.navigation_discussion:
                     fragmentTransaction
                             //.beginTransaction()
                             //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                            .replace(R.id.frame_container, new PrrofileFragment());
+                            .replace(R.id.frame_container, new DisFragment());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
 
@@ -122,10 +115,9 @@ public class HomeActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setSelectedItemId(R.id.navigation_home);
-
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         storyRecyclerview = findViewById(R.id.story_recyclerview);
         statuspostRecyclerview = findViewById(R.id.status_recyclerview);
 
@@ -181,12 +173,26 @@ public class HomeActivity extends AppCompatActivity {
         statusPostAdapter.notifyDataSetChanged();
 
 
+
+
         //
         //
-GoToChat();
+        GoToChat();
 
     }
 
+    public void showToolbar(){
+        View layout;
+        layout = findViewById(R.id.home_toolbar);
+        layout.setVisibility(View.VISIBLE);
+
+    }
+    public void hideToolbar(){
+        View layout;
+        layout = findViewById(R.id.home_toolbar);
+        layout.setVisibility(View.GONE);
+
+    }
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
 
@@ -211,9 +217,14 @@ GoToChat();
         return false;
     }
 
+    @Override
+    protected void onResume() {
+        Toast.makeText(this, "show", Toast.LENGTH_SHORT).show();
+        showToolbar();
+        super.onResume();
+    }
 
-
-    public void GoToChat (){
+    public void GoToChat() {
 
         chatbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,4 +238,5 @@ GoToChat();
         });
 
     }
+
 }

@@ -48,7 +48,7 @@ public class GetAllMessageAdapter extends RecyclerView.Adapter<GetAllMessageAdap
         Vholder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "" + data.getSender_id() + data.getUsername() + data.getProfileUrl(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "" + data.getSender_id() + data.getUsername() + data.getProfileUrl(), Toast.LENGTH_SHORT).show();
 
                 Log.i("TAG","senderid : "+data.getSender_id());
                 Log.i("TAG","getUsername : "+data.getUsername() );
