@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@drawable/background_splash_color"
+    android:gravity="center_vertical"
+    android:layout_marginRight="20dp"
+    android:padding="5dp"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            app:srcCompat="@drawable/ic_keyboard_backspace_black_24dp"
+            tools:ignore="NestedWeights" />
+        <!--<ImageView-->
+        <!--android:id="@+id/back_btn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:srcCompat="@drawable/ic_back_btn_toolbar"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center_vertical"/>-->
+
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+            <!--android:layout_width="45dp"-->
+            <!--android:layout_height="45dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:src="@drawable/ic_seo" />-->
+
+        <TextView
+            android:id="@+id/title_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:gravity="center_vertical"
+            android:text="@string/user"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+             />
+        <!---->
+        <!--<TextView-->
+        <!--android:id="@+id/name"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:text="@string/invite"-->
+        <!--android:textColor="#000"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textStyle="bold"-->
+        <!--app:fontFamily="@font/allan_bold" />-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="end">
+
+        <ImageButton
+            android:id="@+id/info_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_weight="0.01"
+            app:srcCompat="@android:drawable/presence_video_online" />
+
+        <ImageButton
+            android:id="@+id/call_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.01"
+            android:background="@null"
+            app:srcCompat="@android:drawable/sym_action_call" />
+
+        <ImageButton
+            android:id="@+id/vidcall_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_weight="0.01"
+
+            android:visibility="gone"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
+        <!--<ImageView-->
+        <!--android:id="@+id/options_btn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--app:srcCompat="@drawable/ic_more_vert_black_24dp" />-->
+
+    </LinearLayout>
+</LinearLayout>
