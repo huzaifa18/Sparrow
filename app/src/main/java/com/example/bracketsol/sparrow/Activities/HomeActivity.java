@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.bracketsol.sparrow.Adapter.StatusPostAdapter;
 import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
 import com.example.bracketsol.sparrow.Classes.BottomNavigationViewHelper;
+import com.example.bracketsol.sparrow.CreatePost;
 import com.example.bracketsol.sparrow.DisFragment;
 import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
 import com.example.bracketsol.sparrow.Fragments.PrrofileFragment;
@@ -45,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
 
     ImageButton chatbtn;
 
+    FloatingActionButton fab;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -178,6 +181,26 @@ public class HomeActivity extends AppCompatActivity {
         //
         //
         GoToChat();
+
+        init();
+
+    }
+
+    private void init() {
+
+        fab = findViewById(R.id.fab);
+
+        setOnClicklisteners();
+    }
+
+    private void setOnClicklisteners() {
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, CreatePost.class));
+            }
+        });
 
     }
 

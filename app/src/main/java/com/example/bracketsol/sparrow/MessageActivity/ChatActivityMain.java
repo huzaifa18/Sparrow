@@ -195,8 +195,8 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                 public void run() {
                     Log.i("msg", "on new message");
                     Log.i(TAG, "run: ");
+                    JSONObject fileObject = (JSONObject) args[0];
                     JSONObject data = (JSONObject) args[0];
-                    JSONObject fileObject = new JSONObject();
                     Log.i("msg", "Data on message recieve: " + data);
                     String content, sender_id, token;
                     int receiver_id;
@@ -208,7 +208,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                         sender_id = data.getString("sender_id");
                         receiver_id = data.getInt("receiver_id");
 
-                        //socket things
+                        //socket thingsgi
                         fileObject = data.getJSONObject("files");
 
                         recfilename = fileObject.getString("name");
@@ -274,6 +274,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                             }
                         }
                     } catch (JSONException e) {
+                        Log.i("getmsg", "main catch",e);
                         Log.i("getmsg", "main catch");
                         e.printStackTrace();
                     }

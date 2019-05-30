@@ -16,7 +16,6 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-
 //    @FormUrlEncoded
 //    @POST("users/register")
 //    Call<ResponseBody> Register(@Field("username") String name,
@@ -43,8 +42,6 @@ public interface ApiInterface {
                                    @Field("sender_id") int sender_id,
                                    @Field("receiver_id") int receiver_id);
 
-
-
     @POST("api/messages/chat/")
     Call<ResponseBody> sendMessageWithFile(
                                             @Field("content") String content,
@@ -52,8 +49,6 @@ public interface ApiInterface {
                                             @Field("receiver_id") int receiver_id,
                                             @Field("token") String token,
                                             @Field("msgData") String msgData);
-
-
 
     @Multipart
     @POST("api/messages/chat/")
@@ -63,8 +58,6 @@ public interface ApiInterface {
                                     @Part("sender_id") int sender_id,
                                     @Part("receiver_id") int receiver_id,
                                     @Part("token") String token);
-
-
 
     @GET("api/messages/chat/")
     Call<ResponseBody> getAllMessage();
@@ -76,6 +69,13 @@ public interface ApiInterface {
     @GET("api/messages/chat-specific/")
     Call<ResponseBody> getSpecificMessage(@Query("sender_id") int sender_id,
                                           @Query("receiver_id") int receiver_id);
+
+    @Multipart
+    @POST("api/posts")
+    Call<ResponseBody> sendPost(@Part("type") String type,
+                                @Part("content") String content,
+                                @Part("background") String background,
+                                @Part MultipartBody.Part fileUpload);
 
 
 }
