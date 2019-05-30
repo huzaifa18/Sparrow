@@ -27,6 +27,7 @@ public class SignUp extends AppCompatActivity {
 
     TextInputEditText username, email, password;
     Button signup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,36 +41,21 @@ public class SignUp extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignUp(username.getText().toString(),email.getText().toString(),password.getText().toString());
+                SignUp(username.getText().toString(), email.getText().toString(), password.getText().toString());
             }
         });
-
-
-
-
     }
 
     private void SignUp(final String username, final String email, final String password) {
-
-        // Tag used to cancel the request
         String cancel_req_tag = "register";
-        //show pregress here
-
-
         StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/users/register", new Response.Listener<String>() {
-
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "Login Response: " + response.toString());
-
                 try {
 
                     JSONObject jObj = new JSONObject(response);
-
-                    //boolean error = jObj.getBoolean("error");
-
                     String message = jObj.getString("message");
-
                     Log.e("TAG", "Message: " + message);
 
                 } catch (JSONException e) {
@@ -91,7 +77,6 @@ public class SignUp extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
-
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("username", username);
                 params.put("password", password);
@@ -100,7 +85,6 @@ public class SignUp extends AppCompatActivity {
                 return params;
             }
         };
-
         strReq.setRetryPolicy(new DefaultRetryPolicy(
                 20000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,

@@ -196,8 +196,9 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                     Log.i("msg", "on new message");
                     Log.i(TAG, "run: ");
                     JSONObject data = (JSONObject) args[0];
-                    JSONObject fileObject = new JSONObject();
+                    //JSONObject fileObject = (JSONObject) args[0];
                     Log.i("msg", "Data on message recieve: " + data);
+                   // Log.i("msg", "Data on message recieve: " + fileObject);
                     String content, sender_id, token;
                     int receiver_id;
                     String mimetype,recfilename,recincImage;
@@ -208,14 +209,10 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                         sender_id = data.getString("sender_id");
                         receiver_id = data.getInt("receiver_id");
 
-                        //socket things
-                        fileObject = data.getJSONObject("files");
-
-                        recfilename = fileObject.getString("name");
-                        Log.i("getmsg", "filename" + recfilename);
-                        recincImage = fileObject.getString("data");
-                        Log.i("getmsg", "enc" + recincImage);
-                        //
+//                        //socket thingsgi
+//                         //fileObject = (data.getJSONObject("files") !=null ?  data.getJSONObject("files") : (JSONObject) JSONObject.NULL);
+//                        recfilename = (fileObject.getString("name")!= null) ? fileObject.getString("name") : "";
+//                        recincImage = (fileObject.getString("data")!= null) ? fileObject.getString("data") : "";
 
                         if (mimetype.equals("")) {
                             Log.i("mime", "empty");
@@ -274,6 +271,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                             }
                         }
                     } catch (JSONException e) {
+                        Log.i("getmsg", "main catch",e);
                         Log.i("getmsg", "main catch");
                         e.printStackTrace();
                     }
@@ -1365,6 +1363,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             jsonObject.put("receiver_id", id);
             jsonObject.put("content", message);
             jsonObject.put("mimetype", "");
+            //jsonObject.put("files", []);
             Log.i("sendmessage", "json object send: " + jsonObject);
             mSocket.emit("private chat", jsonObject);
 
@@ -1372,9 +1371,6 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             e.printStackTrace();
         }
         Log.i(TAG, "sendMessage: 1" + mSocket.emit("chat message", jsonObject));
-
-        //TODO send message over api
-
     }
 
     private void sendWithImage() {

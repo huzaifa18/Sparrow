@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Prefs {
 
-    public static void addingUserUDID(Context context, final String userUDID){
+    public static void addingUserUDID(Context context, final String userUDID) {
         SharedPreferences userUDIDPref = context.getSharedPreferences("betaar_udid", 0);
         SharedPreferences.Editor editor = userUDIDPref.edit();
         editor.putString("user_udid", userUDID);
@@ -15,7 +15,7 @@ public class Prefs {
 
     }
 
-    public static String gettUserUDID(Context context){
+    public static String gettUserUDID(Context context) {
 
         SharedPreferences userUDIDPref = context.getSharedPreferences("betaar_udid", 0);
         String UDID = userUDIDPref.getString("user_udid", "-1");
@@ -24,9 +24,9 @@ public class Prefs {
 
     public static void addPrefsForLogin(Context context, final int user_id,
                                         final String name, final String username,
-                                        final String  email, final String phone,String auth){
+                                        final String email, final String phone, String auth) {
 
-        SharedPreferences userLoginPref  = context.getSharedPreferences("betaar_user", 0);
+        SharedPreferences userLoginPref = context.getSharedPreferences("betaar_user", 0);
         SharedPreferences.Editor editor = userLoginPref.edit();
         editor.putInt("_id", user_id);
         editor.putString("name", name);
@@ -37,64 +37,72 @@ public class Prefs {
         editor.commit();
 
 
+    }
+
+    public static void addPrefsForUserId(Context context, final int user_id) {
+
+        SharedPreferences userLoginPref = context.getSharedPreferences("betaar_user", 0);
+        SharedPreferences.Editor editor = userLoginPref.edit();
+        editor.putInt("_id", user_id);
+        editor.commit();
 
 
     }
 
     //getting user id
-    public static int getUserIDFromPref(Context context){
-        SharedPreferences userLoginPref  = context.getSharedPreferences("betaar_user", 0);
+    public static int getUserIDFromPref(Context context) {
+        SharedPreferences userLoginPref = context.getSharedPreferences("betaar_user", 0);
         int userId = userLoginPref.getInt("_id", 0);
         return userId;
     }
 
     //getting user id
-    public static String getUserToken(Context context){
-        SharedPreferences userLoginPref  = context.getSharedPreferences("betaar_user", 0);
+    public static String getUserToken(Context context) {
+        SharedPreferences userLoginPref = context.getSharedPreferences("betaar_user", 0);
         String userId = userLoginPref.getString("token", "-1");
         return userId;
     }
 
     //gettitng user role
-    public static String getUserRoleFromPref(Context context){
-        SharedPreferences userRolePref  = context.getSharedPreferences("betaar_user", 0);
+    public static String getUserRoleFromPref(Context context) {
+        SharedPreferences userRolePref = context.getSharedPreferences("betaar_user", 0);
         String userId = userRolePref.getString("role", "-1");
         return userId;
     }
 
     //gettitng full name
-    public static String getUserFullNameFromPref(Context context){
-        SharedPreferences preUserFullName  = context.getSharedPreferences("betaar_user", 0);
+    public static String getUserFullNameFromPref(Context context) {
+        SharedPreferences preUserFullName = context.getSharedPreferences("betaar_user", 0);
         String fullName = preUserFullName.getString("name", "-1");
         return fullName;
     }
 
     //gettitng user name
-    public static String getUserNameFromPref(Context context){
-        SharedPreferences preUserName  = context.getSharedPreferences("betaar_user", 0);
+    public static String getUserNameFromPref(Context context) {
+        SharedPreferences preUserName = context.getSharedPreferences("betaar_user", 0);
         String username = preUserName.getString("username", "-1");
         return username;
     }
 
     //gettitng user name
-    public static String getEmailFromPref(Context context){
-        SharedPreferences preUserEmail  = context.getSharedPreferences("betaar_user", 0);
+    public static String getEmailFromPref(Context context) {
+        SharedPreferences preUserEmail = context.getSharedPreferences("betaar_user", 0);
         String email = preUserEmail.getString("email", "-1");
         return email;
     }
 
     //gettitng password
-    public static String getPasswordFromPref(Context context){
-        SharedPreferences prepassword  = context.getSharedPreferences("betaar_user", 0);
+    public static String getPasswordFromPref(Context context) {
+        SharedPreferences prepassword = context.getSharedPreferences("betaar_user", 0);
         String password = prepassword.getString("password", "-1");
         return password;
     }
 
 
-    public static ArrayList<String> getAllUserValueFromPref(Context context){
+    public static ArrayList<String> getAllUserValueFromPref(Context context) {
 
         ArrayList<String> arrayList = new ArrayList<>();
-        SharedPreferences userLoginPref  = context.getSharedPreferences("betaar_user", 0);
+        SharedPreferences userLoginPref = context.getSharedPreferences("betaar_user", 0);
         String userId = userLoginPref.getString("_id", "");
         String name = userLoginPref.getString("username", "");
         String email = userLoginPref.getString("email", "");
@@ -109,8 +117,8 @@ public class Prefs {
         return arrayList;
     }
 
-    public static void clearPrefData(Context context){
-        SharedPreferences userLoginPref  = context.getSharedPreferences("betaar_user", 0);
+    public static void clearPrefData(Context context) {
+        SharedPreferences userLoginPref = context.getSharedPreferences("betaar_user", 0);
         SharedPreferences.Editor editor = userLoginPref.edit();
         editor.clear();
         editor.commit();

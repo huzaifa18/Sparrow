@@ -78,4 +78,10 @@ public interface ApiInterface {
                                           @Query("receiver_id") int receiver_id);
 
 
+    //token
+    @FormUrlEncoded
+    @POST("api/firebase/add-device/")
+    Call<ResponseBody> sendTokenToServer(@Field("token") String token,
+                                        @Field("platform_os") String platform,
+                                        @Field("user_id") int userid);
 }

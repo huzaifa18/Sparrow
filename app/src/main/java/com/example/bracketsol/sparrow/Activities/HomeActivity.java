@@ -23,6 +23,7 @@ import com.example.bracketsol.sparrow.DisFragment;
 import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
 import com.example.bracketsol.sparrow.Fragments.PrrofileFragment;
 import com.example.bracketsol.sparrow.MessageActivity.ChatsListingMain;
+import com.example.bracketsol.sparrow.MessageActivity.MessagingService;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.Model.StoryModel;
 import com.example.bracketsol.sparrow.R;
@@ -38,13 +39,11 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView storyRecyclerview, statuspostRecyclerview;
     ArrayList<StoryModel> storyArraylist;
     ArrayList<StatusPostingModel> statusArraylist;
-
     StoryAdapter storyAdapter;
     StatusPostAdapter statusPostAdapter;
     LinearLayoutManager manager;
-
     ImageButton chatbtn;
-
+    MessagingService messagingService;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -57,23 +56,9 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    fragmentTransaction
-//                            //.beginTransaction()
-//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-//                            .replace(R.id.frame_container, new SetFragment());
-//                    fragmentTransaction.addToBackStack(null);
-//                    fragmentTransaction.commit();
+
                     return true;
                 case R.id.navigation_account:
-//                    fragmentTransaction
-//                            //.beginTransaction()
-//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-//                            .replace(R.id.frame_container, new NotificationFragment());
-//                    fragmentTransaction.addToBackStack(null);
-//                    fragmentTransaction.commit();
-
-//                    return true;
-
                     return true;
                 case R.id.navigation_discussion:
                     fragmentTransaction
@@ -82,17 +67,7 @@ public class HomeActivity extends AppCompatActivity {
                             .replace(R.id.frame_container, new DisFragment());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-
-
                     return true;
-//                case R.id.navigation_notification:
-//                    fragmentTransaction
-//                            //.beginTransaction()
-//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-//                            .replace(R.id.frame_container, new DisFragment());
-//                    fragmentTransaction.addToBackStack(null);
-//                    fragmentTransaction.commit();
-//                    return true;
                 case R.id.navigation_profile:
                     fragmentTransaction
                             //.beginTransaction()
@@ -101,7 +76,6 @@ public class HomeActivity extends AppCompatActivity {
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     return true;
-
             }
             return false;
         }
@@ -114,6 +88,7 @@ public class HomeActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setSelectedItemId(R.id.navigation_home);
@@ -124,8 +99,6 @@ public class HomeActivity extends AppCompatActivity {
         chatbtn = findViewById(R.id.chat_ib);
         storyArraylist = new ArrayList<StoryModel>();
         statusArraylist = new ArrayList<StatusPostingModel>();
-//
-//        Collections.reverse(storyArraylist);
 
         storyAdapter = new StoryAdapter(this, storyArraylist);
         statusPostAdapter = new StatusPostAdapter(this, statusArraylist);
@@ -137,10 +110,6 @@ public class HomeActivity extends AppCompatActivity {
         statuspostRecyclerview.setAdapter(statusPostAdapter);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         statuspostRecyclerview.setLayoutManager(manager);
-
-//        //manager.setReverseLayout(true);
-//        manager.setStackFromEnd(true);
-
 
         storyArraylist.add(new StoryModel(R.drawable.ic_seo, "Your Story"));
         storyArraylist.add(new StoryModel(R.drawable.ic_icons8_administrator_male, "hassan ali"));
@@ -171,12 +140,6 @@ public class HomeActivity extends AppCompatActivity {
                 R.drawable.ic_dislike, R.drawable.ic_comment, R.drawable.ic_senddd,
                 R.drawable.ic_bookmark, "Ahmad", "lahore"));
         statusPostAdapter.notifyDataSetChanged();
-
-
-
-
-        //
-        //
         GoToChat();
 
     }
@@ -194,15 +157,10 @@ public class HomeActivity extends AppCompatActivity {
 
     }
     private boolean loadFragment(Fragment fragment) {
-        //switching fragment
-
         NotificationFragment notificationFragment = new NotificationFragment();
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
-
-// Commit the transaction
         transaction.commit();
 
         if (fragment != null) {
@@ -220,20 +178,15 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         Toast.makeText(this, "show", Toast.LENGTH_SHORT).show();
-        showToolbar();
         super.onResume();
     }
-
     public void GoToChat() {
 
         chatbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//
                 Intent intent = new Intent(HomeActivity.this, ChatsListingMain.class);
                 startActivity(intent);
-//                Intent intent = new Intent(HomeActivity.this, ChatsListingMain.class);
-//                startActivity(intent);
             }
         });
 

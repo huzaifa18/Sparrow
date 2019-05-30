@@ -5,8 +5,10 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +17,8 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Base64;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +27,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -34,6 +37,10 @@ import android.widget.Toast;
 import com.example.bracketsol.sparrow.MyApp;
 import com.example.bracketsol.sparrow.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,78 +51,39 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static org.webrtc.ContextUtils.getApplicationContext;
-
 /**
  * Created by Varun John on 4 Dec, 2018
  * Github : https://github.com/varunjohn
  */
 public class AudioRecordView extends FrameLayout implements View.OnClickListener {
 
-    @Override
-    public void onClick(View view) {
-
-    }
-
-    public enum UserBehaviour {
-        CANCELING,
-        LOCKING,
-        NONE
-    }
-
-    public enum RecordingBehaviour {
-        CANCELED,
-        LOCKED,
-        LOCK_DONE,
-        RELEASED
-    }
-
-    public interface RecordingListener {
-
-        void onRecordingStarted();
-
-        void onRecordingLocked();
-
-        void onRecordingCompleted();
-
-        void onRecordingCanceled();
-
-    }
-
+    ImageButton imageButton;
+    MediaPlayer mediaPlayer;
     private View imageViewAudio, imageViewLockArrow, imageViewLock, imageViewMic, dustin, dustin_cover, imageViewStop, imageViewSend;
     private View layoutDustin, layoutMessage, imageViewAttachment;
     private View layoutSlideCancel, layoutLock;
     private EditText editTextMessage;
     private TextView timeText;
-
     private ImageView stop, audio, send;
-
     private Animation animBlink, animJump, animJumpFast;
-
     private boolean isDeleting;
     private boolean stopTrackingAction;
     private Handler handler;
-
     private int audioTotalTime;
     private TimerTask timerTask;
     private Timer audioTimer;
     private SimpleDateFormat timeFormatter = new SimpleDateFormat("m:ss", Locale.getDefault());
-
     private float lastX, lastY;
     private float firstX, firstY;
-
     private float directionOffset, cancelOffset, lockOffset;
     private float dp = 0;
     private boolean isLocked = false;
-
     private UserBehaviour userBehaviour = UserBehaviour.NONE;
     private RecordingListener recordingListener;
-
+    String getenc;
     //AUDIO TASK
-    private MediaRecorder myAudioRecorder ;
+    private MediaRecorder myAudioRecorder;
     private String outputFile;
-    ImageButton imageButton;
-    MediaPlayer mediaPlayer;
 
     public AudioRecordView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -132,10 +100,15 @@ public class AudioRecordView extends FrameLayout implements View.OnClickListener
         initView();
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
+
     private void initView() {
         View view = inflate(getContext(), R.layout.recording_layout, null);
         addView(view);
-Permissions();
+       // Permissions();
         //imageViewAttachment = view.findViewById(R.id.imageViewAttachment);
         editTextMessage = view.findViewById(R.id.editTextMessage);
 
@@ -168,24 +141,34 @@ Permissions();
         animJumpFast = AnimationUtils.loadAnimation(getContext(),
                 R.anim.jump_fast);
 
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+System.currentTimeMillis()+"recording.3gp";
         imageButton = view.findViewById(R.id.playbtn);
-        myAudioRecorder = new MediaRecorder();
-        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        myAudioRecorder.setOutputFile(outputFile);
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + System.currentTimeMillis() + "recording.3gp";
+        //convert to uri
+        Uri uri = Uri.fromFile(new File(outputFile));
 
+        Log.i("audio","uri"+uri);
+        Log.i("audio","outputFile"+outputFile);
         setupRecording();
-
-        //AUDIO TASK
-
-
-
         listeners();
+    }
+
+    private String encodeAudio(String path) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] b = baos.toByteArray();
+        path = Base64.encodeToString(b, Base64.DEFAULT);
+        return path;
+    }
+
+    private String doFileUpload(String path) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] b = baos.toByteArray();
+        getenc = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return getenc;
 
     }
-    private boolean Permissions(){
+
+    private boolean Permissions() {
         int permissionWRITE_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(MyApp.getContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionRECORD = ContextCompat.checkSelfPermission(MyApp.getContext(), Manifest.permission.RECORD_AUDIO);
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -202,12 +185,12 @@ Permissions();
             return false;
         }
 
-        return  true;
+        return true;
 
 
     }
 
-    public void listeners(){
+    public void listeners() {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,11 +198,15 @@ Permissions();
             }
         });
     }
+
     private void startRecording() {
         mediaPlayer = new MediaPlayer();
         try {
-
-
+            myAudioRecorder = new MediaRecorder();
+            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+            myAudioRecorder.setOutputFile(outputFile);
             myAudioRecorder.prepare();
             myAudioRecorder.start();
         } catch (IllegalStateException ise) {
@@ -239,12 +226,13 @@ Permissions();
             mediaPlayer.prepare();
             mediaPlayer.start();
             Toast.makeText(MyApp.getContext(), "Playing Audio", Toast.LENGTH_LONG).show();
-            Toast.makeText(MyApp.getContext(), "outputFile"+outputFile, Toast.LENGTH_LONG).show();
+            Toast.makeText(MyApp.getContext(), "outputFile" + outputFile, Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             // make something
         }
     }
+
     private void stopRecording() {
         mediaPlayer = new MediaPlayer();
         myAudioRecorder.stop();
@@ -253,7 +241,6 @@ Permissions();
         Toast.makeText(MyApp.getContext(), "Audio Recorder successfully", Toast.LENGTH_LONG).show();
     }
 
-
     public void setAudioRecordButtonImage(int imageResource) {
         audio.setImageResource(imageResource);
     }
@@ -261,10 +248,6 @@ Permissions();
     public void setStopButtonImage(int imageResource) {
         stop.setImageResource(imageResource);
     }
-
-//    public void setSendButtonImage(int imageResource) {
-//        send.setImageResource(imageResource);
-//    }
 
     public RecordingListener getRecordingListener() {
         return recordingListener;
@@ -278,8 +261,8 @@ Permissions();
         return imageViewSend;
     }
 
-//    public View getAttachmentView() {
-//        return imageViewAttachment;
+//    public void setSendButtonImage(int imageResource) {
+//        send.setImageResource(imageResource);
 //    }
 
     public EditText getMessageView() {
@@ -320,10 +303,10 @@ Permissions();
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (!Permissions()) {
 
-                    Toast.makeText(MyApp.getContext(), "Please gi", Toast.LENGTH_SHORT).show();;
-                }else{
+                    Toast.makeText(MyApp.getContext(), "Please gi", Toast.LENGTH_SHORT).show();
+                    ;
+                } else {
 
-                    startRecording();
                 }
 
                 if (isDeleting) {
@@ -430,6 +413,10 @@ Permissions();
         imageViewAudio.setTranslationX(0);
     }
 
+//    public View getAttachmentView() {
+//        return imageViewAttachment;
+//    }
+
     private void translateX(float x) {
         if (x < -cancelOffset) {
             canceled();
@@ -486,7 +473,6 @@ Permissions();
         imageViewLock.clearAnimation();
 
 
-
         if (isLocked) {
             return;
         }
@@ -527,7 +513,7 @@ Permissions();
 
     private void startRecord() {
 
-
+        startRecording();
         if (recordingListener != null)
             recordingListener.onRecordingStarted();
 
@@ -678,5 +664,30 @@ Permissions();
 
             }
         }).start();
+    }
+
+    public enum UserBehaviour {
+        CANCELING,
+        LOCKING,
+        NONE
+    }
+
+    public enum RecordingBehaviour {
+        CANCELED,
+        LOCKED,
+        LOCK_DONE,
+        RELEASED
+    }
+
+    public interface RecordingListener {
+
+        void onRecordingStarted();
+
+        void onRecordingLocked();
+
+        void onRecordingCompleted();
+
+        void onRecordingCanceled();
+
     }
 }

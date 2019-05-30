@@ -81,53 +81,6 @@ public class CreateAccount extends AppCompatActivity {
         });
     }
 
-    private void SignUp(final String username, final String email, final String password) {
-        String cancel_req_tag = "register";
-        //show pregress here
-        StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/users/register", new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.e("TAG", "Login Response: " + response.toString());
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    //boolean error = jObj.getBoolean("error");
-                    String message = jObj.getString("message");
-                    Log.e("TAG", "Message: " + message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG", "Error: " + error);
-                Toast.makeText(getApplicationContext(),
-                        "Server Connection Fail", Toast.LENGTH_LONG).show();
-                //hid pregress here
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("password", password);
-                params.put("email", email);
-                return params;
-            }
-        };
-
-        strReq.setRetryPolicy(new DefaultRetryPolicy(
-                20000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        // Adding request to request queue
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
-    }
-
     private class MyTask extends AsyncTask<Void, Void, Void> {
 
         @Override

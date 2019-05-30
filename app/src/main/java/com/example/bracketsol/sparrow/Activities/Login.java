@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +25,6 @@ import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
-import com.example.bracketsol.sparrow.webrtcc.CallActivity;
 import com.example.bracketsol.sparrow.webrtcc.ConnectActivity;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -46,23 +47,24 @@ public class Login extends AppCompatActivity {
 
     private static View view;
     TextInputEditText username, password;
-    Button nextButton,fb_btn;
+    Button nextButton, fb_btn;
     TextView createAccounttxt;
     String getname, getpass;
     ProgressBar simpleProgressBar;
     Handler handler;
     private Socket mSocket;
+    Animation animShake ;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login);
-
         //init
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         fb_btn = findViewById(R.id.facebook_btn_signin);
+
         try {
             mSocket = IO.socket("https://social-funda.herokuapp.com/");
         } catch (URISyntaxException e) {
@@ -86,7 +88,6 @@ public class Login extends AppCompatActivity {
 
 
         username.setOnKeyListener(new View.OnKeyListener() {
-
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
@@ -109,24 +110,9 @@ public class Login extends AppCompatActivity {
 
                 getname = username.getText().toString();
                 getpass = password.getText().toString();
+                simpleProgressBar.setVisibility(View.VISIBLE);
+                nextButton.setEnabled(false);
                 checkValidate();
-
-                new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            Thread.sleep(5000);
-                        } catch (Exception e) {
-                        } // Just catch the InterruptedException
-
-                        // Now we use the Handler to post back to the main thread
-                        handler.post(new Runnable() {
-                            public void run() {
-                                // Set the View's visibility back on the main UI Thread
-                                simpleProgressBar.setVisibility(View.GONE);
-                            }
-                        });
-                    }
-                }).start();
             }
         });
     }
@@ -137,18 +123,24 @@ public class Login extends AppCompatActivity {
         StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/auth/login", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                simpleProgressBar.setVisibility(View.GONE);
+                nextButton.setEnabled(true);
                 try {
                     JSONObject jObj = new JSONObject(response);
                     String message = jObj.getString("message");
                     Log.e("TAG", "Message: " + message);
-
-                    Toast.makeText(Login.this, ""+message, Toast.LENGTH_SHORT).show();
-                    simpleProgressBar.setVisibility(View.GONE);
-
+                    //Toast.makeText(Login.this, "" + message, Toast.LENGTH_SHORT).show();
+                    animShake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                    if(message.equals("username or email is invalid.")){
+                        username.setAnimation(animShake);
+                        username.setError(message);
+                    }else if(message.equals("Password is incorrect")){
+                        password.setAnimation(animShake);
+                        password.setError(message);
+                    }
                     String user = jObj.getString("user");
                     Log.e("TAG", "Message: " + user);
                     JSONObject userdata = jObj.getJSONObject("user");
-
                     int userid = userdata.getInt("_id");
                     String username = userdata.getString("username");
                     String email = userdata.getString("email");
@@ -173,7 +165,6 @@ public class Login extends AppCompatActivity {
 
                     Log.e("TAG", "" + Prefs.getUserIDFromPref(Login.this));
                     Toast.makeText(Login.this, "" + userdata.getInt("_id"), Toast.LENGTH_SHORT).show();
-                    simpleProgressBar.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(Login.this, HomeActivity.class);
                     startActivity(intent);
 
@@ -185,11 +176,12 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                simpleProgressBar.setVisibility(View.GONE);
+                nextButton.setEnabled(true);
                 Log.e("TAG", "Error: " + error);
                 Toast.makeText(getApplicationContext(),
                         "No internet, Please try again later", Toast.LENGTH_LONG).show();
                 //hid pregress here
-                simpleProgressBar.setVisibility(View.GONE);
             }
         }) {
 
@@ -218,16 +210,14 @@ public class Login extends AppCompatActivity {
         // Check if all strings are null or not
         if (getname.equals("") || getname.length() == 0
                 || getpass.equals("") || getpass.length() == 0) {
-            simpleProgressBar.setVisibility(View.VISIBLE);
-
 
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             simpleProgressBar.setVisibility(View.GONE);
+            nextButton.setEnabled(true);
 
         } else {
             Toast.makeText(this, "Ok auth.", Toast.LENGTH_SHORT)
                     .show();
-            simpleProgressBar.setVisibility(View.VISIBLE);
             callLoginService(username.getText().toString(), password.getText().toString());
         }
     }

@@ -92,6 +92,7 @@ public class SocialLifeFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.fab);
         fabalert = view.findViewById(R.id.fab_alert);
 
+
     }
 
     private void Listeners() {
@@ -192,8 +193,11 @@ public class SocialLifeFragment extends Fragment {
                         socialArrayList.add(modelSocial);
                     }
                     recyclerView_social.setAdapter(socialadapter);
+                    recyclerView_social.scrollToPosition(socialArrayList.size());
                     socialadapter.notifyDataSetChanged();
                     mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
+                    mLayoutManager.setReverseLayout(true);
+                    mLayoutManager.setStackFromEnd(true);
                     recyclerView_alert.setItemAnimator(new DefaultItemAnimator());
                     recyclerView_social.setLayoutManager(mLayoutManager);
 
@@ -226,7 +230,8 @@ public class SocialLifeFragment extends Fragment {
 
         recyclerView_alert.setAdapter(alertadapter);
         mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL, true);
-
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
         recyclerView_alert.setLayoutManager(mLayoutManager);
 
         alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
@@ -246,7 +251,9 @@ public class SocialLifeFragment extends Fragment {
     public void startSlideDownAnimation() {
         alert_layout.startAnimation(slideDownAnimation);
     }
-
+    public void startSlideDownAnimationn() {
+        social_layout.startAnimation(slideDownAnimation);
+    }
     public void startSlideUpAnimation() {
         alert_layout.startAnimation(slideUpAnimation);
     }
@@ -278,7 +285,7 @@ public class SocialLifeFragment extends Fragment {
                 Log.i("onscroll", "No Horizontal Scrolled");
             }
             if (dy > 0) {
-
+                Log.i("onscroll", "Scrolled Downwards");
                 if (isfirsttime_social) {
                     isfirsttime_alert= true;
                     startSlideDownAnimation();
@@ -301,9 +308,30 @@ public class SocialLifeFragment extends Fragment {
                 }
                 isfirsttime_social = false;
 
-                Log.i("onscroll", "Scrolled Downwards");
+
             } else if (dy < 0) {
                 Log.i("onscroll", "Scrolled Upwards");
+                if (isfirsttime_social) {
+                    isfirsttime_alert= true;
+                    startSlideUpAnimation();
+                    Log.i("onscroll", "Scrolled Downwards");
+                    //alert_layout.setL
+                    LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            0,
+                            1.7f
+                    );
+                    social_layout.setLayoutParams(param);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            0,
+                            0.3f
+                    );
+                    params.setMargins(0,0,0,0);
+                    alert_layout.setLayoutParams(params);
+
+                }
+                isfirsttime_social = false;
             } else {
                 Log.i("onscroll", "No Vertical Scrolled");
             }
@@ -341,13 +369,33 @@ public class SocialLifeFragment extends Fragment {
                 Log.i("onscroll", "No Horizontal Scrolled");
             }
             if (dy > 0) {
+                if (isfirsttime_alert) {
+                    isfirsttime_social = true;
+                    startSlideDownAnimationn();
+                    Log.i("onscroll", "Scrolled Downwards");
+                    //alert_layout.setL
+                    LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            0,
+                            0.3f
+                    );
+                    social_layout.setLayoutParams(param);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            0,
+                            1.7f
+                    );
+                    params.setMargins(0,0,0,0);
+                    alert_layout.setLayoutParams(params);
 
+                }
+                isfirsttime_alert = false;
 
             } else if (dy < 0) {
                 Log.i("onscroll", "Scrolled Upwards");
                 if (isfirsttime_alert) {
                     isfirsttime_social = true;
-                    startSlideDownAnimation();
+                    startSlideUpAnimation();
                     Log.i("onscroll", "Scrolled Downwards");
                     //alert_layout.setL
                     LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(

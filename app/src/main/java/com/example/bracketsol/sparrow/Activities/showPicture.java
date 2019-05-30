@@ -14,19 +14,6 @@ public class showPicture extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_picture);
-//        Bundle extras = getIntent().getExtras();
-//        if (extras == null)
-//        {
-//            return;
-//        }
-//        int res = extras.getInt("resourseInt");
-//
-//        ImageView vieww = (ImageView) findViewById(R.id.imageView1);
-//        vieww.setImageResource(res);
-
-
-
-
         Bundle extras = getIntent().getExtras();
         byte[] image = extras.getByteArray("picture");
         Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);

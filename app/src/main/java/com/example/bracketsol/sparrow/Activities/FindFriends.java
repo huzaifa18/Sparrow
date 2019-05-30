@@ -79,7 +79,6 @@ public class FindFriends extends AppCompatActivity {
                 try {
                     JSONObject jObj = new JSONObject(response);
                     JSONArray array = jObj.getJSONArray("users");
-                    //Log.e("TAG", "mess" +array.length());
                     for (int i = 0; i < array.length(); i++) {
                         //getting product object from json array
                         JSONObject product = array.getJSONObject(i);
@@ -121,7 +120,6 @@ public class FindFriends extends AppCompatActivity {
                 //hid pregress here
             }
         });
-
         strReq.setRetryPolicy(new DefaultRetryPolicy(
                 20000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -129,31 +127,4 @@ public class FindFriends extends AppCompatActivity {
         // Adding request to request queue
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
     }
-
-    private class AsyncCaller extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-
-//                    resarrayList.add(new FindFriendModel(R.drawable.ic_icons8_administrator_male, R.drawable.frndship_btn_selector, R.drawable.final_selector, "Ali haider", "98 mutual friend"));
-                }
-            });
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            //this method will be running on UI thread
-        }
-    }
-
 }
