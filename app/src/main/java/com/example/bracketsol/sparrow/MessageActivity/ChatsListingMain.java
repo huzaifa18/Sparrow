@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.bracketsol.sparrow.Adapter.RecentChatsListingAdapter;
@@ -56,6 +57,7 @@ public class ChatsListingMain extends AppCompatActivity {
     Call<ResponseBody> call;
     ProgressBar simpleProgressBar;
     FrameLayout frameLayout;
+    RelativeLayout nomessagelayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class ChatsListingMain extends AppCompatActivity {
         list2 = new ArrayList<MessageListModel>();
         resadapter = new GetAllMessageAdapter(ChatsListingMain.this, list2);
         call = apiInterface.getAllMessage();
+        nomessagelayout = findViewById(R.id.no_messages_yet);
         //GetAll();
 
     }
@@ -102,7 +105,11 @@ public class ChatsListingMain extends AppCompatActivity {
                     JSONArray array = resJson.getJSONArray("messages");
                     Log.e("TAG", "ok");
 
-
+                    if(array.length()==0){
+                        nomessagelayout.setVisibility(View.VISIBLE);
+                        Toast.makeText(ChatsListingMain.this, "No message", Toast.LENGTH_SHORT).show();
+                        simpleProgressBar.setVisibility(View.GONE);
+                    }
                     for (int i = 0; i < array.length(); i++) {
                         //getting product object from json array
                         JSONObject product = array.getJSONObject(i);
@@ -164,6 +171,7 @@ public class ChatsListingMain extends AppCompatActivity {
                                     formattedDate);
                         }
 
+
                         Log.e("idchat","senderid"+Prefs.getUserIDFromPref(MyApp.getContext()));
                         Log.e("idchat","receiverid"+receiver_id);
 
@@ -197,7 +205,8 @@ public class ChatsListingMain extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Log.e("TAG", "error" + t.getMessage());
+                
             }
         });
     }
@@ -251,80 +260,10 @@ public class ChatsListingMain extends AppCompatActivity {
         rv_main.setAdapter(chatAdapter);
     }
 
-//    private void GetAll() {
-//        Log.e("TAG", "inside get all");
-//        // Tag used to cancel the request
-//        String cancel_req_tag = "register";
-//        //show pregress here
-//        StringRequest strReq = new StringRequest(Request.Method.GET, "https://social-funda.herokuapp.com/api/messages/chat/", new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.e("TAG", "Get all Response: " + response.toString());
-//                try {
-//                    JSONObject jObj = new JSONObject(response);
-//                    JSONArray array = jObj.getJSONArray("users");
-//                    //Log.e("TAG", "mess" +array.length());
-//                    for (int i = 0; i < array.length(); i++) {
-//                        //getting product object from json array
-//                        JSONObject product = array.getJSONObject(i);
-//                        Log.e("TAG", "mess" + product.getInt("_id"));
-//                        Log.e("TAG", "mess" + product.getString("username"));
-//                        Log.e("TAG", "mess" + product.getString("email"));
-//                        Log.e("TAG", "mess" + product.getString("password"));
-//
-//                        list2.add(new FindFriendModel(product.getInt("_id"), product.getInt("_id"), product.getString("email")));
-//                        //resarrayList.add(new FindFriendModel(R.drawable.ic_seo, R.drawable.frndship_btn_selector, R.drawable.frndship_btn_selector, product.getString("username"), product.getString("email")));
-//                    }
-//                    resadapter = new GetAllMessageAdapter(ChatsListingMain.this, list2);
-//                    recyclerView.setAdapter(resadapter);
-//                    manager = new LinearLayoutManager(ChatsListingMain.this, LinearLayoutManager.VERTICAL, true);
-//                    recyclerView.setLayoutManager(manager);
-//                    boolean error = jObj.getBoolean("error");
-//                    String message = jObj.getString("message");
-//                    Log.e("TAG", "Message: " + message);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.e("TAG", "Error: " + error);
-//                Toast.makeText(getApplicationContext(),
-//                        "Server Connection Fail", Toast.LENGTH_LONG).show();
-//                error.printStackTrace();
-//                Log.e("TAG", "Error: " + error
-//                        + "\nStatus Code " + error.networkResponse.statusCode
-//                        + "\nCause " + error.getCause()
-//                        + "\nnetworkResponse " + error.networkResponse.data.toString()
-//                        + "\nmessage" + error.getMessage());
-//                //hid pregress here
-//            }
-//        });
-//
-//        strReq.setRetryPolicy(new DefaultRetryPolicy(
-//                20000,
-//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        // Adding request to request queue
-//        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
-//    }
-
-
     @Override
     public void onBackPressed() {
         finish();
         super.onBackPressed();
     }
-//
-//    @Override
-//    public okhttp3.Response intercept(Chain chain) throws IOException {
-//        Request request = chain.request();
-//        request = request.newBuilder()
-//                .addHeader("authorization", "Bearer "+ Prefs.getUserToken(ChatsListingMain.this))
-//                .build();
-//        okhttp3.Response response = chain.proceed(request);
-//        return response;
-//    }
+
 }

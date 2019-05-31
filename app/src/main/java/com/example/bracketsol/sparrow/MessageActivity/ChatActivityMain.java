@@ -180,6 +180,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
     private boolean isKeyBoardVisible;
     private Bitmap[] emoticons;
     private EditText editTextMessage;
+
     //FOR SHOWING IN RECYCLERVIEW CHAT
     private MessageAdapter messageAdapter;
     private View imageViewSend,imageViewAudio;
@@ -836,6 +837,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
 
     private void init() {
         imgvidLayout = findViewById(R.id.add_imge_vid_layout);
+
         //webrtc
         sendmsgBtn = findViewById(R.id.ssendButton);
         vidImgbtn = findViewById(R.id.vid_img_btn);
@@ -942,7 +944,6 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 try {
-
                     String resString = response.body().string();
                     Log.e("TAG", "res: " + response.body().string());
                     JSONObject resJson = new JSONObject(resString);

@@ -2,90 +2,72 @@ package com.example.bracketsol.sparrow.Model;
 
 public class StatusPostingModel {
 
-    int status_img,user_img,more_imgbtn,like_imgbtn,coment_imgbtn,send_imgbtn,fav_imgbtn;
-    String name_txt,loc;
+    String sender_name,sender_pic,content,attachment;
+    int total_likes,total_comments,total_views;
 
-    public StatusPostingModel(int status_img, int user_img, int more_imgbtn, int like_imgbtn, int coment_imgbtn, int send_imgbtn, int fav_imgbtn, String name_txt, String loc) {
-        this.status_img = status_img;
-        this.user_img = user_img;
-        this.more_imgbtn = more_imgbtn;
-        this.like_imgbtn = like_imgbtn;
-        this.coment_imgbtn = coment_imgbtn;
-        this.send_imgbtn = send_imgbtn;
-        this.fav_imgbtn = fav_imgbtn;
-        this.name_txt = name_txt;
-        this.loc = loc;
+    public StatusPostingModel(String sender_name, String sender_pic, String content, String attachment, int total_likes, int total_comments, int total_views) {
+        this.sender_name = sender_name;
+        this.sender_pic = sender_pic;
+        this.content = content;
+        this.attachment = attachment;
+        this.total_likes = total_likes;
+        this.total_comments = total_comments;
+        this.total_views = total_views;
     }
 
-    public int getStatus_img() {
-        return status_img;
+    public String getSender_name() {
+        return sender_name;
     }
 
-    public void setStatus_img(int status_img) {
-        this.status_img = status_img;
+    public void setSender_name(String sender_name) {
+        this.sender_name = sender_name;
     }
 
-    public int getUser_img() {
-        return user_img;
+    public String getSender_pic() {
+        return sender_pic;
     }
 
-    public void setUser_img(int user_img) {
-        this.user_img = user_img;
+    public void setSender_pic(String sender_pic) {
+        this.sender_pic = sender_pic;
     }
 
-    public int getMore_imgbtn() {
-        return more_imgbtn;
+    public String getContent() {
+        return content;
     }
 
-    public void setMore_imgbtn(int more_imgbtn) {
-        this.more_imgbtn = more_imgbtn;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public int getLike_imgbtn() {
-        return like_imgbtn;
+    public String getAttachment() {
+        return attachment;
     }
 
-    public void setLike_imgbtn(int like_imgbtn) {
-        this.like_imgbtn = like_imgbtn;
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
     }
 
-    public int getComent_imgbtn() {
-        return coment_imgbtn;
+    public int getTotal_likes() {
+        return total_likes;
     }
 
-    public void setComent_imgbtn(int coment_imgbtn) {
-        this.coment_imgbtn = coment_imgbtn;
+    public void setTotal_likes(int total_likes) {
+        this.total_likes = total_likes;
     }
 
-    public int getSend_imgbtn() {
-        return send_imgbtn;
+    public int getTotal_comments() {
+        return total_comments;
     }
 
-    public void setSend_imgbtn(int send_imgbtn) {
-        this.send_imgbtn = send_imgbtn;
+    public void setTotal_comments(int total_comments) {
+        this.total_comments = total_comments;
     }
 
-    public int getFav_imgbtn() {
-        return fav_imgbtn;
+    public int getTotal_views() {
+        return total_views;
     }
 
-    public void setFav_imgbtn(int fav_imgbtn) {
-        this.fav_imgbtn = fav_imgbtn;
-    }
-
-    public String getName_txt() {
-        return name_txt;
-    }
-
-    public void setName_txt(String name_txt) {
-        this.name_txt = name_txt;
-    }
-
-    public String getLoc() {
-        return loc;
-    }
-
-    public void setLoc(String loc) {
-        this.loc = loc;
+    public void setTotal_views(int total_views) {
+        this.total_views = total_views;
     }
 }

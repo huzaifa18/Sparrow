@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.R;
 import com.yuyakaido.android.squareimageview.SquareImageView;
@@ -47,6 +48,11 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.setData(statusarraylistAdapter.get(position));
         StatusPostingModel statusPostingModel = statusarraylistAdapter.get(position);
+
+        Glide.with(mContext).load("https://s3.amazonaws.com/social-funda-bucket/" +statusarraylistAdapter.get(position).getSender_pic()).into(holder.sender_pic);
+        Glide.with(mContext).load("https://s3.amazonaws.com/social-funda-bucket/" +statusarraylistAdapter.get(position).getAttachment()).into(holder.sender_pic);
+        Glide.with(mContext).load("https://s3.amazonaws.com/social-funda-bucket/" +statusarraylistAdapter.get(position).getSender_pic()).into(holder.sender_pic);
+        Glide.with(mContext).load("https://s3.amazonaws.com/social-funda-bucket/" +statusarraylistAdapter.get(position).getSender_pic()).into(holder.sender_pic);
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,14 +93,6 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
 
             }
         });
-//        holder.cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(mContext, position + " is clicked", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
     }
 
 
@@ -109,11 +107,10 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        CircleImageView user_img;
-        TextView name, location;
+        CircleImageView sender_pic;
+        TextView sender_name, content,total_likes,total_comments,total_views;
         ImageButton more, like, coment, save;
-        ImageView share;
-        SquareImageView imgpost;
+        SquareImageView attachment;
         CardView cardView;
 
         StatusPostingModel item;
@@ -124,16 +121,21 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             super(itemView);
             itemView.setOnClickListener(this);
 
-            user_img = itemView.findViewById(R.id.post_uimg);
-            name = itemView.findViewById(R.id.username_post);
-            location = itemView.findViewById(R.id.location);
-            more = itemView.findViewById(R.id.more_imgbtn);
-            imgpost = itemView.findViewById(R.id.posted_img);
 
+
+            sender_pic= itemView.findViewById(R.id.post_uimg);
+            sender_name= itemView.findViewById(R.id.username_post);
+            total_likes= itemView.findViewById(R.id.like_tv);
+            total_comments= itemView.findViewById(R.id.coment_tv);
+            total_views= itemView.findViewById(R.id.views_tv);
+            attachment = itemView.findViewById(R.id.posted_img);
+            content = itemView.findViewById(R.id.content);
+
+            more = itemView.findViewById(R.id.more_imgbtn);
             like = itemView.findViewById(R.id.like_imgbtn);
             coment = itemView.findViewById(R.id.coment_imgbtn);
-            share = itemView.findViewById(R.id.share_imgbtn);
             save = itemView.findViewById(R.id.save_imgbtn);
+
             cardView = itemView.findViewById(R.id.cardview);
 
         }
@@ -141,14 +143,11 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
         public void setData(StatusPostingModel statusPostingModel) {
             this.item = statusPostingModel;
 
-            user_img.setImageResource(statusPostingModel.getUser_img());
-            name.setText(statusPostingModel.getName_txt());
-            location.setText(statusPostingModel.getLoc());
-            more.setImageResource(statusPostingModel.getMore_imgbtn());
-            like.setImageResource(statusPostingModel.getLike_imgbtn());
-            coment.setImageResource(statusPostingModel.getComent_imgbtn());
-            share.setImageResource(statusPostingModel.getSend_imgbtn());
-            save.setImageResource(statusPostingModel.getFav_imgbtn());
+            sender_name.setText(statusPostingModel.getSender_name());
+            total_likes.setText(statusPostingModel.getTotal_likes());
+            total_comments.setText(statusPostingModel.getTotal_comments());
+            total_likes.setText(statusPostingModel.getTotal_views());
+            content.setText(statusPostingModel.getContent());
         }
 
         @Override

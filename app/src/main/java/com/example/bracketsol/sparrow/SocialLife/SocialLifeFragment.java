@@ -108,7 +108,7 @@ public class SocialLifeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "hi", Toast.LENGTH_SHORT).show();
-                startSlideDownAnimation();
+                //startSlideDownAnimation();
                 LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         0,
@@ -126,6 +126,25 @@ public class SocialLifeFragment extends Fragment {
         fabalert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(alert_layout.getVisibility()==View.VISIBLE){
+                    social_layout.setVisibility(View.VISIBLE);
+                    alert_layout.setVisibility(View.GONE);
+                    LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            0,
+                            1.99f
+                    );
+                    social_layout.setLayoutParams(param);
+                }else if(social_layout.getVisibility()==View.VISIBLE){
+                    alert_layout.setVisibility(View.VISIBLE);
+                    social_layout.setVisibility(View.GONE);
+                    LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            0,
+                            1.99f
+                    );
+                    alert_layout.setLayoutParams(param);
+                }
 
             }
         });
@@ -155,40 +174,42 @@ public class SocialLifeFragment extends Fragment {
                     for (int i = 0; i < array.length(); i++) {
                         //getting product object from json array
                         JSONObject product = array.getJSONObject(i);
-                        Log.e("GAT", "announcement_id" + product.getInt("announcement_id"));
-                        Log.e("GAT", "attachment_id" + product.getInt("attachment_id"));
-                        Log.e("GAT", "sender_id" + product.getInt("sender_id"));
-                        Log.e("GAT", "sender_name" + product.getString("sender_name"));
+                        Log.e("TAG", "announcement_id" + product.getInt("announcement_id"));
+                        Log.e("TAG", "sender_id" + product.getInt("sender_id"));
+                        Log.e("TAG", "sender_name" + product.getString("sender_name"));
                         Log.e("TAG", "profile_pic" + product.getString("profile_pic"));
                         Log.e("TAG", "statement" + product.getString("statement"));
-                        Log.e("TAG", "url" + product.getString("url"));
+                        Log.e("TAG", "attachment_url" + product.getString("attachment_url"));
+                        Log.e("TAG", "attachment_url" + product.getString("attachment_url"));
                         Log.e("TAG", "is_active" + product.getInt("is_active"));
                         Log.e("TAG", "type" + product.getString("type"));
                         Log.e("TAG", "start_date" + product.getString("start_date"));
                         Log.e("TAG", "end_date" + product.getString("end_date"));
-                        Log.e("TAG", "created_at" + product.getString("created_at"));
-                        Log.e("TAG", "total_comments" + product.getInt("total_comments"));
                         Log.e("TAG", "total_likes" + product.getInt("total_likes"));
+                        Log.e("TAG", "total_comments" + product.getInt("total_comments"));
+                        Log.e("TAG", "total_views" + product.getInt("total_views"));
+                        Log.e("TAG", "created_at" + product.getString("created_at"));
 
 
                         int announcement_id = product.getInt("announcement_id");
-                        int attachment_id = product.getInt("attachment_id");
                         int sender_id = product.getInt("sender_id");
                         String sender_name = product.getString("sender_name");
                         String profile_pic = product.getString("profile_pic");
                         String statement = product.getString("statement");
-                        String url = product.getString("url");
+                        String url = product.getString("attachment_url");
                         int is_active = product.getInt("is_active");
                         String type = product.getString("type");
+                        int attachment_id = product.getInt("attachment_id");
                         String start_data = product.getString("start_date");
                         String end_date = product.getString("end_date");
-                        String created_at = product.getString("created_at");
-                        int total_comments = product.getInt("total_comments");
                         int total_likes = product.getInt("total_likes");
+                        int total_comments = product.getInt("total_comments");
+                        int total_views= product.getInt("total_views");
+                        String created_at = product.getString("created_at");
                         //simpleProgressBar.setVisibility(View.GONE);
                         Log.i("url", "https://s3.amazonaws.com/social-funda-bucket/" + url);
                         ModelSocial modelSocial = new ModelSocial(announcement_id, attachment_id,
-                                sender_id, is_active, type, statement, "https://s3.amazonaws.com/social-funda-bucket/" + url, start_data, end_date, created_at, sender_name, "https://s3.amazonaws.com/social-funda-bucket/" + profile_pic, total_likes, total_comments);
+                                sender_id, is_active, type, statement, "https://s3.amazonaws.com/social-funda-bucket/" + url, start_data, end_date, created_at, sender_name, "https://s3.amazonaws.com/social-funda-bucket/" + profile_pic, total_likes, total_comments,total_views);
                         simpleProgressBar.setVisibility(View.GONE);
                         socialArrayList.add(modelSocial);
                     }
@@ -196,8 +217,8 @@ public class SocialLifeFragment extends Fragment {
                     recyclerView_social.scrollToPosition(socialArrayList.size());
                     socialadapter.notifyDataSetChanged();
                     mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-                    mLayoutManager.setReverseLayout(true);
-                    mLayoutManager.setStackFromEnd(true);
+                   // mLayoutManager.setReverseLayout(true);
+                    //mLayoutManager.setStackFromEnd(true);
                     recyclerView_alert.setItemAnimator(new DefaultItemAnimator());
                     recyclerView_social.setLayoutManager(mLayoutManager);
 
@@ -248,15 +269,15 @@ public class SocialLifeFragment extends Fragment {
         alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
     }
 
-    public void startSlideDownAnimation() {
-        alert_layout.startAnimation(slideDownAnimation);
-    }
-    public void startSlideDownAnimationn() {
-        social_layout.startAnimation(slideDownAnimation);
-    }
-    public void startSlideUpAnimation() {
-        alert_layout.startAnimation(slideUpAnimation);
-    }
+//    public void startSlideDownAnimation() {
+//        alert_layout.startAnimation(slideDownAnimation);
+//    }
+//    public void startSlideDownAnimationn() {
+//        social_layout.startAnimation(slideDownAnimation);
+//    }
+//    public void startSlideUpAnimation() {
+//        alert_layout.startAnimation(slideUpAnimation);
+//    }
 
     public class SocialCustomScrollListener extends RecyclerView.OnScrollListener {
         public SocialCustomScrollListener() {
@@ -286,49 +307,51 @@ public class SocialLifeFragment extends Fragment {
             }
             if (dy > 0) {
                 Log.i("onscroll", "Scrolled Downwards");
+                fabalert.setVisibility(View.VISIBLE);
                 if (isfirsttime_social) {
                     isfirsttime_alert= true;
-                    startSlideDownAnimation();
+                    //startSlideDownAnimation();
                     Log.i("onscroll", "Scrolled Downwards");
                     //alert_layout.setL
                     LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
-                            1.7f
+                            1.99f
                     );
                     social_layout.setLayoutParams(param);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
-                            0.3f
+                            0.01f
                     );
                     params.setMargins(0,0,0,0);
                     alert_layout.setLayoutParams(params);
+                    alert_layout.setVisibility(View.GONE);
 
                 }
                 isfirsttime_social = false;
-
-
             } else if (dy < 0) {
                 Log.i("onscroll", "Scrolled Upwards");
+                fabalert.setVisibility(View.VISIBLE);
                 if (isfirsttime_social) {
                     isfirsttime_alert= true;
-                    startSlideUpAnimation();
+                    //startSlideUpAnimation();
                     Log.i("onscroll", "Scrolled Downwards");
                     //alert_layout.setL
                     LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
-                            1.7f
+                            1.99f
                     );
                     social_layout.setLayoutParams(param);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
-                            0.3f
+                            0.01f
                     );
                     params.setMargins(0,0,0,0);
                     alert_layout.setLayoutParams(params);
+                    alert_layout.setVisibility(View.GONE);
 
                 }
                 isfirsttime_social = false;
@@ -371,46 +394,49 @@ public class SocialLifeFragment extends Fragment {
             if (dy > 0) {
                 if (isfirsttime_alert) {
                     isfirsttime_social = true;
-                    startSlideDownAnimationn();
+                    //startSlideDownAnimationn();
                     Log.i("onscroll", "Scrolled Downwards");
+                    fabalert.setVisibility(View.VISIBLE);
                     //alert_layout.setL
                     LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
-                            0.3f
+                            0.01f
                     );
                     social_layout.setLayoutParams(param);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
-                            1.7f
+                            1.99f
                     );
                     params.setMargins(0,0,0,0);
                     alert_layout.setLayoutParams(params);
-
+                    social_layout.setVisibility(View.GONE);
                 }
                 isfirsttime_alert = false;
 
             } else if (dy < 0) {
                 Log.i("onscroll", "Scrolled Upwards");
+                fabalert.setVisibility(View.VISIBLE);
                 if (isfirsttime_alert) {
                     isfirsttime_social = true;
-                    startSlideUpAnimation();
+                    //startSlideUpAnimation();
                     Log.i("onscroll", "Scrolled Downwards");
                     //alert_layout.setL
                     LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
-                            0.3f
+                            0.01f
                     );
                     social_layout.setLayoutParams(param);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
-                            1.7f
+                            1.99f
                     );
                     params.setMargins(0,0,0,0);
                     alert_layout.setLayoutParams(params);
+                    social_layout.setVisibility(View.GONE);
 
                 }
                 isfirsttime_alert = false;

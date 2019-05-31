@@ -73,6 +73,9 @@ public interface ApiInterface {
     Call<ResponseBody> getSocialLife();
 
 
+    @GET("api/posts")
+    Call<ResponseBody> getAllPosts();
+
     @GET("api/messages/chat-specific/")
     Call<ResponseBody> getSpecificMessage(@Query("sender_id") int sender_id,
                                           @Query("receiver_id") int receiver_id);

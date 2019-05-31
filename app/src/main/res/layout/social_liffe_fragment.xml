@@ -50,46 +50,53 @@
             android:id="@+id/alert_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.7"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_alignParentEnd="true"
-                    android:padding="10dp">
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fab_alert"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="right"
-                        app:backgroundTint="#000000" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:elevation="16dp"
-                        android:text="3"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#FFFFFF" />
-                </FrameLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/alert_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
+
             </RelativeLayout>
+
         </LinearLayout>
+
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+
+        android:padding="10dp">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_alert"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:layout_gravity="right"
+            app:backgroundTint="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="16dp"
+            android:text="3"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF" />
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"

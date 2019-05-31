@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/image_post_social"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/demo"
                     android:scaleType="fitXY" />
 
@@ -110,6 +110,26 @@
 
                         <TextView
                             android:id="@+id/coments_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="40k" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="60dp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@null"
+                            android:src="@drawable/ic_remove_red_eye_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/views_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
