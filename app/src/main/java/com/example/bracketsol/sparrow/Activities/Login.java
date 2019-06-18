@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,6 +13,9 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.bracketsol.sparrow.R;
+import com.example.bracketsol.sparrow.Tryy.PhoneAuth;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
@@ -46,11 +51,12 @@ public class Login extends AppCompatActivity {
 
 
     private static View view;
-    TextInputEditText username, password;
+    EditText username, password;
     Button nextButton, fb_btn;
     TextView createAccounttxt;
     String getname, getpass;
     ProgressBar simpleProgressBar;
+    CheckBox passwordchk;
     Handler handler;
     private Socket mSocket;
     Animation animShake ;
@@ -61,8 +67,20 @@ public class Login extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login);
         //init
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
+        username = findViewById(R.id.phone);
+        password = findViewById(R.id.passwordd);
+        passwordchk = findViewById(R.id.show_pass_checkbox);
+        passwordchk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                } else {
+                    password.setInputType(129);
+                }
+            }
+        });
+
         fb_btn = findViewById(R.id.facebook_btn_signin);
 
         try {
@@ -165,7 +183,7 @@ public class Login extends AppCompatActivity {
 
                     Log.e("TAG", "" + Prefs.getUserIDFromPref(Login.this));
                     Toast.makeText(Login.this, "" + userdata.getInt("_id"), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Login.this, HomeActivity.class);
+                    Intent intent = new Intent(Login.this, PhoneAuth.class);
                     startActivity(intent);
 
                 } catch (JSONException e) {

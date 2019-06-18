@@ -41,23 +41,22 @@ public class MessageAdapter extends ArrayAdapter<MessageFormat> {
         Log.e("TAG", "ok" + message.getMessage());
         Log.e("TAG", "ok" + message.getUsername());
         Log.e("TAG", "ok" + message.getUniqueId());
+//
+//        if (TextUtils.isEmpty(message.getMessage())) {
+//            convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.socket_user_connected, parent, false);
+//
+//            TextView messageText = convertView.findViewById(R.id.message_body);
+//            ImageView imageView = convertView.findViewById(R.id.my_image);
+//
+//            Log.i(MainActivity.TAG, "getView: is empty ");
+//            String userConnected = message.getUsername();
+//            messageText.setText(userConnected);
+//
+//
+//        } else
 
-        if (TextUtils.isEmpty(message.getMessage())) {
-
-
-            convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.socket_user_connected, parent, false);
-
-            TextView messageText = convertView.findViewById(R.id.message_body);
-            ImageView imageView = convertView.findViewById(R.id.my_image);
-
-            Log.i(MainActivity.TAG, "getView: is empty ");
-            String userConnected = message.getUsername();
-            messageText.setText(userConnected);
-
-
-        } else if (message.getUniqueId() != Prefs.getUserIDFromPref(mcontext)) {
+        if (message.getUniqueId() != Prefs.getUserIDFromPref(mcontext)) {
             Log.i(MainActivity.TAG, "getView: " + message.getUniqueId() + " " + MainActivity.uniqueId);
-
 
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.my_message, parent, false);
             TextView messageText = convertView.findViewById(R.id.message_body);

@@ -87,4 +87,11 @@ public interface ApiInterface {
     Call<ResponseBody> sendTokenToServer(@Field("token") String token,
                                         @Field("platform_os") String platform,
                                         @Field("user_id") int userid);
+
+    @Multipart
+    @POST("api/posts")
+    Call<ResponseBody> sendMessagevideo(
+
+                                @Part MultipartBody.Part fileUpload);
+
 }

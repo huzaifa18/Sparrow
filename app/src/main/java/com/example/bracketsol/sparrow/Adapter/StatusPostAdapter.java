@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,10 +50,11 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
         holder.setData(statusarraylistAdapter.get(position));
         StatusPostingModel statusPostingModel = statusarraylistAdapter.get(position);
 
-        Glide.with(mContext).load("https://s3.amazonaws.com/social-funda-bucket/" +statusarraylistAdapter.get(position).getSender_pic()).into(holder.sender_pic);
-        Glide.with(mContext).load("https://s3.amazonaws.com/social-funda-bucket/" +statusarraylistAdapter.get(position).getAttachment()).into(holder.sender_pic);
-        Glide.with(mContext).load("https://s3.amazonaws.com/social-funda-bucket/" +statusarraylistAdapter.get(position).getSender_pic()).into(holder.sender_pic);
-        Glide.with(mContext).load("https://s3.amazonaws.com/social-funda-bucket/" +statusarraylistAdapter.get(position).getSender_pic()).into(holder.sender_pic);
+        Glide.with(mContext).load(statusarraylistAdapter.get(position).getSender_pic()).into(holder.sender_pic);
+        Glide.with(mContext).load(statusarraylistAdapter.get(position).getAttachment()).into(holder.attachment);
+        Log.e("tag","glide url"+statusarraylistAdapter.get(position).getSender_pic());
+        //Glide.with(mContext).load("https://www.gstatic.com/webp/gallery3/3.png").into(holder.sender_pic);
+
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,11 +146,12 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             this.item = statusPostingModel;
 
             sender_name.setText(statusPostingModel.getSender_name());
-            total_likes.setText(statusPostingModel.getTotal_likes());
-            total_comments.setText(statusPostingModel.getTotal_comments());
-            total_likes.setText(statusPostingModel.getTotal_views());
+            total_likes.setText(String.valueOf(statusPostingModel.getTotal_likes()));
+            total_comments.setText(String.valueOf(statusPostingModel.getTotal_comments()));
+            total_views.setText(String.valueOf(statusPostingModel.getTotal_views()));
             content.setText(statusPostingModel.getContent());
         }
+
 
         @Override
         public void onClick(View view) {

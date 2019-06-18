@@ -14,7 +14,7 @@
     <string name="skip">Skip</string>
     <string name="myMixedText">My simple Text<b>My Bold Text<i>MyBoldItalicText</i></b></string>
 
-    <string name="phone">Phone number</string>
+    <string name="phone">Username or Email</string>
     <string name="password">Password</string>
 
 
@@ -26,7 +26,7 @@
     <string name="forgot">Forgot password</string>
     <string name="friendship">Friendship</string>
     <string name="login">Login</string>
-    <string name="fb_login">Facebook Login</string>
+    <string name="fb_login">Fb Login</string>
     <string name="create">Create Account</string>
     <string name="creating">Creating a new Account</string>
     <string name="acount_detail">Account Detail</string>
@@ -322,5 +322,6 @@
     <string name="pref_use_legacy_audio_device_key">use_legacy_audio_device_key</string>
     <string name="pref_use_legacy_audio_device_title">Use legacy audio device.</string>
     <string name="pref_use_legacy_audio_device_default">false</string>
+    <string name="sparrow">Sparrow</string>
 
 </resources>

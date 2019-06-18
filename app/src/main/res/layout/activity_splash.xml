@@ -14,11 +14,11 @@
 
         <ImageView
             android:id="@+id/sparrow_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
-            android:src="@color/colorPrimary"/>
+            android:src="@drawable/sparrow_logo"/>
 
 
         <ProgressBar

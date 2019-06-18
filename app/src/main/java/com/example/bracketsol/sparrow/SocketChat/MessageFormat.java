@@ -24,6 +24,10 @@ public class MessageFormat {
         UniqueId = uniqueId;
     }
 
+    public MessageFormat(int uniqueId, String username) {
+        Username = username;
+        UniqueId = uniqueId;
+    }
 
 
     public MessageFormat(int uniqueId, String username, String message) {

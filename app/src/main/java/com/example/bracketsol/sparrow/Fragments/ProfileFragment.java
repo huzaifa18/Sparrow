@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class PrrofileFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     private static View view;
     FragmentManager fragmentManager;

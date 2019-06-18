@@ -148,6 +148,7 @@ public class AudioRecordView extends FrameLayout implements View.OnClickListener
 
         Log.i("audio","uri"+uri);
         Log.i("audio","outputFile"+outputFile);
+        Permissions();
         setupRecording();
         listeners();
     }
@@ -301,11 +302,11 @@ public class AudioRecordView extends FrameLayout implements View.OnClickListener
         imageViewAudio.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (!Permissions()) {
-
-                    Toast.makeText(MyApp.getContext(), "Please gi", Toast.LENGTH_SHORT).show();
-                    ;
+                if (!Permissions() ) {
+                    Toast.makeText(MyApp.getContext(), "Allow permissions", Toast.LENGTH_SHORT).show();
+                    Permissions();
                 } else {
+
 
                 }
 

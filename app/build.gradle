@@ -95,7 +95,14 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-core:16.0.9'
 
+    //firebase OTP
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
+
+    //noinspection GradleCompatible
+    implementation "com.google.android.gms:play-services-gcm:9.2.1"
+
 
 }
 //firebase
 apply plugin: 'com.google.gms.google-services'
+

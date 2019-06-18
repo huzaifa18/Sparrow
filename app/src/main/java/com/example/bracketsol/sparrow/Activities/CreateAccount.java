@@ -73,7 +73,6 @@ public class CreateAccount extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // SignUp("popopop","apopopo@gmail.com","asdfk23");
                 new MyTask().execute();
                 Intent intent = new Intent(CreateAccount.this, VerificationDetails.class);
                 startActivity(intent);

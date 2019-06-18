@@ -2,6 +2,7 @@ package com.example.bracketsol.sparrow.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -11,10 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
 import com.example.bracketsol.sparrow.Classes.BottomNavigationViewHelper;
 import com.example.bracketsol.sparrow.DisFragment;
 import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
-import com.example.bracketsol.sparrow.Fragments.PrrofileFragment;
+import com.example.bracketsol.sparrow.Fragments.ProfileFragment;
 import com.example.bracketsol.sparrow.MessageActivity.ChatsListingMain;
 import com.example.bracketsol.sparrow.MessageActivity.MessagingService;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
@@ -32,7 +33,6 @@ import com.example.bracketsol.sparrow.Model.StoryModel;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Retrofit.ApiClient;
 import com.example.bracketsol.sparrow.Retrofit.ApiInterface;
-import com.example.bracketsol.sparrow.SocialLife.ModelSocial;
 import com.example.bracketsol.sparrow.SocialLife.SocialLifeFragment;
 
 import org.json.JSONArray;
@@ -65,6 +65,9 @@ public class HomeActivity extends AppCompatActivity {
     ProgressBar simpleProgressBar;
     ApiInterface apiInterface;
     Call<ResponseBody> getSocialCall;
+    ProgressBar progressBar;
+    Boolean isScrolling = false;
+    int currentItems, totalItems, scrollOutItems;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -73,8 +76,23 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    refresh();
                     return true;
                 case R.id.navigation_account:
+                    fragmentTransaction
+                            //.beginTransaction()
+                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                            .replace(R.id.frame_container, new ProfileFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    return true;
+                case R.id.navigation_notification:
+                    fragmentTransaction
+                            //.beginTransaction()
+                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                            .replace(R.id.frame_container, new NotificationFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_discussion:
                     fragmentTransaction
@@ -84,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                     return true;
-                case R.id.navigation_profile:
+                case R.id.navigation_social:
                     fragmentTransaction
                             //.beginTransaction()
                             //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
@@ -113,8 +131,10 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setSelectedItemId(R.id.navigation_home);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         storyRecyclerview = findViewById(R.id.story_recyclerview);
         statuspostRecyclerview = findViewById(R.id.status_recyclerview);
+        progressBar = findViewById(R.id.progressBarstatus);
         chatbtn = findViewById(R.id.chat_ib);
         storyArraylist = new ArrayList<StoryModel>();
         statusArraylist = new ArrayList<StatusPostingModel>();
@@ -126,8 +146,44 @@ public class HomeActivity extends AppCompatActivity {
         statuspostRecyclerview.setAdapter(statusPostAdapter);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         statuspostRecyclerview.setLayoutManager(manager);
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
+        statusArraylist.add(new StatusPostingModel("Ali Irfan", "sender pic", "Content",
+                "Attachment", 43, 21, 32));
+//        statusPostAdapter.notifyDataSetChanged();
+        statuspostRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                currentItems = manager.getChildCount();
+                totalItems = manager.getItemCount();
+                scrollOutItems = manager.findFirstVisibleItemPosition();
+                if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
+                    isScrolling = false;
+                    //getPostsData();
+                    fetchData();
+                }
+            }
+        });
+
+
+    }
+
+    private void fetchData() {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getPostsData();
+                statusPostAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+            }
+        }, 5000);
     }
 
     private void getStoryData() {
@@ -171,7 +227,9 @@ public class HomeActivity extends AppCompatActivity {
                         Log.e("TAG", "content" + product.getString("content"));
                         Log.e("TAG", "background" + product.getString("background"));
                         Log.e("TAG", "type" + product.getString("type"));
-                        Log.e("TAG", "attachment" + product.getString("attachment"));
+                        Log.e("TAG", "attachment_id" + product.getString("attachment_id"));
+                        Log.e("TAG", "attachment_url" + product.getString("attachment_url"));
+                        Log.e("TAG", "attachment_type" + product.getString("attachment_type"));
                         Log.e("TAG", "total_likes" + product.getInt("total_likes"));
                         Log.e("TAG", "total_comments" + product.getInt("total_comments"));
                         Log.e("TAG", "total_views" + product.getInt("total_views"));
@@ -185,25 +243,29 @@ public class HomeActivity extends AppCompatActivity {
                         String content = product.getString("content");
                         String background = product.getString("background");
                         String type = product.getString("type");
-                        String attachment = product.getString("attachment");
+                        String attachment = product.getString("attachment_id");
+                        String attachment_url = product.getString("attachment_url");
+                        String attachment_type = product.getString("attachment_type");
                         int total_likes = product.getInt("total_likes");
                         int total_comments = product.getInt("total_comments");
-                        int total_views= product.getInt("total_views");
+                        int total_views = product.getInt("total_views");
                         String created_at = product.getString("created_at");
                         //simpleProgressBar.setVisibility(View.GONE);
                         Log.i("url", "https://s3.amazonaws.com/social-funda-bucket/" + attachment);
-                        StatusPostingModel statusPostingModel = new StatusPostingModel(sender_name, sender_pic,content,attachment,total_likes,
-                                total_comments,total_views);
+                        Log.i("senderpic", "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic);
+                        StatusPostingModel statusPostingModel = new StatusPostingModel(sender_name, "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic, content, "https://social-funda-bucket.s3.amazonaws.com/" + attachment_url, total_likes,
+                                total_comments, total_views);
 
 //                        simpleProgressBar.setVisibility(View.GONE);
                         statusArraylist.add(statusPostingModel);
+
                     }
                     statuspostRecyclerview.setAdapter(statusPostAdapter);
                     statuspostRecyclerview.scrollToPosition(statusArraylist.size());
                     statusPostAdapter.notifyDataSetChanged();
                     manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-                    // mLayoutManager.setReverseLayout(true);
-                    //mLayoutManager.setStackFromEnd(true);
+                    //manager.setReverseLayout(true);
+                    manager.setStackFromEnd(true);
                     statuspostRecyclerview.setItemAnimator(new DefaultItemAnimator());
                     statuspostRecyclerview.setLayoutManager(manager);
 
@@ -224,34 +286,33 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-//
-//        statusArraylist.add(new StatusPostingModel(R.drawable.demo, R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp,
-//                R.drawable.ic_dislike, R.drawable.ic_comment, R.drawable.ic_senddd,
-//                R.drawable.ic_bookmark, "Ahmad", "lahore"));
-//        statusArraylist.add(new StatusPostingModel(R.drawable.demo, R.drawable.ic_target, R.drawable.ic_more_horiz_black_24dp,
-//                R.drawable.ic_dislike, R.drawable.ic_comment, R.drawable.ic_senddd,
-//                R.drawable.ic_bookmark, "Ahmad", "lahore"));
-//        statusArraylist.add(new StatusPostingModel(R.drawable.demo, R.drawable.ic_man, R.drawable.ic_more_horiz_black_24dp,
-//                R.drawable.ic_dislike, R.drawable.ic_comment, R.drawable.ic_senddd,
-//                R.drawable.ic_bookmark, "Ahmad", "lahore"));
-//        statusArraylist.add(new StatusPostingModel(R.drawable.demo, R.drawable.ic_man3, R.drawable.ic_more_horiz_black_24dp,
-//                R.drawable.ic_dislike, R.drawable.ic_comment, R.drawable.ic_senddd,
-//                R.drawable.ic_bookmark, "Ahmad", "lahore"));
-//        statusPostAdapter.notifyDataSetChanged();
+
+
     }
 
-    public void showToolbar(){
+    public void refresh() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
+    public void showToolbar() {
         View layout;
         layout = findViewById(R.id.home_toolbar);
         layout.setVisibility(View.VISIBLE);
 
     }
-    public void hideToolbar(){
+
+    public void hideToolbar() {
         View layout;
         layout = findViewById(R.id.home_toolbar);
         layout.setVisibility(View.GONE);
 
     }
+
     private boolean loadFragment(Fragment fragment) {
         NotificationFragment notificationFragment = new NotificationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
