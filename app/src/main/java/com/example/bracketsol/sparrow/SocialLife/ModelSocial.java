@@ -2,10 +2,10 @@ package com.example.bracketsol.sparrow.SocialLife;
 
 public class ModelSocial {
 
-    int announcement_id,attachment_id,sender_id,is_active,likes,comments;
+    int announcement_id,attachment_id,sender_id,is_active,likes,comments,total_views;
     String statement,url,start_date,end_date,created_at,sender_name,profile_pic,type;
 
-    public ModelSocial(int announcement_id, int attachment_id, int sender_id, int is_active, String type, String statement, String url, String start_date, String end_date, String created_at, String sender_name, String profile_pic,int likes,int comments) {
+    public ModelSocial(int announcement_id, int attachment_id, int sender_id, int is_active, String type, String statement, String url, String start_date, String end_date, String created_at, String sender_name, String profile_pic,int likes,int comments,int total_views) {
         this.announcement_id = announcement_id;
         this.attachment_id = attachment_id;
         this.sender_id = sender_id;
@@ -20,6 +20,15 @@ public class ModelSocial {
         this.profile_pic = profile_pic;
         this.likes = likes;
         this.comments = comments;
+        this.total_views = total_views;
+    }
+
+    public int getTotal_views() {
+        return total_views;
+    }
+
+    public void setTotal_views(int total_views) {
+        this.total_views = total_views;
     }
 
     public ModelSocial(int announcement_id, int attachment_id, String end_date) {

@@ -74,6 +74,17 @@ public interface ApiInterface {
     @POST("api/posts")
     Call<ResponseBody> sendPost(@Part("type") String type,
                                 @Part("content") String content,
+                                @Part("hasFile") int hasFile,
+                                @Part("background") String background,
+                                @Part MultipartBody.Part fileUpload);
+
+    @Multipart
+    @POST("api/announcements/announcement")
+    Call<ResponseBody> sendAnnouncement(@Part("type") String type,
+                                @Part("statement") String statement,
+                                @Part("start_date") String start_date,
+                                @Part("end_date") String end_date,
+                                @Part("hasFile") int hasFile,
                                 @Part("background") String background,
                                 @Part MultipartBody.Part fileUpload);
 

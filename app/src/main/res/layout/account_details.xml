@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <include layout="@layout/custom_toolbar"/>
 
@@ -19,9 +18,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/fullname"
-            android:paddingTop="10dp"
+            android:layout_marginTop="10dp">
 
-            >
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/black_border_shape"
+                android:padding="5dp"
+                android:textStyle="bold" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/et_bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bio"
+            android:layout_below="@id/full_name_edittext"
+            android:layout_marginTop="10dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/black_border_shape"
+                android:padding="5dp"
+                android:textStyle="bold" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/et_profession"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/profession"
+            android:layout_below="@id/et_bio"
+            android:layout_marginTop="10dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/black_border_shape"
+                android:padding="5dp"
+                android:textStyle="bold" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/et_blog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/blog"
+            android:layout_below="@id/et_profession"
+            android:layout_marginTop="10dp">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
@@ -36,12 +84,9 @@
             android:id="@+id/pass_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_below="@id/full_name_edittext"
+            android:layout_below="@id/et_blog"
             android:hint="@string/password"
-            android:paddingTop="10dp"
-
-            >
+            android:layout_marginTop="10dp">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
@@ -59,9 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/pass_edittext"
             android:hint="@string/dob"
-            android:paddingTop="10dp"
-
-            >
+            android:layout_marginTop="10dp">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
@@ -72,51 +115,43 @@
 
         </android.support.design.widget.TextInputLayout>
 
-
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/ll_gender"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/dob_edittext"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/dob_edittext"
+            android:gravity="center">
 
-            <LinearLayout
-                android:id="@+id/gender_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/bt_boy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorwhite"
+            android:drawableTop="@drawable/ic_camera_alt_black_24dp"
+            android:text="@string/boy"
+            android:textAllCaps="false" />
 
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+        <Button
+            android:id="@+id/bt_girl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorwhite"
+            android:drawableTop="@drawable/ic_camera_alt_black_24dp"
+            android:text="@string/girl"
+            android:textAllCaps="false"/>
 
+        </LinearLayout>
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorwhite"
-                    android:drawableTop="@drawable/ic_camera_alt_black_24dp"
-                    android:text="@string/boy"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorwhite"
-                    android:drawableTop="@drawable/ic_camera_alt_black_24dp"
-                    android:text="@string/girl"
-                    android:textAllCaps="false" />
-
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/next_button"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_below="@id/gender_layout"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_shape"
-                app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
-        </RelativeLayout>
+        <ImageButton
+            android:id="@+id/next_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_shape"
+            android:layout_below="@+id/ll_gender"
+            app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
 
         <TextView
             android:id="@+id/already_login_text"

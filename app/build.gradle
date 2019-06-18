@@ -93,4 +93,6 @@ dependencies {
 
     implementation 'org.jetbrains:annotations:15.0'
 
+    implementation 'com.github.shts:StoriesProgressView:3.0.0'
+
 }

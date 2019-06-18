@@ -1,6 +1,7 @@
 package com.example.bracketsol.sparrow.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.bracketsol.sparrow.Model.StoryModel;
 import com.example.bracketsol.sparrow.R;
+import com.example.bracketsol.sparrow.Stories.StoryView;
 
 import java.util.ArrayList;
 
@@ -42,11 +44,11 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, position + " is clicked", Toast.LENGTH_SHORT).show();
+                mContext.startActivity(new Intent(mContext, StoryView.class));
             }
         });
 
     }
-
 
     @Override
     public int getItemCount() {

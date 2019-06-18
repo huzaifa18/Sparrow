@@ -18,10 +18,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bracketsol.sparrow.Activities.EditProfile;
 import com.example.bracketsol.sparrow.Activities.showPicture;
 import com.example.bracketsol.sparrow.Adapter.ProfileAdapter;
 import com.example.bracketsol.sparrow.Model.ModelProfile;
@@ -49,6 +51,7 @@ public class PrrofileFragment extends Fragment {
     Dialog settingsDialog;
     boolean zoomOut = true;
 
+    Button bt_edit;
 
     @Nullable
     @Override
@@ -61,6 +64,8 @@ public class PrrofileFragment extends Fragment {
     private void init() {
         recyclerView = (RecyclerView) view.findViewById(R.id.ppl_you_know_list);
         arrayList = new ArrayList<>();
+
+        bt_edit = view.findViewById(R.id.bt_edit);
 
         profileAdapter = new ProfileAdapter(arrayList);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -119,9 +124,19 @@ public class PrrofileFragment extends Fragment {
 //
 //                    zoomOut = true;
 //                }
+
             }
 
         });
+
+        bt_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), EditProfile.class));
+
+            }
+        });
+
     }
 
     private void loadPhoto(ImageView imageView) {
@@ -151,6 +166,7 @@ public class PrrofileFragment extends Fragment {
     }
 
     private void prepareMovieData() {
+
         ModelProfile account = new ModelProfile(R.drawable.ic_seo, "kamal Rafiq");
         arrayList.add(account);
         account = new ModelProfile(R.drawable.ic_seo, "sajid Rahim");
@@ -158,6 +174,7 @@ public class PrrofileFragment extends Fragment {
         account = new ModelProfile(R.drawable.ic_seo, "waseem Azeem");
         arrayList.add(account);
         profileAdapter.notifyDataSetChanged();
+
     }
 
 }

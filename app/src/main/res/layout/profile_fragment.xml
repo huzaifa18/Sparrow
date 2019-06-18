@@ -81,6 +81,13 @@
                 android:layout_below="@+id/statment"
                 android:text="extra fonts besides " />
 
+            <Button
+                android:id="@+id/bt_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit"
+                android:drawableRight="@drawable/ic_edit"/>
+
         </LinearLayout>
 
 

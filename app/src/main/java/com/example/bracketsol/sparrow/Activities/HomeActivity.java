@@ -68,16 +68,15 @@ public class HomeActivity extends AppCompatActivity {
 //                    fragmentTransaction.commit();
                     return true;
                 case R.id.navigation_account:
-//                    fragmentTransaction
-//                            //.beginTransaction()
-//                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-//                            .replace(R.id.frame_container, new NotificationFragment());
-//                    fragmentTransaction.addToBackStack(null);
-//                    fragmentTransaction.commit();
-
-//                    return true;
+                    fragmentTransaction
+                            //.beginTransaction()
+                            //.setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                            .replace(R.id.frame_container, new PrrofileFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
 
                     return true;
+
                 case R.id.navigation_discussion:
                     fragmentTransaction
                             //.beginTransaction()
@@ -85,7 +84,6 @@ public class HomeActivity extends AppCompatActivity {
                             .replace(R.id.frame_container, new DisFragment());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-
 
                     return true;
 //                case R.id.navigation_notification:

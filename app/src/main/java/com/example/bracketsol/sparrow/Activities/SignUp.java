@@ -44,9 +44,6 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     private void SignUp(final String username, final String email, final String password) {

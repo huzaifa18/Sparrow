@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/logo_imageview"
                     android:layout_marginTop="20dp"
-                    android:hint="@string/phone"
+                    android:hint="@string/phone_number"
                     android:paddingTop="10dp"
 
                     >
@@ -53,7 +53,7 @@
                         android:background="@drawable/btn_shape_login"
                         android:maxLines="1"
                         android:nextFocusForward="@string/password"
-                        android:text="tester@gmail.com"
+                        android:text="huzaifa007"
                         android:textStyle="bold" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -83,7 +83,7 @@
                         android:background="@drawable/btn_shape_login"
                         android:inputType="textPassword"
                         android:nextFocusForward="@id/login_button"
-                        android:text="tester"
+                        android:text="123456"
                         android:textStyle="bold" />
 
                 </android.support.design.widget.TextInputLayout>

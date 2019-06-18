@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/logo_imageview"
                         android:layout_marginTop="20dp"
-                        android:hint="@string/phone"
+                        android:hint="@string/phone_number"
                         android:paddingTop="10dp"
 
                         >
