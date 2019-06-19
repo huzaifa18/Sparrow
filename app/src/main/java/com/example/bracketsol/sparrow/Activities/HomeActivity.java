@@ -67,6 +67,9 @@ public class HomeActivity extends AppCompatActivity {
     Call<ResponseBody> getSocialCall;
     ProgressBar progressBar;
     Boolean isScrolling = false;
+    Boolean has_next = true;
+    int page,total_pages = 0;
+
     int currentItems, totalItems, scrollOutItems;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -121,7 +124,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         init();
         getStoryData();
-        getPostsData();
+        fetchData();
         GoToChat();
     }
 
@@ -147,12 +150,23 @@ public class HomeActivity extends AppCompatActivity {
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         statuspostRecyclerview.setLayoutManager(manager);
 
-        statusArraylist.add(new StatusPostingModel("Ali Irfan", "sender pic", "Content",
-                "Attachment", 43, 21, 32));
+//        statusArraylist.add(new StatusPostingModel("Ali Irfan", "sender pic", "Content",
+//                "Attachment", 43, 21, 32));
 //        statusPostAdapter.notifyDataSetChanged();
         statuspostRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                Log.i("Data","onScrolledstate");
+                if(isLastItemDisplaying(statuspostRecyclerview)){
+                    Log.i("Data","islastitem");
+                    if(has_next){
+                        Log.i("Data","hasnext");
+                        if(page<=total_pages){
+                            Log.i("Data","page<totalpage");
+                            fetchData();
+                        }
+                    }
+                }
                 if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                     isScrolling = true;
                 }
@@ -160,14 +174,25 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                currentItems = manager.getChildCount();
-                totalItems = manager.getItemCount();
-                scrollOutItems = manager.findFirstVisibleItemPosition();
-                if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
-                    isScrolling = false;
-                    //getPostsData();
-                    fetchData();
+                Log.i("Data","onScrolled");
+                if(isLastItemDisplaying(statuspostRecyclerview)){
+                    Log.i("Data","onScrolled:islastitem");
+                    if(has_next){
+                        Log.i("Data","onScrolled:hasnext");
+                        if(page<=total_pages){
+                            Log.i("Data","onScrolled:page<totalpage");
+                            fetchData();
+                        }
+                    }
                 }
+//                currentItems = manager.getChildCount();
+//                totalItems = manager.getItemCount();
+//                scrollOutItems = manager.findFirstVisibleItemPosition();
+//                if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
+//                    isScrolling = false;
+//                    //getPostsData();
+//                    fetchData();
+//                }
             }
         });
 
@@ -175,6 +200,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void fetchData() {
+        page++;
         progressBar.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -184,6 +210,7 @@ public class HomeActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
         }, 5000);
+
     }
 
     private void getStoryData() {
@@ -205,7 +232,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getPostsData() {
-        getSocialCall = apiInterface.getAllPosts();
+        getSocialCall = apiInterface.getAllPosts(page);
         getSocialCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -350,4 +377,13 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+
+    private boolean isLastItemDisplaying(RecyclerView recyclerView) {
+        if (recyclerView.getAdapter().getItemCount() != 0) {
+            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
+                return true;
+        }
+        return false;
+    }
 }

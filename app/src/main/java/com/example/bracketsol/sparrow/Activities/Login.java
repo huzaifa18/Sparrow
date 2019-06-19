@@ -147,7 +147,8 @@ public class Login extends AppCompatActivity {
                     JSONObject jObj = new JSONObject(response);
                     String message = jObj.getString("message");
                     Log.e("TAG", "Message: " + message);
-                    //Toast.makeText(Login.this, "" + message, Toast.LENGTH_SHORT).show();
+
+
                     animShake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                     if(message.equals("username or email is invalid.")){
                         username.setAnimation(animShake);
@@ -156,6 +157,8 @@ public class Login extends AppCompatActivity {
                         password.setAnimation(animShake);
                         password.setError(message);
                     }
+
+
                     String user = jObj.getString("user");
                     Log.e("TAG", "Message: " + user);
                     JSONObject userdata = jObj.getJSONObject("user");

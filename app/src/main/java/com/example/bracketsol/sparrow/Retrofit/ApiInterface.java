@@ -16,27 +16,6 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-
-//    @FormUrlEncoded
-//    @POST("users/register")
-//    Call<ResponseBody> Register(@Field("username") String name,
-//                                @Field("email") String email,
-//                                @Field("password") String password);
-//
-//
-////    @FormUrlEncoded
-////    @POST("auth/login")
-////    Call<User> Login(@Field("username") String username,
-////                     @Field("password") String password);
-//
-//
-//    @Headers("Content-Type: application/json")
-//    @POST("auth/login")
-//    Call<User> Login(@Body JSONObject body);
-//
-//
-////    Call<ResponseBody> Login(@Body User user);
-
     @FormUrlEncoded
     @POST("api/messages/chat/")
     Call<ResponseBody> sendMessage(@Field("content") String content,
@@ -74,7 +53,7 @@ public interface ApiInterface {
 
 
     @GET("api/posts")
-    Call<ResponseBody> getAllPosts();
+    Call<ResponseBody> getAllPosts(@Query("page") int page);
 
     @GET("api/messages/chat-specific/")
     Call<ResponseBody> getSpecificMessage(@Query("sender_id") int sender_id,

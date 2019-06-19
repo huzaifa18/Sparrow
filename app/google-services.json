@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "603885288271",
+    "firebase_url": "https://sparrow-63e48.firebaseio.com",
+    "project_id": "sparrow-63e48",
+    "storage_bucket": "sparrow-63e48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603885288271:android:07804e9f239dc7c8",
+        "android_client_info": {
+          "package_name": "com.example.bracketsol.sparrow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603885288271-gickvgb2dgrhq0mm57rdnt2ibfb5q35b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bracketsol.sparrow",
+            "certificate_hash": "061aae095a33c5f71d16937e42750fbe03075296"
+          }
+        },
+        {
+          "client_id": "603885288271-d67t5oc66crcv296tqmo296t0s4qtu2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXk1wA4UtEgOrTCj2tZ9NUNynHQx6dgZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603885288271-d67t5oc66crcv296tqmo296t0s4qtu2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
