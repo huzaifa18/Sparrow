@@ -55,6 +55,22 @@ public interface ApiInterface {
     @GET("api/posts")
     Call<ResponseBody> getAllPosts(@Query("page") int page);
 
+    @FormUrlEncoded
+    @POST("api/posts/like")
+    Call<ResponseBody> hitLike(@Field("post_id") int post_id);
+
+
+
+    @FormUrlEncoded
+    @POST("api/posts/comment")
+    Call<ResponseBody> addComment(@Field("post_id") int post_id,
+                                  @Field("content") String content);
+
+    @GET("api/posts/comment/")
+    Call<ResponseBody> getPreviousComment(@Query("post_id") int post_id);
+
+
+
     @GET("api/messages/chat-specific/")
     Call<ResponseBody> getSpecificMessage(@Query("sender_id") int sender_id,
                                           @Query("receiver_id") int receiver_id);
@@ -70,7 +86,6 @@ public interface ApiInterface {
     @Multipart
     @POST("api/posts")
     Call<ResponseBody> sendMessagevideo(
-
                                 @Part MultipartBody.Part fileUpload);
 
 }

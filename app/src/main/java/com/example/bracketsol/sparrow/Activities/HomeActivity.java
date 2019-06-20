@@ -8,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -68,7 +69,25 @@ public class HomeActivity extends AppCompatActivity {
     ProgressBar progressBar;
     Boolean isScrolling = false;
     Boolean has_next = true;
-    int page,total_pages = 0;
+    int page, total_pages = 0;
+
+    //Apis data
+    int post_id;
+    int sender_id;
+    String sender_name;
+    String sender_pic;
+    String content;
+    String background;
+    String type;
+    String attachment;
+    String attachment_url;
+    String attachment_type;
+    int total_likes;
+    int total_comments;
+    int total_views;
+    String created_at;
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     int currentItems, totalItems, scrollOutItems;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -122,13 +141,18 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         init();
+        onScrollListener();
         getStoryData();
         fetchData();
         GoToChat();
+        swipeListener();
     }
 
     private void init() {
+
+        swipeRefreshLayout = findViewById(R.id.swipe_container);
         fragmentManager = getSupportFragmentManager();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
@@ -144,72 +168,93 @@ public class HomeActivity extends AppCompatActivity {
         storyAdapter = new StoryAdapter(this, storyArraylist);
         statusPostAdapter = new StatusPostAdapter(this, statusArraylist);
         storyRecyclerview.setAdapter(storyAdapter);
-        manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
+        manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
         storyRecyclerview.setLayoutManager(manager);
         statuspostRecyclerview.setAdapter(statusPostAdapter);
-        manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         statuspostRecyclerview.setLayoutManager(manager);
 
 //        statusArraylist.add(new StatusPostingModel("Ali Irfan", "sender pic", "Content",
 //                "Attachment", 43, 21, 32));
 //        statusPostAdapter.notifyDataSetChanged();
+
+
+    }
+
+    private void onScrollListener() {
         statuspostRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                Log.i("Data","onScrolledstate");
-                if(isLastItemDisplaying(statuspostRecyclerview)){
-                    Log.i("Data","islastitem");
-                    if(has_next){
-                        Log.i("Data","hasnext");
-                        if(page<=total_pages){
-                            Log.i("Data","page<totalpage");
+                Log.e("Page", "onScrolledstate");
+
+                LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisible = layoutManager.findLastVisibleItemPosition();
+
+                boolean endHasBeenReached = lastVisible <= totalItemCount;
+                if (totalItemCount > 0 && endHasBeenReached) {
+                    //you have reached to the bottom of your recycler view
+                    Log.e("Page", "islastitem");
+                    if (has_next) {
+                        Log.e("Page", "hasnext");
+                        if (page <= total_pages) {
+                            Log.e("Page", "page<totalpage");
                             fetchData();
                         }
                     }
                 }
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+
+                /*if (isLastItemDisplaying(statuspostRecyclerview)) {
+                    Log.e("Page", "islastitem");
+                    if (has_next) {
+                        Log.e("Page", "hasnext");
+                        if (page <= total_pages) {
+                            Log.e("Page", "page<totalpage");
+                            fetchData();
+                        }
+                    }
+                }*/
+                /*if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                     isScrolling = true;
-                }
+                    if (has_next) {
+                        Log.e("Page", "hasnext");
+                        if (page <= total_pages) {
+                            Log.e("Page", "page<totalpage");
+                            fetchData();
+                        }
+                    }
+                }*/
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                Log.i("Data","onScrolled");
-                if(isLastItemDisplaying(statuspostRecyclerview)){
-                    Log.i("Data","onScrolled:islastitem");
-                    if(has_next){
-                        Log.i("Data","onScrolled:hasnext");
-                        if(page<=total_pages){
-                            Log.i("Data","onScrolled:page<totalpage");
-                            fetchData();
-                        }
-                    }
-                }
-//                currentItems = manager.getChildCount();
-//                totalItems = manager.getItemCount();
-//                scrollOutItems = manager.findFirstVisibleItemPosition();
-//                if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
-//                    isScrolling = false;
-//                    //getPostsData();
-//                    fetchData();
-//                }
             }
         });
+        statusPostAdapter.notifyDataSetChanged();
 
+    }
+
+
+    private void swipeListener() {
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 0;
+                //progressBar.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(true);
+                statusArraylist.clear();
+                fetchData();
+            }
+        });
 
     }
 
     private void fetchData() {
         page++;
-        progressBar.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getPostsData();
-                statusPostAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
-            }
-        }, 5000);
+        //progressBar.setVisibility(View.VISIBLE);
+        getPostsData();
 
     }
 
@@ -232,14 +277,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getPostsData() {
+        Log.e("Post","Page: " + page);
         getSocialCall = apiInterface.getAllPosts(page);
         getSocialCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 try {
                     String resString = response.body().string();
                     JSONObject resJson = new JSONObject(resString);
-                    Log.e("TAG", "ok");
+                    total_pages = resJson.getInt("total_pages");
+                    Log.e("TAG", "total_pages " + total_pages);
                     JSONArray array = resJson.getJSONArray("posts");
                     Log.e("TAG", "ok");
 
@@ -263,45 +312,43 @@ public class HomeActivity extends AppCompatActivity {
                         Log.e("TAG", "created_at" + product.getString("created_at"));
 
 
-                        int post_id = product.getInt("post_id");
-                        int sender_id = product.getInt("sender_id");
-                        String sender_name = product.getString("sender_name");
-                        String sender_pic = product.getString("sender_pic");
-                        String content = product.getString("content");
-                        String background = product.getString("background");
-                        String type = product.getString("type");
-                        String attachment = product.getString("attachment_id");
-                        String attachment_url = product.getString("attachment_url");
-                        String attachment_type = product.getString("attachment_type");
-                        int total_likes = product.getInt("total_likes");
-                        int total_comments = product.getInt("total_comments");
-                        int total_views = product.getInt("total_views");
-                        String created_at = product.getString("created_at");
+                        post_id = product.getInt("post_id");
+                        sender_id = product.getInt("sender_id");
+                        sender_name = product.getString("sender_name");
+                        sender_pic = product.getString("sender_pic");
+                        content = product.getString("content");
+                        background = product.getString("background");
+                        type = product.getString("type");
+                        attachment = product.getString("attachment_id");
+                        attachment_url = product.getString("attachment_url");
+                        attachment_type = product.getString("attachment_type");
+                        total_likes = product.getInt("total_likes");
+                        total_comments = product.getInt("total_comments");
+                        total_views = product.getInt("total_views");
+                        created_at = product.getString("created_at");
                         //simpleProgressBar.setVisibility(View.GONE);
                         Log.i("url", "https://s3.amazonaws.com/social-funda-bucket/" + attachment);
                         Log.i("senderpic", "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic);
                         StatusPostingModel statusPostingModel = new StatusPostingModel(sender_name, "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic, content, "https://social-funda-bucket.s3.amazonaws.com/" + attachment_url, total_likes,
-                                total_comments, total_views);
+                                total_comments, total_views,post_id,attachment_type);
 
 //                        simpleProgressBar.setVisibility(View.GONE);
                         statusArraylist.add(statusPostingModel);
 
                     }
-                    statuspostRecyclerview.setAdapter(statusPostAdapter);
-                    statuspostRecyclerview.scrollToPosition(statusArraylist.size());
+                    /*statuspostRecyclerview.scrollToPosition(statusArraylist.size());*/
                     statusPostAdapter.notifyDataSetChanged();
-                    manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-                    //manager.setReverseLayout(true);
-                    manager.setStackFromEnd(true);
-                    statuspostRecyclerview.setItemAnimator(new DefaultItemAnimator());
-                    statuspostRecyclerview.setLayoutManager(manager);
 
                 } catch (IOException e) {
+                    //progressBar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setRefreshing(false);
                     e.printStackTrace();
                     Log.e("TAG", "checkval " + e.getMessage());
 
 
                 } catch (JSONException e) {
+                    //progressBar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setRefreshing(false);
                     e.printStackTrace();
                     Log.e("TAG", "checkval onresponse" + e.getMessage());
 
@@ -310,13 +357,17 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                //progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(HomeActivity.this, "Failed To Retrieve Data", Toast.LENGTH_SHORT).show();
             }
         });
 
-
     }
 
+    public int getPost_id(){
+             return post_id;
+          }
     public void refresh() {
         Intent intent = getIntent();
         overridePendingTransition(0, 0);
@@ -378,6 +429,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    /*private boolean isLastItemDisplaying() {
+        RecyclerView.Adapter adapter = statuspostRecyclerview.getAdapter();
+        if (adapter != null && adapter.getItemCount() != 0) {
+            int lastVisibleItemPosition = ((LinearLayoutManager) statuspostRecyclerview.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == adapter.getItemCount() - 1) {
+                return true;
+            }
+        }
+        return false;
+    }*/
+
     private boolean isLastItemDisplaying(RecyclerView recyclerView) {
         if (recyclerView.getAdapter().getItemCount() != 0) {
             int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
@@ -386,4 +448,5 @@ public class HomeActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }

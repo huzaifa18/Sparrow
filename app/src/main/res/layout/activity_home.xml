@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".Activities.HomeActivity">
 
-    <include layout="@layout/home_toolbar"
+    <include
         android:id="@+id/home_toolbar"
-        />
+        layout="@layout/home_toolbar" />
 
     <FrameLayout
         android:id="@+id/frame_container"
@@ -75,8 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/fram"
-                    tools:ignore="NotSibling">
-                </android.support.v7.widget.RecyclerView>
+                    tools:ignore="NotSibling"></android.support.v7.widget.RecyclerView>
             </RelativeLayout>
         </HorizontalScrollView>
 
@@ -86,27 +85,33 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="90dp">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/status_recyclerview"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:paddingBottom="50dp"
-                tools:ignore="NotSibling">
+                android:paddingBottom="50dp">
 
-            </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/status_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
 
         </RelativeLayout>
     </FrameLayout>
+
     <ProgressBar
         android:id="@+id/progressBarstatus"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
         android:layout_above="@id/navigation"
-        />
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
