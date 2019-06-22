@@ -14,6 +14,7 @@
     <string name="skip">Skip</string>
     <string name="myMixedText">My simple Text<b>My Bold Text<i>MyBoldItalicText</i></b></string>
 
+    <string name="phone">Phone number</string>
     <string name="password">Password</string>
 
 
@@ -89,7 +90,6 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="and">and ""</string>
 
-
     <string name="bio">Bio/About</string>
     <string name="edit">Edit</string>
     <string name="edit_profile">Edit Profile</string>
@@ -98,6 +98,7 @@
     <string name="profession">Profession</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="coment">Wow great</string>
 
     <string name="fullname">Full name</string>
 
@@ -331,5 +332,6 @@
     <string name="pref_use_legacy_audio_device_key">use_legacy_audio_device_key</string>
     <string name="pref_use_legacy_audio_device_title">Use legacy audio device.</string>
     <string name="pref_use_legacy_audio_device_default">false</string>
+    <string name="sparrow">Sparrow</string>
 
 </resources>

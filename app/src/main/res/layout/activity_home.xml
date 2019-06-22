@@ -7,8 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".Activities.HomeActivity">
 
-    <include layout="@layout/home_toolbar"
-        android:id="@+id/home_toolbar" />
+    <include
+        android:id="@+id/home_toolbar"
+        layout="@layout/home_toolbar" />
 
     <FrameLayout
         android:id="@+id/frame_container"
@@ -18,118 +19,99 @@
         android:layout_below="@id/home_toolbar"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+        <HorizontalScrollView
+            android:id="@+id/horizntal_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <RelativeLayout
+                android:id="@+id/center_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp">
+
+
+                <FrameLayout
+                    android:id="@+id/fram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/black_border_shape"
+                    android:padding="1dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/story_image_pro"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        app:srcCompat="@drawable/ic_girl" />
+
+
+                </FrameLayout>
+
+
+                <ImageView
+                    android:id="@+id/test"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="42dp"
+                    app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+
+                <TextView
+                    android:id="@+id/story_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="68dp"
+                    android:padding="1dp"
+                    android:text="@string/your_story"
+                    android:textSize="12sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/story_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/fram"
+                    tools:ignore="NotSibling"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+        </HorizontalScrollView>
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="85dp">
+            android:layout_marginTop="90dp">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/status_recyclerview"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/story_layout"
                 android:padding="5dp"
-                tools:ignore="NotSibling">
+                android:paddingBottom="50dp">
 
-            </android.support.v7.widget.RecyclerView>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/story_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <HorizontalScrollView
-                android:id="@+id/horizntal_scroll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_alignParentBottom="true">
-
-                <RelativeLayout
-                    android:id="@+id/center_layout"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/status_recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="wrap_content">
 
+                </android.support.v7.widget.RecyclerView>
 
-                    android:paddingLeft="10dp">
-
-
-                    <FrameLayout
-                        android:id="@+id/fram"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="3dp"
-
-                        android:background="@drawable/black_border_shape"
-                        android:padding="1dp">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/story_image_pro"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            android:layout_centerHorizontal="true"
-                            app:srcCompat="@drawable/ic_girl" />
-
-
-                    </FrameLayout>
-
-                    <ImageView
-                        android:id="@+id/test"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="50dp"
-                        app:srcCompat="@drawable/ic_add_circle_black_24dp" />
-
-                    <TextView
-                        android:id="@+id/story_username"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="68dp"
-                        android:padding="1dp"
-                        android:text="@string/your_story"
-                        android:textSize="12sp" />
-
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/story_recyclerview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/fram"
-                        tools:ignore="NotSibling">
-
-
-                    </android.support.v7.widget.RecyclerView>
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/story_plus"-->
-                    <!--android:layout_width="10dp"-->
-                    <!--android:layout_height="10dp"-->
-                    <!--android:layout_marginTop="30dp"-->
-                    <!--app:srcCompat="@drawable/ic_add_circle_black_24dp"-->
-                    <!--/>-->
-
-
-                </RelativeLayout>
-
-            </HorizontalScrollView>
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+            </android.support.v4.widget.SwipeRefreshLayout>
 
         </RelativeLayout>
-
     </FrameLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBarstatus"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/navigation"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

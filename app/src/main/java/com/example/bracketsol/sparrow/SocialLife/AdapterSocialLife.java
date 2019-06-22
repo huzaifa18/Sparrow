@@ -58,6 +58,7 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
         myViewHolder.user.setText(mAccount.getSender_name());
         myViewHolder.likes.setText("" + mAccount.getLikes());
         myViewHolder.coments.setText("" + mAccount.getComments());
+        myViewHolder.eye_tv.setText("" + mAccount.getTotal_views());
 
 
         myViewHolder.layout.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +101,10 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView user, desc, likes, coments;
+        public TextView user, desc, likes, coments,eye_tv;
         ImageView imageView_post;
         CircleImageView imageVie1w;
-        ImageButton like, coment;
+        ImageButton like, coment,eye;
         ModelSocial item;
         LinearLayout layout;
 
@@ -114,6 +115,7 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
             user = (TextView) view.findViewById(R.id.username_social);
             likes = (TextView) view.findViewById(R.id.likess_tv);
             coments = (TextView) view.findViewById(R.id.coments_tv);
+            eye_tv= (TextView) view.findViewById(R.id.views_tv);
             layout = view.findViewById(R.id.layout);
             imageVie1w = (CircleImageView) view.findViewById(R.id.userprofile_social);
             imageView_post = (ImageView) view.findViewById(R.id.image_post_social);

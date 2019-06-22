@@ -9,19 +9,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -70,6 +70,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.bracketsol.sparrow.Activities.HomeActivity;
 import com.example.bracketsol.sparrow.BottomSheetGallery.BSImagePicker;
 import com.example.bracketsol.sparrow.BottomSheetGallery.BSVideoPicker;
 import com.example.bracketsol.sparrow.Emoticons.ChatListAdapter;
@@ -129,6 +130,8 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
     private static final String[] PERMISSIONS_START_CALL = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};//WRITE_EXTERNAL_STORAGE, CAPTURE_VIDEO_OUTPUT
     private static final int PERMISSIONS_REQUEST_START_CALL = 101;
     private static boolean commandLineRun = false;
+    //Audio file
+    public MediaRecorder myAudioRecorder;
     ImageButton add_filebtn, cam_imgbtn;
     LinearLayout linearLayout;
     Animation bottomUp;
@@ -180,12 +183,9 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
     private boolean isKeyBoardVisible;
     private Bitmap[] emoticons;
     private EditText editTextMessage;
+    Cursor cursor;
     //FOR SHOWING IN RECYCLERVIEW CHAT
     private MessageAdapter messageAdapter;
-    private View imageViewSend,imageViewAudio;
-    //Audio file
-    private MediaRecorder myAudioRecorder;
-    private String outputFile;
     //SOCKETIO
     Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
@@ -195,12 +195,13 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                 public void run() {
                     Log.i("msg", "on new message");
                     Log.i(TAG, "run: ");
-                    JSONObject fileObject = (JSONObject) args[0];
                     JSONObject data = (JSONObject) args[0];
+                    //JSONObject fileObject = (JSONObject) args[0];
                     Log.i("msg", "Data on message recieve: " + data);
+                    // Log.i("msg", "Data on message recieve: " + fileObject);
                     String content, sender_id, token;
                     int receiver_id;
-                    String mimetype,recfilename,recincImage;
+                    String mimetype, recfilename, recincImage;
 
                     try {
                         mimetype = (data.getString("mimetype") != null) ? data.getString("mimetype") : "";
@@ -208,19 +209,15 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                         sender_id = data.getString("sender_id");
                         receiver_id = data.getInt("receiver_id");
 
-                        //socket thingsgi
-                        fileObject = data.getJSONObject("files");
-
-                        recfilename = fileObject.getString("name");
-                        Log.i("getmsg", "filename" + recfilename);
-                        recincImage = fileObject.getString("data");
-                        Log.i("getmsg", "enc" + recincImage);
-                        //
+//                        //socket thingsgi
+//                         //fileObject = (data.getJSONObject("files") !=null ?  data.getJSONObject("files") : (JSONObject) JSONObject.NULL);
+//                        recfilename = (fileObject.getString("name")!= null) ? fileObject.getString("name") : "";
+//                        recincImage = (fileObject.getString("data")!= null) ? fileObject.getString("data") : "";
 
                         if (mimetype.equals("")) {
                             Log.i("mime", "empty");
                             try {
-                                Log.i("getmsg", "mimetype.equals(\"\")" );
+                                Log.i("getmsg", "mimetype.equals(\"\")");
                                 Log.i("getmsg", "content:" + content);
                                 Log.i("getmsg", "sender_id:" + sender_id);
                                 Log.i("getmsg", "receiver_id:" + receiver_id);
@@ -230,7 +227,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                                 Log.i(TAG, "run:5 ");
                                 Log.i(TAG, "run: " + getuname + message + getsenderid);
                             } catch (Exception e) {
-                                Log.i("getmsg", "mimetype.equals(\"\")" );
+                                Log.i("getmsg", "mimetype.equals(\"\")");
                                 Log.i("exc", "" + e.getMessage());
                             }
 
@@ -244,13 +241,13 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                                 Log.i("getmsg", "mimetype:" + mimetype);
                                 Log.i("getmsg", "token:" + token);
 
-                                MessageFormat format = new MessageFormat(receiver_id, getuname, mime);
+                                MessageFormat format = new MessageFormat(receiver_id, getuname);
                                 Log.i(TAG, "run:4 ");
                                 messageAdapter.add(format);
                                 Log.i(TAG, "run:5 ");
                                 Log.i(TAG, "run: " + getuname + message + getsenderid);
                             } catch (Exception e) {
-                                Log.i("getmsg", "content.equals(\"\")"  );
+                                Log.i("getmsg", "content.equals(\"\")");
                                 Log.i("exc", "" + e.getMessage());
                             }
                         } else {
@@ -270,11 +267,11 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                                 Log.i(TAG, "run:5 ");
                                 Log.i(TAG, "run: " + getuname + message + getsenderid);
                             } catch (Exception e) {
-                                Log.i("getmsg", "else"  );
+                                Log.i("getmsg", "else");
                             }
                         }
                     } catch (JSONException e) {
-                        Log.i("getmsg", "main catch",e);
+                        Log.i("getmsg", "main catch", e);
                         Log.i("getmsg", "main catch");
                         e.printStackTrace();
                     }
@@ -325,6 +322,8 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             });
         }
     };
+    private View imageViewSend, imageViewAudio;
+    private String outputFile;
     private SharedPreferences sharedPref;
     private String keyprefResolution;
     private String keyprefFps;
@@ -839,6 +838,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
 
     private void init() {
         imgvidLayout = findViewById(R.id.add_imge_vid_layout);
+
         //webrtc
         sendmsgBtn = findViewById(R.id.ssendButton);
         vidImgbtn = findViewById(R.id.vid_img_btn);
@@ -878,12 +878,12 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
         getuname = getIntent().getStringExtra("username");
         title_tv.setText(getuname);
         editTextMessage = findViewById(R.id.editTextMessage);
-        //
-        myAudioRecorder = new MediaRecorder();
-        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        myAudioRecorder.setOutputFile(outputFile);
+//        //
+//        myAudioRecorder = new MediaRecorder();
+//        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+//        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+//        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+//        myAudioRecorder.setOutputFile(outputFile);
         ClickListeners();
 
 
@@ -894,11 +894,12 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             @Override
             public void onClick(View view) {
                 if (!editTextMessage.getText().equals("")) {
-                    if (encodedImage!=null) {
+                    if (encodedImage != null) {
                         Toast.makeText(ChatActivityMain.this, "image send", Toast.LENGTH_SHORT).show();
                         sendMessage("Image");
+                    } else {
+                        sendMessage("message");
                     }
-                    sendMessage("message");
                 } else {
                     Toast.makeText(ChatActivityMain.this, "Please write something", Toast.LENGTH_SHORT).show();
                     if (!encodedImage.isEmpty()) {
@@ -907,7 +908,6 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                     }
                 }
                 encodedImage = null;
-
             }
         });
     }
@@ -945,7 +945,6 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 try {
-
                     String resString = response.body().string();
                     Log.e("TAG", "res: " + response.body().string());
                     JSONObject resJson = new JSONObject(resString);
@@ -1070,7 +1069,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             public void onClick(View view) {
                 //linearLayout.removeAllViews();
                 linearLayout.setVisibility(View.GONE);
-                 Toast.makeText(ChatActivityMain.this, "camera butotn", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivityMain.this, "camera butotn", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -1366,6 +1365,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             jsonObject.put("receiver_id", id);
             jsonObject.put("content", message);
             jsonObject.put("mimetype", "");
+            //jsonObject.put("files", []);
             Log.i("sendmessage", "json object send: " + jsonObject);
             mSocket.emit("private chat", jsonObject);
 
@@ -1373,9 +1373,54 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             e.printStackTrace();
         }
         Log.i(TAG, "sendMessage: 1" + mSocket.emit("chat message", jsonObject));
+    }
 
-        //TODO send message over api
 
+    private void sendWithVideo() {
+
+
+    }
+
+    private void sendWithVideoApi() {
+
+        Log.e("TAG","Send Video!");
+
+        File fileUp = new File(String.valueOf(mUri));
+
+        MultipartBody.Part filePart;
+
+        Log.e("TAG","postPath: " + mUri);
+        Log.e("TAG","fileUp: " + fileUp.getName());
+        Log.e("TAG","Mime Type: " + getMimeType(fileUp.getName()));
+
+        MultipartBody.Part filePart1 = MultipartBody.Part.createFormData("fileUpload", fileUp.getName(), RequestBody.create(MediaType.parse(getMimeType(fileUp.getName())), fileUp));
+
+        filePart = filePart1;
+
+        Call<ResponseBody> call = apiInterface.sendMessagevideo(filePart);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                try {
+                    String responseStr = response.body().string();
+                    Log.e("TAG","Response: " + responseStr);
+                    JSONObject jsonObject = new JSONObject(responseStr);
+                    String message = jsonObject.getString("message");
+                    Log.e("TAG","Message: " + message);
+                    Toast.makeText(ChatActivityMain.this,"Message: " + message,Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("TAG","Error Response: " + t.getMessage());
+            }
+        });
     }
 
     private void sendWithImage() {
@@ -1400,7 +1445,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                 jsonObject.put("receiver_id", id);
                 jsonObject.put("token", token);
                 jsonObject.put("mimetype", mime);
-                jsonObject.put("content", "");
+                jsonObject.put("content", message);
                 //image data
                 fileObject.put("mimetype", mime);
                 fileObject.put("name", filename);
@@ -1484,26 +1529,6 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
 
             Glide.with(this).load(messageFormatList.get(i)).into(iv);
-
-//            ApiInterface uploadImage = ApiClient.getApiClient().create(ApiInterface.class);
-//
-//            Call<UploadObject> fileUpload = uploadImage.uploadFile(fileToUpload, "hello" ,3,4,"45621");
-//            fileUpload.enqueue(new Callback<UploadObject>() {
-//                @Override
-//                public void onResponse(Call<UploadObject> call, Response<UploadObject> response) {
-//                    Toast.makeText(ChatActivityMain.this, "Success " + response.body().getSuccess(), Toast.LENGTH_LONG).show();
-//                    Log.i("retro","successs");
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UploadObject> call, Throwable t) {
-//                    Log.d(TAG, "Error " + t.getMessage());
-//                    Toast.makeText(ChatActivityMain.this, "fail " , Toast.LENGTH_LONG).show();
-//                }
-//            });
-
-
-            ;
             File getmimefile = new File(String.valueOf(messageFormatList.get(i)));
             String filenamee = getmimefile.getName();
             mime = getMimeType(filenamee);
@@ -1520,7 +1545,6 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             }
             final String finalEncodedImage = encodedImage;
             Log.i("file", "encodedImage: " + encodedImage + "finalEncodedImage: " + finalEncodedImage + "filename: " + filename + "file: " + file);
-
         }
     }
 
@@ -1549,9 +1573,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
         String ts = tsLong.toString();
         String token = "" + Prefs.getUserIDFromPref(MyApp.getContext()) + ts;
         linearLayout.setVisibility(View.GONE);
-        Log.i(TAG, "sendMessage: ");
         message = editTextMessage.getText().toString().trim();
-
         int id = -1;
         if (Prefs.getUserIDFromPref(getContext()) == getsenderid) {
             id = getreceiverid;
@@ -1566,10 +1588,12 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
             sendOnlyMessageApi();
         } else if (check.equals("video")) {
             Log.i("msg", "video :" + check);
+            sendWithVideo();
+            sendWithVideoApi();
         } else if (check.equals("Image")) {
             Log.i("msg", "Image :" + check);
             sendWithImage();
-            addProduct();
+            sendImageApi();
 //            sendMessageFile();
 
             if (imgLayout.getVisibility() == View.VISIBLE) {
@@ -2340,15 +2364,36 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
                 default:
                     iv = vid;
             }
-            Log.i("list", "videoindex: " + messageFormatList.get(i));
+            imageViewSend.setVisibility(View.VISIBLE);
+            imageViewSend.animate().scaleX(1f).scaleY(1f).setDuration(100).setInterpolator(new LinearInterpolator()).start();
+
+            if(messageFormatList.size()>0){
+                // Get the Image from data
+                Uri selectedImage = messageFormatList.get(i);
+                Log.i("TAG","message url" + messageFormatList.get(i));
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String mediaPath = cursor.getString(columnIndex);
+                // Set the Image in ImageView for Previewing the Media
+                //imageView.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                //Glide.with(CreatePost.this).load(BitmapFactory.decodeFile(mediaPath)).into(iv_image);
+                cursor.close();
+                mUri= Uri.parse(mediaPath);
+            }
 
             mUri = messageFormatList.get(i);
+            Log.i("list", "videoindex: " + messageFormatList.get(i));
             Log.i("list", "videoindex: " + mUri);
             imgLayout.setVisibility(View.VISIBLE);
             Toast.makeText(ChatActivityMain.this, "" + mUri, Toast.LENGTH_SHORT).show();
 
 
-            //sendMessage("video");
+            sendMessage("video");
 
             File file = new File(String.valueOf(messageFormatList.get(i)));
             filename = file.getName();
@@ -2360,7 +2405,7 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
 
     //volley
 
-    public void addProduct() {
+    public void sendImageApi() {
         int id = -1;
         if (Prefs.getUserIDFromPref(getContext()) == getsenderid) {
             id = getreceiverid;
@@ -2413,7 +2458,6 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
              */
 
 
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -2422,7 +2466,6 @@ public class ChatActivityMain extends AppCompatActivity implements BSImagePicker
 
                 return params;
             }
-
 
 
             @Override

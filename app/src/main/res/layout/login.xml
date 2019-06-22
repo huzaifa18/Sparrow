@@ -12,14 +12,9 @@
         <LinearLayout
             android:id="@+id/scroll_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/inside_scroll_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/header_layout"
@@ -35,58 +30,32 @@
                     android:layout_marginTop="20dp"
                     app:srcCompat="@drawable/ic_camera_alt_black_24dp" />
 
-                <android.support.design.widget.TextInputLayout
+                <EditText
                     android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/logo_imageview"
                     android:layout_marginTop="20dp"
-                    android:hint="@string/phone_number"
+                    android:hint="@string/phone"
+                    android:text="tester"
                     android:paddingTop="10dp"
-
                     >
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/username"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/btn_shape_login"
-                        android:maxLines="1"
-                        android:nextFocusForward="@string/password"
-                        android:text="huzaifa007"
-                        android:textStyle="bold" />
+                </EditText>
 
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
+                <EditText
                     android:id="@+id/passwordd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/phone"
                     android:hint="@string/password"
                     android:paddingTop="10dp"
+                    android:text="tester"
+                    android:inputType="textPassword"
 
-                    >
+                    />
 
-                    <ProgressBar
-                        android:id="@+id/simpleProgressBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:visibility="gone" />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/btn_shape_login"
-                        android:inputType="textPassword"
-                        android:nextFocusForward="@id/login_button"
-                        android:text="123456"
-                        android:textStyle="bold" />
-
-                </android.support.design.widget.TextInputLayout>
 
 
                 <LinearLayout
@@ -121,16 +90,26 @@
 
                 </LinearLayout>
 
+
+
                 <Button
                     android:id="@+id/login_button"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/pass_layout"
-                    android:layout_marginLeft="45dp"
-                    android:layout_marginRight="45dp"
-                    android:background="@drawable/btn_shape_login"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/btn_shape_style"
                     android:text="@string/login"
                     android:textAllCaps="false" />
+                <ProgressBar
+                    android:id="@+id/simpleProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pass_layout"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    />
 
                 <TextView
                     android:id="@+id/or_textview"
@@ -138,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/login_button"
                     android:layout_centerHorizontal="true"
+                    android:layout_margin="20dp"
                     android:gravity="right"
                     android:text="@string/or"
                     android:textAlignment="center"
@@ -145,12 +125,13 @@
 
                 <Button
                     android:id="@+id/facebook_btn_signin"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/or_textview"
+                    android:layout_centerInParent="true"
                     android:layout_marginLeft="45dp"
                     android:layout_marginRight="45dp"
-                    android:background="@drawable/btn_shape_login"
+                    android:background="@drawable/btn_shape_style"
                     android:text="@string/fb_login"
                     android:textAllCaps="false" />
 
@@ -158,28 +139,27 @@
             </RelativeLayout>
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_above="@id/create_account_textview"
-                android:layout_gravity="bottom"
-                android:background="@color/colorwhite" />
-
-            <TextView
-                android:id="@+id/create_account_textview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_margin="20dp"
-                android:gravity="left"
-                android:text="@string/create"
-                android:textAlignment="center"
-                android:textStyle="bold" />
-        </LinearLayout>
         </LinearLayout>
 
 
     </ScrollView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".1dp"
+        android:layout_above="@id/create_account_textview"
+        android:background="@color/colorwhite" />
+
+    <TextView
+        android:id="@+id/create_account_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:gravity="bottom"
+        android:text="@string/create"
+        android:textAlignment="center"
+        android:textStyle="bold" />
 
 </RelativeLayout>

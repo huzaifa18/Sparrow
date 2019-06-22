@@ -93,6 +93,21 @@
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
+<RelativeLayout
+    android:id="@+id/no_messages_yet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="No Old Conversations Yet"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

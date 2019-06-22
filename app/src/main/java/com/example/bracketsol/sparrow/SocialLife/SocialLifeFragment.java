@@ -217,7 +217,7 @@ public class SocialLifeFragment extends Fragment {
                     recyclerView_social.scrollToPosition(socialArrayList.size());
                     socialadapter.notifyDataSetChanged();
                     mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-                    // mLayoutManager.setReverseLayout(true);
+                   // mLayoutManager.setReverseLayout(true);
                     //mLayoutManager.setStackFromEnd(true);
                     recyclerView_alert.setItemAnimator(new DefaultItemAnimator());
                     recyclerView_social.setLayoutManager(mLayoutManager);
