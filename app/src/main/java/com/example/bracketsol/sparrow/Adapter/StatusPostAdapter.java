@@ -53,7 +53,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
     Dialog dialog;
     boolean issave = false;
     ApiInterface apiInterface;
-    Call<ResponseBody> hitLike;
+    Call<ResponseBody> hitLike,hitDisLike;
 
 
     public StatusPostAdapter(Context mContext, ArrayList<StatusPostingModel> statusarraylistAdapter) {
@@ -264,6 +264,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
                     holder.iv_like.setVisibility(View.GONE); }
             }, 500);
             holder.islike = false;
+            hitDisLikeApi(holder,position,holder.islike);
         } else {
             holder.like.setImageResource(R.drawable.ic_like);
             holder.iv_like.setVisibility(View.VISIBLE);
@@ -276,8 +277,9 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
                     holder.iv_like.setVisibility(View.GONE); }
             }, 500);
             holder.islike = true;
+            hitLikeApi(holder, position, holder.islike);
         }
-        hitLikeApi(holder, position, holder.islike);
+
 
     }
 
@@ -322,6 +324,53 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
                 }
             }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+    public void hitDisLikeApi(ViewHolder Apiholder, int position, final boolean like) {
+        hitLike = apiInterface.hitDisLike(statusarraylistAdapter.get(position).getPost_id());
+        hitLike.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String resString = response.body().string();
+                    JSONObject resJson = new JSONObject(resString);
+                    String getmessage = resJson.getString("error");
+                    String getmes = resJson.getString("message");
+                    Log.i("TAG", "" + getmessage + getmes);
+                    Log.i("TAG", "" + "dislike");
+
+                    boolean islikes = like;
+                    if (islikes) {
+
+                        int TotalLike = statusarraylistAdapter.get(position).getTotal_likes();
+                        //int updatelikes = ++TotalLike;
+                        Log.i("TAG", "" + TotalLike);
+                        Apiholder.setTotalLikes("" + TotalLike);
+
+                        Apiholder.like.setImageResource(R.drawable.ic_like);
+                        //islike = false;
+                    } else {
+                        int TotalLike = statusarraylistAdapter.get(position).getTotal_likes();
+                        int updatelikes = --TotalLike;
+                        Log.i("TAG", "" + TotalLike);
+                        Apiholder.setTotalLikes("" + TotalLike);
+
+                        Apiholder.like.setImageResource(R.drawable.ic_dislike);
+
+                        //islike= true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
