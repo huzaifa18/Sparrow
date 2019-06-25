@@ -17,75 +17,73 @@
         app:backgroundTint="#00695C"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/fab"
-        android:orientation="vertical"
-        android:weightSum="2">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fab">
 
         <LinearLayout
-            android:id="@+id/social_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <!--<View-->
-            <!--android:id="@+id/social_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:visibility="invisible"-->
-            <!--android:layout_height="wrap_content"/>-->
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2">
 
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/social_recycler"
+            <LinearLayout
+                android:id="@+id/social_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scrollbars="vertical" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/alert_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
+                android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/alert_recycler"
+                    android:id="@+id/social_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="vertical" />
 
-            </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/alert_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/alert_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
         android:padding="10dp">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_alert"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:visibility="gone"
             android:layout_gravity="right"
+            android:visibility="gone"
             app:backgroundTint="#000000" />
 
         <TextView
@@ -103,8 +101,8 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

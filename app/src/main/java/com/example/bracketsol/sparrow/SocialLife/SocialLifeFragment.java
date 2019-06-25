@@ -43,7 +43,6 @@ public class SocialLifeFragment extends Fragment {
     Call<ResponseBody> socialCall, alertCall;
     ProgressBar simpleProgressBar;
     LinearLayout alert_layout, social_layout;
-    Animation slideUpAnimation, slideDownAnimation;
     FloatingActionButton floatingActionButton, fabalert;
     LinearLayout getSocial_layout, getAlert_layout;
     boolean isfirsttime_social = true;
@@ -54,6 +53,8 @@ public class SocialLifeFragment extends Fragment {
     private ArrayList<ModelAlertSocial> alertArrayList;
     private RecyclerView recyclerView_social;
     private AdapterSocialLife socialadapter;
+
+    int page = 1;
 
     @Nullable
     @Override
@@ -79,19 +80,21 @@ public class SocialLifeFragment extends Fragment {
         socialArrayList = new ArrayList<>();
         socialadapter = new AdapterSocialLife(getContext(), socialArrayList);
 
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        slideUpAnimation = AnimationUtils.loadAnimation(getContext(),
-                R.anim.slide_up);
+        recyclerView_social.setAdapter(socialadapter);
+        LinearLayoutManager ll_manager = new LinearLayoutManager(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL, true);
+        ll_manager.setReverseLayout(true);
+        ll_manager.setStackFromEnd(true);
+        recyclerView_social.setLayoutManager(ll_manager);
 
-        slideDownAnimation = AnimationUtils.loadAnimation(getContext(),
-                R.anim.slide_down);
-        prepareSocialData();
-        prepareAlertData();
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
         recyclerView_social.addOnScrollListener(new SocialCustomScrollListener());
         recyclerView_alert.addOnScrollListener(new AlertCustomScrollListener());
         floatingActionButton = view.findViewById(R.id.fab);
         fabalert = view.findViewById(R.id.fab_alert);
 
+        prepareSocialData();
+        prepareAlertData();
 
     }
 
@@ -108,7 +111,6 @@ public class SocialLifeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "hi", Toast.LENGTH_SHORT).show();
-                //startSlideDownAnimation();
                 LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         0,
@@ -129,6 +131,8 @@ public class SocialLifeFragment extends Fragment {
                 if(alert_layout.getVisibility()==View.VISIBLE){
                     social_layout.setVisibility(View.VISIBLE);
                     alert_layout.setVisibility(View.GONE);
+                    Animation down = AnimationUtils.loadAnimation(getContext(), R.anim.slide_down);
+                    social_layout.setAnimation(down);
                     LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
@@ -138,6 +142,8 @@ public class SocialLifeFragment extends Fragment {
                 }else if(social_layout.getVisibility()==View.VISIBLE){
                     alert_layout.setVisibility(View.VISIBLE);
                     social_layout.setVisibility(View.GONE);
+                    Animation up = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
+                    alert_layout.setAnimation(up);
                     LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             0,
@@ -159,14 +165,14 @@ public class SocialLifeFragment extends Fragment {
     }
 
     private void prepareSocialData() {
-        socialCall = apiInterface.getSocialLife();
+        socialCall = apiInterface.getSocialLife(page);
         socialCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String resString = response.body().string();
                     JSONObject resJson = new JSONObject(resString);
-                    Log.e("TAG", "ok");
+                    Log.e("TAG", "resString: " + resString);
                     JSONArray array = resJson.getJSONArray("announcements");
                     Log.e("TAG", "ok");
 
@@ -210,7 +216,7 @@ public class SocialLifeFragment extends Fragment {
                         Log.i("url", "https://s3.amazonaws.com/social-funda-bucket/" + url);
                         ModelSocial modelSocial = new ModelSocial(announcement_id, attachment_id,
                                 sender_id, is_active, type, statement, "https://s3.amazonaws.com/social-funda-bucket/" + url, start_data, end_date, created_at, sender_name, "https://s3.amazonaws.com/social-funda-bucket/" + profile_pic, total_likes, total_comments,total_views);
-                        simpleProgressBar.setVisibility(View.GONE);
+                        //.setVisibility(View.GONE);
                         socialArrayList.add(modelSocial);
                     }
                     recyclerView_social.setAdapter(socialadapter);

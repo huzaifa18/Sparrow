@@ -47,7 +47,7 @@ public interface ApiInterface {
     Call<ResponseBody> getAllMessage();
 
     @GET("api/announcements/announcement")
-    Call<ResponseBody> getSocialLife();
+    Call<ResponseBody> getSocialLife(@Query("page") int page);
 
     @GET("api/posts")
     Call<ResponseBody> getAllPosts(@Query("page") int page);
@@ -85,9 +85,6 @@ public interface ApiInterface {
 
     @GET("api/users/profile/")
     Call<ResponseBody> getProfile(@Query("user_id") int userid);
-
-    @GET("api/announcements/announcement")
-    Call<ResponseBody> getSocialLife(@Query("page") int page);
 
     @Multipart
     @POST("api/posts")
