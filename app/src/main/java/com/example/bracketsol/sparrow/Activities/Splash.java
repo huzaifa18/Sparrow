@@ -21,7 +21,7 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mprogressBar = new ProgressBar(this);
-        mprogressBar.setBackgroundColor(getResources().getColor(R.color.colorwhite));
+        mprogressBar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
 
         new Handler().postDelayed(new Runnable(){
             @Override

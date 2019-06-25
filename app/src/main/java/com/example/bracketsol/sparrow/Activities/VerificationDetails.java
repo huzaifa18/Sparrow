@@ -55,12 +55,10 @@ import retrofit2.Callback;
 public class VerificationDetails extends AppCompatActivity {
 
     ImageButton nextButton;
-    Toolbar toolbar;
     Animation animShake;
     ApiInterface apiInterface;
 
     TextInputEditText username, phone, email, password;
-    //spinner
     String myLog = "myLog";
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
@@ -71,12 +69,20 @@ public class VerificationDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.verification_details);
+
+        inititialize();
+
+    }
+
+    private void inititialize() {
+
         progressBarHolder = (FrameLayout) findViewById(R.id.up_progressBarHolder);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         username = findViewById(R.id.up_username);
         phone = findViewById(R.id.up_phone);
         email = findViewById(R.id.up_email);
         password = findViewById(R.id.up_password);
+        nextButton = findViewById(R.id.nextt_button);
 
         //Generating token
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -90,6 +96,13 @@ public class VerificationDetails extends AppCompatActivity {
                 }
             }
         });
+
+        clickListeners();
+
+    }
+
+    private void clickListeners() {
+
         username.setOnKeyListener(new View.OnKeyListener() {
 
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -104,6 +117,7 @@ public class VerificationDetails extends AppCompatActivity {
                 return false;
             }
         });
+
         email.setOnKeyListener(new View.OnKeyListener() {
 
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -118,7 +132,6 @@ public class VerificationDetails extends AppCompatActivity {
                 return false;
             }
         });
-
 
         phone.setOnKeyListener(new View.OnKeyListener() {
 
@@ -135,26 +148,9 @@ public class VerificationDetails extends AppCompatActivity {
             }
         });
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                Toast.makeText(getApplicationContext(), "Back clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        nextButton = findViewById(R.id.nextt_button);
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                new VerificationDetails.MyTask().execute();
 
 //                Intent intent = new Intent(VerificationDetails.this,Login.class);
 //                startActivity(intent);
@@ -165,21 +161,49 @@ public class VerificationDetails extends AppCompatActivity {
                 String getemail = email.getText().toString();
                 String getpasword = password.getText().toString();
                 String getphone = phone.getText().toString();
-                checkValidate();
+
+                Intent intent = new Intent(VerificationDetails.this, SetProfilePicture.class);
+                startActivity(intent);
+                //checkValidate();
 
             }
         });
 
     }
 
-    public void click(View view) {
-        view.getId();
-        Intent intent = new Intent(VerificationDetails.this, SetProfilePicture.class);
-        startActivity(intent);
+    private void checkValidate() {
+        Pattern p = Pattern.compile(Utils.regEx);
+        Matcher m = p.matcher(email.getText().toString());
+        animShake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+
+        boolean failFlag = false;
+        // TODO Auto-generated method stub
+        if(username.getText().toString().equals("")) {
+            username.setAnimation(animShake);
+            failFlag = true;
+            username.setError( "username is required" );
+        } else if(email.getText().toString().length() == 0) {
+            email.setAnimation(animShake);
+            failFlag = true;
+            email.setError( "email is required" );
+        } else if(phone.getText().toString().length() == 0) {
+            failFlag = true;
+            phone.setError( "Phone number is required" );
+            phone.setAnimation(animShake);
+        } else if(password.getText().toString().length() == 0) {
+            failFlag = true;
+            password.setAnimation(animShake);
+            password.setError("Password is required");
+        } else if (failFlag == false) {
+            //new VerificationDetails.MyTask().execute();
+            SignUp(username.getText().toString(), email.getText().toString(), phone.getText().toString(), password.getText().toString());
+        }
+
     }
 
     private void SignUp(final String username, final String email, final String phone, final String password) {
 
+        progressBarHolder.setVisibility(View.VISIBLE);
         // Tag used to cancel the request
         String cancel_req_tag = "register";
         //show pregress here
@@ -201,18 +225,27 @@ public class VerificationDetails extends AppCompatActivity {
                     sb.append(message_two);
                     Log.e("TAG", "Message: " + message);
                     sb.append(message);
+
                     if (message.equals("0")) {
+
                         Toast.makeText(VerificationDetails.this, "Successfully registered" + message_two, Toast.LENGTH_SHORT).show();
                         int userid = jObj.getInt("user_id");
                         Prefs.addPrefsForUserId(VerificationDetails.this, userid);
                         Log.i("token", "userid" + userid);
+
                         if (Prefs.getUserIDFromPref(VerificationDetails.this) != -1 && Prefs.gettUserUDID(VerificationDetails.this) != null) {
+
                             sendRegistrationToServer(token, Prefs.getUserIDFromPref(VerificationDetails.this));
+
                         } else {
+
                             Log.i("token", "user not registered");
+
                         }
                     } else {
+
                         Toast.makeText(VerificationDetails.this, ""+message_two, Toast.LENGTH_SHORT).show();
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -227,6 +260,7 @@ public class VerificationDetails extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 Toast.makeText(getApplicationContext(),
                         "Server Connection Fail", Toast.LENGTH_LONG).show();
+                progressBarHolder.setVisibility(View.GONE);
                 //hid pregress here
             }
         }) {
@@ -254,43 +288,6 @@ public class VerificationDetails extends AppCompatActivity {
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
     }
 
-    private void checkValidate() {
-        Pattern p = Pattern.compile(Utils.regEx);
-        Matcher m = p.matcher(email.getText().toString());
-        animShake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-
-        boolean failFlag = false;
-        // TODO Auto-generated method stub
-        if(username.getText().toString().equals(""))
-        {
-            username.setAnimation(animShake);
-            failFlag = true;
-            username.setError( "username is required" );
-        }
-        if(email.getText().toString().length() == 0)
-        {
-            email.setAnimation(animShake);
-            failFlag = true;
-            email.setError( "email is required" );
-        }
-        if(phone.getText().toString().length() == 0)
-        {
-            failFlag = true;
-            phone.setError( "Phone number is required" );
-            phone.setAnimation(animShake);
-        }
-        if(password.getText().toString().length() == 0)
-        {
-            failFlag = true;
-            password.setAnimation(animShake);
-            password.setError("Password is required");
-        }
-        // if all are fine
-        if (failFlag == false) {
-            SignUp(username.getText().toString(), email.getText().toString(), phone.getText().toString(), password.getText().toString());
-        }
-
-    }
 
     private void sendRegistrationToServer(String token, int userId) {
         Call<ResponseBody> sendTokenToServer = apiInterface.sendTokenToServer(token, "Android", userId);
@@ -298,23 +295,30 @@ public class VerificationDetails extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 try {
+                    progressBarHolder.setVisibility(View.GONE);
                     String responsestr = response.body().string();
                     JSONObject jsonObject = new JSONObject(responsestr);
                     String message = jsonObject.getString("message");
                     Log.i("token", "userid" + message);
+
+                    Intent intent = new Intent(VerificationDetails.this, SetProfilePicture.class);
+                    startActivity(intent);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressBarHolder.setVisibility(View.GONE);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    progressBarHolder.setVisibility(View.GONE);
                 }
 
-                Intent intent = new Intent(VerificationDetails.this, Login.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(VerificationDetails.this, Login.class);
+                startActivity(intent);*/
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                progressBarHolder.setVisibility(View.GONE);
             }
         });
 

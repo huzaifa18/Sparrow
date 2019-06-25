@@ -23,7 +23,7 @@
     <string name="or">OR</string>
 
     <string name="show">Show password</string>
-    <string name="forgot">Forgot password</string>
+    <string name="forgot">Forgot password?</string>
     <string name="friendship">Friendship</string>
     <string name="login">Login</string>
     <string name="fb_login">Facebook Login</string>
@@ -42,6 +42,7 @@
 
 
     <string name="verify">Account Verification Details</string>
+    <string name="sign_up">Sign Up</string>
 
     <string name="confirm_detail">The code sent your mobile for confirming this contact number belong to you or not</string>
 
@@ -57,7 +58,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="code">Enter your Code</string>
     <string name="ver">Account verification</string>
-    <string name="privacy">Queen match media privacy and policy</string>
+    <string name="privacy">Sparrow Privacy And Policy</string>
 
     <string name="already_account_login">Already have an account? Login </string>
 

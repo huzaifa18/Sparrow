@@ -139,7 +139,7 @@
         android:layout_height="1dp"
         android:layout_above="@id/create_account_textview"
 android:layout_marginTop="10dp"
-        android:background="@color/colorwhite" />
+        android:background="@color/colorWhite" />
 
     <TextView
         android:id="@+id/create_account_textview"

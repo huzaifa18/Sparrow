@@ -27,7 +27,7 @@
                 android:gravity="center|center_vertical"
                 android:text="@string/welcome"
 
-                android:textColor="@color/colorwhite"
+                android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_toRightOf="@id/welcome_textview"
                 android:gravity="center|center_vertical"
                 android:text="@string/user"
-                android:textColor="@color/colorwhite"
+                android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
 
         </RelativeLayout>

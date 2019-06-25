@@ -18,27 +18,12 @@ import com.example.bracketsol.sparrow.R;
 
 public class SetProfilePicture extends AppCompatActivity {
 
-    Toolbar toolbar;
-
-
     Button nextButtonn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_profile_pic);
-
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                onBackPressed();
-                Toast.makeText(getApplicationContext(), "Back clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         nextButtonn = findViewById(R.id.skip_prifile_picture);
         nextButtonn.setOnClickListener(new View.OnClickListener() {

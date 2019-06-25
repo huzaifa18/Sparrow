@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include layout="@layout/custom_toolbar" />
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
 
     <FrameLayout
         android:id="@+id/up_progressBarHolder"
@@ -20,23 +19,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true" />
+
     </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="55dp">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/verify_detail_textview"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/colorchoose"
+            android:background="@color/colorPrimaryDark"
             android:gravity="center|center_vertical"
-            android:text="@string/verify"
-            android:textColor="@color/colorwhite"
-            android:textStyle="bold" />
+            android:text="@string/sign_up"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,20 +45,23 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <ImageView
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_gravity="center"
+                android:src="@drawable/sparrow_logo"/>
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/country_editext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/user"
-                android:paddingTop="10dp"
-
-                >
+                android:paddingTop="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/up_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/black_border_shape"
                     android:padding="5dp"
                     android:textStyle="bold" />
 
@@ -69,15 +72,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
-                android:paddingTop="10dp"
-
-                >
+                android:paddingTop="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/up_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/black_border_shape"
                     android:padding="5dp"
                     android:textStyle="bold" />
 
@@ -96,7 +96,6 @@
                     android:id="@+id/up_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/black_border_shape"
                     android:inputType="number"
                     android:maxLength="11"
                     android:padding="5dp"
@@ -110,17 +109,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
-                android:paddingTop="10dp"
-
-                >
+                android:paddingTop="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/up_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/black_border_shape"
                     android:inputType="textPassword"
-
                     android:padding="5dp"
                     android:textStyle="bold" />
 
@@ -130,13 +125,12 @@
 
         <ImageButton
             android:id="@+id/nextt_button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
             android:layout_above="@id/privacy_editext"
             android:layout_centerInParent="true"
             android:layout_marginBottom="40dp"
             android:background="@drawable/btn_shape"
-            android:onClick="click"
             android:src="@drawable/ic_navigate_next_black_24dp" />
 
         <TextView
@@ -146,6 +140,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
             android:gravity="center_horizontal"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold|italic"
             android:hint="@string/privacy" />
 
     </RelativeLayout>

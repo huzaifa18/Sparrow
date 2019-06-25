@@ -5,11 +5,13 @@
             <item android:bottom="3px" android:top="2px">
                 <shape>
 
-                    <stroke android:color="@color/colorwhite"
+                    <stroke android:color="@color/colorWhite"
                         android:width="1dp"/>
+
                     <gradient android:angle="90"
-                        android:endColor="@color/colorPrimary"
-                        android:startColor="@color/white" />
+                        android:endColor="@color/colorPrimaryLight"
+                        android:startColor="@color/colorPrimary" />
+
                     <corners android:radius="10dp" />
 
                     <padding android:bottom="5dp"
@@ -26,7 +28,7 @@
             <item android:bottom="5px">
                 <shape>
                     <padding android:bottom="5dp" />
-                    <stroke android:color="@color/colorwhite"
+                    <stroke android:color="@color/colorWhite"
                         android:width="1dp"/>
                     <corners android:radius="5dp" />
                     <padding android:bottom="10dp"

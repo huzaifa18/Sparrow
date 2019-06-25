@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.bracketsol.chatapp.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:background="@color/colorwhite">
+    android:background="@color/colorWhite">
 
     <include layout="@layout/chat_top_bar" />
 

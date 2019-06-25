@@ -22,7 +22,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="Create Post"
-            android:textColor="@color/colorwhite"
+            android:textColor="@color/colorWhite"
             android:textSize="24dp"
             app:layout_constraintStart_toEndOf="@+id/back" />
 

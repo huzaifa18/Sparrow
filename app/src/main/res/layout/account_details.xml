@@ -127,7 +127,7 @@
             android:id="@+id/bt_boy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorwhite"
+            android:background="@color/colorWhite"
             android:drawableTop="@drawable/ic_camera_alt_black_24dp"
             android:text="@string/boy"
             android:textAllCaps="false" />
@@ -136,7 +136,7 @@
             android:id="@+id/bt_girl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorwhite"
+            android:background="@color/colorWhite"
             android:drawableTop="@drawable/ic_camera_alt_black_24dp"
             android:text="@string/girl"
             android:textAllCaps="false"/>
