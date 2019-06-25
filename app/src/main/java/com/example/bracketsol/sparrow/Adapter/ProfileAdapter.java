@@ -56,7 +56,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
             super(view);
             title = (TextView) view.findViewById(R.id.text);
             imageView = (ImageView) view.findViewById(R.id.image);
-            img =  view.findViewById(R.id.pro_image);
+            img =  view.findViewById(R.id.civ_profile);
 
 
         }

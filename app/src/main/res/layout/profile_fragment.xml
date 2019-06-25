@@ -12,11 +12,10 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/my_toolbar"
+            android:id="@+id/toolbar_profile"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="#000"
-
             android:visibility="gone"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -25,23 +24,23 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="vertical">
 
 
             <com.example.bracketsol.sparrow.Utils.RoundRectCornerImageView
-                android:id="@+id/pro_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:clickable="true"
-
+                android:id="@+id/civ_profile"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_margin="5dp"
+                android:clickable="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/profile" />
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/username_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/image"
@@ -49,64 +48,53 @@
                 android:text="Kabeer Ali"
                 android:textColor="#000000"
                 android:textSize="15sp"
-
-
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/pro22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/username"
-                android:text="Sanger" />
 
             <TextView
-                android:id="@+id/statment"
+                android:id="@+id/tv_bio"
                 android:layout_width="wrap_content"
+                android:textColor="#000000"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pro22"
+                android:layout_below="@+id/tv_profession"
                 android:text="Samsung Android devices  " />
 
             <TextView
-                android:id="@+id/statment2"
+                android:id="@+id/tv_profession"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/statment"
+                android:textColor="#000000"
+                android:layout_below="@id/username_profile"
+                android:text="Sanger" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:layout_below="@+id/tv_bio"
                 android:text="extra fonts besides the default" />
 
             <TextView
-                android:id="@+id/statment3"
+                android:id="@+id/tv_blog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/statment"
+                android:textColor="#000000"
+                android:layout_below="@+id/tv_bio"
                 android:text="extra fonts besides " />
 
             <Button
                 android:id="@+id/bt_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/edit"
-                android:drawableRight="@drawable/ic_edit"/>
+                android:gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/ic_edit"
+                android:text="@string/edit" />
 
         </LinearLayout>
 
 
-        <LinearLayout
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/flowing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/statment"
-                android:layout_marginBottom="5dp"
-                android:paddingBottom="10dp"
-                android:text="Following"
-                android:textSize="12sp" />
-        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -121,6 +109,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_fan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -130,6 +119,7 @@
 
 
             <TextView
+                android:id="@+id/tv_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -138,6 +128,7 @@
 
 
             <TextView
+                android:id="@+id/tv_following"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -145,6 +136,7 @@
                 android:text="folling" />
 
             <TextView
+                android:id="@+id/tv_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -157,7 +149,6 @@
 
         <View
             android:layout_width="match_parent"
-
             android:layout_height="1dp"
             android:background="#52DBDBDB" />
 
@@ -169,11 +160,11 @@
 
 
             <ImageView
+                android:id="@+id/iv_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
-
                 android:src="@drawable/profile" />
 
 
@@ -181,7 +172,6 @@
 
         <View
             android:layout_width="match_parent"
-
             android:layout_height="1dp"
             android:background="#52DBDBDB" />
 
