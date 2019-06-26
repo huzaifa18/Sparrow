@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="keyboard_height">230dip</dimen>
+    <dimen name="profile_pic_round">75dip</dimen>
+
 </resources>

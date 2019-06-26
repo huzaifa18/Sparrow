@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/colorWhite"
     android:fillViewport="true">
 
     <LinearLayout
@@ -22,34 +22,48 @@
 
         </android.support.v7.widget.Toolbar>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <com.example.bracketsol.sparrow.Utils.RoundRectCornerImageView
-                android:id="@+id/civ_profile"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_margin="5dp"
-                android:clickable="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/profile" />
+                <com.example.bracketsol.sparrow.Utils.RoundRectCornerImageView
+                    android:id="@+id/civ_profile"
+                    android:layout_width="@dimen/profile_pic_round"
+                    android:layout_height="@dimen/profile_pic_round"
+                    android:clickable="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/story1"/>
+
+                <Button
+                    android:id="@+id/bt_edit"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:background="@drawable/btn_shape_style"
+                    android:drawableRight="@drawable/ic_edit"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/edit_profile" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/username_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_below="@+id/image"
-                android:layout_marginLeft="10dp"
-                android:text="Kabeer Ali"
-                android:textColor="#000000"
+                android:text="Huzaifa Asif"
+                android:textColor="@color/colorBlack"
                 android:textSize="15sp"
                 android:textStyle="bold" />
-
 
             <TextView
                 android:id="@+id/tv_bio"
@@ -57,7 +71,8 @@
                 android:textColor="#000000"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_profession"
-                android:text="Samsung Android devices  " />
+                android:layout_marginTop="5dp"
+                android:text="Never Give Up!" />
 
             <TextView
                 android:id="@+id/tv_profession"
@@ -65,15 +80,17 @@
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:layout_below="@id/username_profile"
-                android:text="Sanger" />
+                android:layout_marginTop="5dp"
+                android:text="Android Developer" />
 
             <TextView
                 android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#000000"
                 android:layout_below="@+id/tv_bio"
-                android:text="extra fonts besides the default" />
+                android:text="huzaifano1@hotmail.com"
+                android:layout_marginTop="5dp"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv_blog"
@@ -81,19 +98,10 @@
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:layout_below="@+id/tv_bio"
-                android:text="extra fonts besides " />
-
-            <Button
-                android:id="@+id/bt_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center"
-                android:drawableRight="@drawable/ic_edit"
-                android:text="@string/edit" />
+                android:layout_marginTop="5dp"
+                android:text="huzaifa18blog.wordpress.com" />
 
         </LinearLayout>
-
 
 
         <View
@@ -102,7 +110,6 @@
             android:background="#52DBDBDB" />
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical|center_horizontal"
@@ -113,9 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="fan"
-
-                />
+                android:text="Fans"/>
 
 
             <TextView
@@ -124,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:padding="10dp"
-                android:text="friend" />
+                android:text="Friends" />
 
 
             <TextView
@@ -133,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:padding="10dp"
-                android:text="folling" />
+                android:text="Following" />
 
             <TextView
                 android:id="@+id/tv_message"
@@ -141,22 +146,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:padding="10dp"
-                android:text="message"
-
-                />
+                android:text="Messages" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#52DBDBDB" />
+            android:background="@color/colorGray" />
 
         <LinearLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
 
 
             <ImageView
@@ -165,7 +169,7 @@
                 android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
-                android:src="@drawable/profile" />
+                android:src="@drawable/story2" />
 
 
         </LinearLayout>
@@ -181,7 +185,6 @@
             android:orientation="horizontal"
             android:padding="5dp">
 
-
             <TextView
                 android:id="@+id/textv"
                 android:layout_width="wrap_content"
@@ -189,6 +192,7 @@
                 android:text="@string/myMixedText"
                 android:textAlignment="textStart"
                 android:textSize="15sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -207,14 +211,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="May you know them" />
+                android:text="You May Know Them" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="#52DBDBDB" />
+                android:background="@color/colorGray" />
 
         </LinearLayout>
 
@@ -225,6 +229,5 @@
             android:scrollbars="vertical" />
 
     </LinearLayout>
-
 
 </ScrollView>

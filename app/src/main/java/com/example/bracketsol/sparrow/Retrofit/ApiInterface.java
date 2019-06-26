@@ -12,6 +12,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -104,8 +105,20 @@ public interface ApiInterface {
                                         @Part("background") String background,
                                         @Part MultipartBody.Part fileUpload);
 
-    @FormUrlEncoded
-    @POST("api/users/")
+    @Multipart
+    @PUT("api/users/")
+    Call<ResponseBody> updataProfileData(@Part("name") String name,
+                                         @Part("email") String email,
+                                         @Part("phone_no") String phone_no,
+                                         @Part("profession") String profession,
+                                         @Part("statement") String statement,
+                                         @Part("blog") String blog,
+                                         @Part("date_of_birth") String date_of_birth,
+                                         @Part("gender") String gender,
+                                         @Part("hasFile") int hasFile,
+                                         @Part MultipartBody.Part fileUpload);
+
+    @PUT("api/users/")
     Call<ResponseBody> updataProfileData(@Field("name") String name,
                                          @Field("email") String email,
                                          @Field("phone_no") String phone_no,
@@ -113,8 +126,6 @@ public interface ApiInterface {
                                          @Field("statement") String statement,
                                          @Field("blog") String blog,
                                          @Field("date_of_birth") String date_of_birth,
-                                         @Field("gender") String gender,
-                                         @Field("hasFile") int hasFile,
-                                         @Part MultipartBody.Part fileUpload);
+                                         @Field("gender") String gender);
 
 }

@@ -112,7 +112,7 @@ public class ProfileFragment extends Fragment {
 
         Listeners();
 
-        //prepareMovieData();
+        prepareMovieData();
 
         getProfile();
 
@@ -188,11 +188,11 @@ public class ProfileFragment extends Fragment {
 
     private void prepareMovieData() {
 
-        ModelProfile account = new ModelProfile(R.drawable.ic_seo, "kamal Rafiq");
+        ModelProfile account = new ModelProfile(R.drawable.ic_seo, "Kamal Rafiq");
         arrayList.add(account);
-        account = new ModelProfile(R.drawable.ic_seo, "sajid Rahim");
+        account = new ModelProfile(R.drawable.ic_seo, "Sajid Rahim");
         arrayList.add(account);
-        account = new ModelProfile(R.drawable.ic_seo, "waseem Azeem");
+        account = new ModelProfile(R.drawable.ic_seo, "Waseem Azeem");
         arrayList.add(account);
         profileAdapter.notifyDataSetChanged();
 

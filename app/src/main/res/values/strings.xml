@@ -12,7 +12,7 @@
     <string name="facebook">Facebook</string>
     <string name="twitter">Twitter</string>
     <string name="skip">Skip</string>
-    <string name="myMixedText">My simple Text<b>My Bold Text<i>MyBoldItalicText</i></b></string>
+    <string name="myMixedText">My simple Text <b> My Bold Text <i> MyBoldItalicText </i></b></string>
 
     <string name="phone">Phone number</string>
     <string name="password">Password</string>

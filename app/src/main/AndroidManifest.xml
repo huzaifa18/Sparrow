@@ -86,7 +86,8 @@
         <activity android:name=".SocketChat.MainActivity" />
         <activity android:name=".MessageActivity.SendMessageActivity" />
         <activity android:name=".Stories.StoryView" />
-        <activity android:name=".Activities.EditProfile" />
+        <activity android:name=".Activities.EditProfile"
+            android:windowSoftInputMode="adjustPan"/>
 
         <service
             android:name=".MessageActivity.MessagingService"

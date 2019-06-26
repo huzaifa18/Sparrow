@@ -38,9 +38,7 @@
                     android:layout_marginTop="50dp"
                     android:hint="@string/phone"
                     android:paddingTop="10dp"
-                    android:text="tester">
-
-                </EditText>
+                    android:text="huzaifa007"/>
 
                 <EditText
                     android:id="@+id/passwordd"
@@ -50,10 +48,7 @@
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:paddingTop="10dp"
-                    android:text="tester"
-
-                    />
-
+                    android:text="123456"/>
 
                 <LinearLayout
                     android:id="@+id/pass_layout"
