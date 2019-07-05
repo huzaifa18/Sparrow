@@ -17,7 +17,7 @@
         android:weightSum="10">
 
         <RelativeLayout
-            android:id="@+id/header_post_row"
+            android:id="@+id/rl_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp">

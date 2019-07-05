@@ -55,18 +55,18 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/posts/like")
-    Call<ResponseBody> hitLike(@Field("post_id") int post_id);
+    Call<ResponseBody> hitLikePost(@Field("post_id") int post_id);
 
     @DELETE("api/posts/like")
-    Call<ResponseBody> hitDisLike(@Query("post_id") int post_id);
+    Call<ResponseBody> hitDisLikePost(@Query("post_id") int post_id);
 
     @FormUrlEncoded
     @POST("api/posts/comment")
-    Call<ResponseBody> addComment(@Field("post_id") int post_id,
-                                  @Field("content") String content);
+    Call<ResponseBody> addPostComment(@Field("post_id") int post_id,
+                                      @Field("content") String content);
 
     @GET("api/posts/comment/")
-    Call<ResponseBody> getPreviousComment(@Query("post_id") int post_id);
+    Call<ResponseBody> getPreviousPostComment(@Query("post_id") int post_id);
 
     @GET("api/messages/chat-specific/")
     Call<ResponseBody> getSpecificMessage(@Query("sender_id") int sender_id,
@@ -127,5 +127,17 @@ public interface ApiInterface {
                                          @Field("blog") String blog,
                                          @Field("date_of_birth") String date_of_birth,
                                          @Field("gender") String gender);
+
+    @FormUrlEncoded
+    @POST("api/announcements/like")
+    Call<ResponseBody> hitLikeAnnouncement(@Field("announcement_id") int announcement_id);
+
+    @GET("api/announcements/comment/")
+    Call<ResponseBody> getPreviousAnnouncementComment(@Query("announcement_id") int announcement_id);
+
+    @FormUrlEncoded
+    @POST("api/announcements/comment")
+    Call<ResponseBody> addAnnouncementComment(@Field("announcement_id") int announcement_id,
+                                      @Field("content") String content);
 
 }

@@ -23,6 +23,10 @@ public class ModelSocial {
         this.total_views = total_views;
     }
 
+    public ModelSocial() {
+
+    }
+
     public int getTotal_views() {
         return total_views;
     }

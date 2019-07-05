@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.bracketsol.chatapp.MainActivity"
+    tools:context=".MessageActivity.ChatsListingMain"
     tools:showIn="@layout/activity_main"
     android:background="@color/colorWhite">
 
@@ -20,12 +21,27 @@
         android:layout_height="match_parent"
         android:background="#97000000"/>
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recent_chat_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         android:layout_marginTop="55dp"/>
+
+    <RelativeLayout
+        android:id="@+id/no_messages_yet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="No Old Conversations Yet" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -85,7 +86,7 @@ public class ChatsListingMain extends AppCompatActivity {
         list2 = new ArrayList<MessageListModel>();
         resadapter = new GetAllMessageAdapter(ChatsListingMain.this, list2);
         call = apiInterface.getAllMessage();
-        nomessagelayout = findViewById(R.id.no_messages_yet);
+        nomessagelayout = (RelativeLayout) findViewById(R.id.no_messages_yet);
         //GetAll();
 
     }
@@ -95,6 +96,10 @@ public class ChatsListingMain extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                simpleProgressBar.setVisibility(View.GONE);
+
+                frameLayout.setVisibility(View.GONE);
 
                 try {
                     String resString = response.body().string();
@@ -106,9 +111,8 @@ public class ChatsListingMain extends AppCompatActivity {
                     Log.e("TAG", "ok");
 
                     if(array.length()==0){
+                        Toast.makeText(ChatsListingMain.this, "No messages found!", Toast.LENGTH_LONG).show();
                         nomessagelayout.setVisibility(View.VISIBLE);
-                        Toast.makeText(ChatsListingMain.this, "No message", Toast.LENGTH_SHORT).show();
-                        simpleProgressBar.setVisibility(View.GONE);
                     }
                     for (int i = 0; i < array.length(); i++) {
                         //getting product object from json array
@@ -150,8 +154,6 @@ public class ChatsListingMain extends AppCompatActivity {
                         //Toast.makeText(ChatsListingMain.this, formattedDate, Toast.LENGTH_SHORT).show();
 
                         String name =null;
-                        simpleProgressBar.setVisibility(View.GONE);
-                        frameLayout.setVisibility(View.GONE);
                         MessageListModel messageListModel = null;
 //                        (getuserid==sender_id)? receiver_name : sender_name,
 

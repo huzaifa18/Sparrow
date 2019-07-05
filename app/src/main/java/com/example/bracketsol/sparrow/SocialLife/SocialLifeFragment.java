@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.example.bracketsol.sparrow.Activities.HomeActivity;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Retrofit.ApiClient;
 import com.example.bracketsol.sparrow.Retrofit.ApiInterface;
+import com.example.bracketsol.sparrow.Utils.PaginationScrollListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +36,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 
 public class SocialLifeFragment extends Fragment {
 
@@ -54,7 +58,16 @@ public class SocialLifeFragment extends Fragment {
     private RecyclerView recyclerView_social;
     private AdapterSocialLife socialadapter;
 
-    int page = 1;
+    public static final int PAGE_START = 0;
+    int page = PAGE_START;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    Boolean has_next = true;
+    int total_pages = 0;
+
+    SwipeRefreshLayout swipe_container;
+
+    LinearLayoutManager ll_manager;
 
     @Nullable
     @Override
@@ -63,6 +76,8 @@ public class SocialLifeFragment extends Fragment {
         view = (View) inflater.inflate(R.layout.social_liffe_fragment, container, false);
         init();
         Listeners();
+        onScrollListener();
+
         return view;
     }
 
@@ -81,9 +96,8 @@ public class SocialLifeFragment extends Fragment {
         socialadapter = new AdapterSocialLife(getContext(), socialArrayList);
 
         recyclerView_social.setAdapter(socialadapter);
-        LinearLayoutManager ll_manager = new LinearLayoutManager(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL, true);
-        ll_manager.setReverseLayout(true);
-        ll_manager.setStackFromEnd(true);
+        ll_manager = new LinearLayoutManager(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL, false);
+        ll_manager.getStackFromEnd();
         recyclerView_social.setLayoutManager(ll_manager);
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
@@ -93,7 +107,9 @@ public class SocialLifeFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.fab);
         fabalert = view.findViewById(R.id.fab_alert);
 
-        prepareSocialData();
+        swipe_container = view.findViewById(R.id.swipe_container);
+
+        fetchData();
         prepareAlertData();
 
     }
@@ -162,6 +178,31 @@ public class SocialLifeFragment extends Fragment {
                 //alert_View.setVisibility(View.INVISIBLE);
             }
         });
+
+        swipeListener();
+    }
+
+    private void swipeListener() {
+
+        swipe_container.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = PAGE_START;
+                isLastPage = false;
+                socialArrayList.clear();
+                fetchData();
+
+            }
+        });
+
+    }
+
+    private void fetchData() {
+        page++;
+        //progressBar.setVisibility(View.VISIBLE);
+        swipe_container.setRefreshing(true);
+        prepareSocialData();
+
     }
 
     private void prepareSocialData() {
@@ -170,12 +211,15 @@ public class SocialLifeFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+                    swipe_container.setRefreshing(false);
                     String resString = response.body().string();
                     JSONObject resJson = new JSONObject(resString);
                     Log.e("TAG", "resString: " + resString);
                     JSONArray array = resJson.getJSONArray("announcements");
                     Log.e("TAG", "ok");
 
+                    total_pages = resJson.getInt("total_pages");
+                    has_next = resJson.getBoolean("has_next");
 
                     for (int i = 0; i < array.length(); i++) {
                         //getting product object from json array
@@ -219,34 +263,31 @@ public class SocialLifeFragment extends Fragment {
                         //.setVisibility(View.GONE);
                         socialArrayList.add(modelSocial);
                     }
-                    recyclerView_social.setAdapter(socialadapter);
-                    recyclerView_social.scrollToPosition(socialArrayList.size());
+
                     socialadapter.notifyDataSetChanged();
-                    mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-                   // mLayoutManager.setReverseLayout(true);
-                    //mLayoutManager.setStackFromEnd(true);
-                    recyclerView_alert.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView_social.setLayoutManager(mLayoutManager);
 
-
-                    recyclerView_social.setItemAnimator(new DefaultItemAnimator());
-
+                    /*if (currentPage != PAGE_START) socialadapter.removeLoading();
+                    mAdapter.addAll(items);
+                    swipeRefresh.setRefreshing(false);
+                    if (currentPage < totalPage) mAdapter.addLoading();*/
+                    if (page < total_pages) socialadapter.addLoading();
+                    else isLastPage = true;
+                    isLoading = false;
 
                 } catch (IOException e) {
                     e.printStackTrace();
                     Log.e("TAG", "checkval " + e.getMessage());
-
-
+                    swipe_container.setRefreshing(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("TAG", "checkval onresponse" + e.getMessage());
-
+                    swipe_container.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                swipe_container.setRefreshing(false);
             }
         });
     }
@@ -256,9 +297,9 @@ public class SocialLifeFragment extends Fragment {
         alertadapter = new AdapterAlertNotificationSocial(getContext(), alertArrayList);
 
         recyclerView_alert.setAdapter(alertadapter);
-        mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL, true);
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
+        mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL, false);
+        /*mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);*/
         recyclerView_alert.setLayoutManager(mLayoutManager);
 
         alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
@@ -452,6 +493,79 @@ public class SocialLifeFragment extends Fragment {
         }
     }
 
+    private void onScrollListener() {
+        recyclerView_social.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                Log.e("Page", "onScrolledstate");
 
+                /*LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisible = layoutManager.findLastVisibleItemPosition();
+
+                boolean endHasBeenReached = lastVisible <= totalItemCount;
+                if (totalItemCount > 0 && endHasBeenReached) {
+                    //you have reached to the bottom of your recycler view
+                    Log.e("Page", "islastitem");
+                    if (has_next) {
+                        Log.e("Page", "hasnext");
+                        if (page <= total_pages) {
+                            Log.e("Page", "page<totalpage");
+                            fetchData();
+                        }
+                    }
+                }*/
+
+                /*if (isLastItemDisplaying(recyclerView)) {
+                    Log.e("Page", "last item");
+                    fetchData();
+                    socialadapter.notifyDataSetChanged();
+                }*/
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+
+            }
+        });
+
+        recyclerView_social.addOnScrollListener(new PaginationScrollListener(mLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                fetchData();
+
+                Log.e("pag", "load more items: " + isLoading);
+
+            }
+
+            @Override
+            public boolean isLastPage() {
+                Log.e("pag", "isLastPage: " + isLastPage);
+
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+
+                Log.e("pag", "isLoading: " + isLoading);
+
+                return isLoading;
+            }
+        });
+
+    }
+
+    private boolean isLastItemDisplaying(RecyclerView recyclerView) {
+        if (recyclerView.getAdapter().getItemCount() != 0) {
+            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            if (lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
+                return true;
+        }
+        return false;
+    }
 
 }

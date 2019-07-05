@@ -94,6 +94,10 @@
     <string name="bio">Bio/About</string>
     <string name="edit">Edit</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="followers">50 Followers</string>
+    <string name="friends">200 Friends</string>
+    <string name="fans">10 Fans</string>
     <string name="change_profile_pic">Change Profile Picture</string>
     <string name="blog">Blog</string>
     <string name="profession">Profession</string>

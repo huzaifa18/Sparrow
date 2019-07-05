@@ -21,12 +21,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.example.bracketsol.sparrow.Activities.CommentActivity;
+import com.example.bracketsol.sparrow.Activities.OthersActivity;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Retrofit.ApiClient;
@@ -117,6 +119,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             public void onClick(View view) {
                 Intent intent = new Intent(mContext,CommentActivity.class);
                 intent.putExtra("post_id",statusarraylistAdapter.get(position).getPost_id());
+                intent.putExtra("api","post");
                 mContext.startActivity(intent);
             }
         });
@@ -128,7 +131,6 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
                 hitLikeBtn(holder,position);
             }
         });
-
 
         holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,9 +170,20 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             public void onClick(View view) {
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-                alertDialog.setMessage("asdf");
+                alertDialog.setMessage("Report Post!");
 
                 alertDialog.show();
+
+            }
+        });
+
+        holder.rl_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(mContext, OthersActivity.class);
+                intent.putExtra("user_id", statusarraylistAdapter.get(position).getSender_id());
+                mContext.startActivity(intent);
 
             }
         });
@@ -190,7 +203,10 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
 
         CircleImageView sender_pic;
         TextView sender_name, content, total_likes, total_comments, total_views;
-        ImageButton more, like, coment, save;
+        ImageButton more;
+        public ImageButton like;
+        ImageButton coment;
+        ImageButton save;
         SquareImageView attachment;
         CardView cardView;
         ImageView iv_like;
@@ -198,8 +214,9 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
         LinearLayout ll_like,ll_comment;
         VideoView vv_posted;
 
-        StatusPostingModel item;
+        RelativeLayout rl_profile;
 
+        StatusPostingModel item;
 
         public ViewHolder(View itemView) {
 
@@ -224,6 +241,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             save = itemView.findViewById(R.id.save_imgbtn);
 
             cardView = itemView.findViewById(R.id.cardview);
+            rl_profile = itemView.findViewById(R.id.rl_profile);
 
         }
 
@@ -284,7 +302,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
     }
 
     public void hitLikeApi(ViewHolder Apiholder, int position, final boolean like) {
-        hitLike = apiInterface.hitLike(statusarraylistAdapter.get(position).getPost_id());
+        hitLike = apiInterface.hitLikePost(statusarraylistAdapter.get(position).getPost_id());
         hitLike.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -332,8 +350,9 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
 
 
     }
+
     public void hitDisLikeApi(ViewHolder Apiholder, int position, final boolean like) {
-        hitLike = apiInterface.hitDisLike(statusarraylistAdapter.get(position).getPost_id());
+        hitLike = apiInterface.hitDisLikePost(statusarraylistAdapter.get(position).getPost_id());
         hitLike.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

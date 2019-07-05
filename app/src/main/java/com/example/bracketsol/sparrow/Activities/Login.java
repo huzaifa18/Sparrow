@@ -133,6 +133,8 @@ public class Login extends AppCompatActivity {
                 checkValidate();
             }
         });
+
+        callLoginService(username.getText().toString(), password.getText().toString());
     }
 
     private void callLoginService(final String user, final String pass) {
@@ -166,7 +168,8 @@ public class Login extends AppCompatActivity {
                     String username = userdata.getString("username");
                     String email = userdata.getString("email");
                     String phone = userdata.getString("phone_no");
-                    String password = userdata.getString("password");
+                    //String password = userdata.getString("password");
+                    String password = "123";
 
                     String auth = jObj.getString("token");
                     Log.e("TAG", "" + auth);

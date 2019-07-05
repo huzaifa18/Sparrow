@@ -29,11 +29,12 @@
         android:allowBackup="true"
         android:icon="@drawable/sparrow_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/sparrow_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activities.CommentActivity"></activity>
+        <activity android:name=".Activities.OthersActivity"></activity>
+        <activity android:name=".Activities.CommentActivity" />
         <activity android:name=".Tryy.PhoneAuth" />
         <activity android:name=".Activities.showPicture" />
         <activity
@@ -86,8 +87,9 @@
         <activity android:name=".SocketChat.MainActivity" />
         <activity android:name=".MessageActivity.SendMessageActivity" />
         <activity android:name=".Stories.StoryView" />
-        <activity android:name=".Activities.EditProfile"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".Activities.EditProfile"
+            android:windowSoftInputMode="adjustPan" />
 
         <service
             android:name=".MessageActivity.MessagingService"

@@ -11,4 +11,5 @@
 
     <color name="colorchoose">#83ceed</color>
     <color name="colorGray">#949494</color>
+    <color name="colorBackgrounGray">#DFDFDF</color>
 </resources>

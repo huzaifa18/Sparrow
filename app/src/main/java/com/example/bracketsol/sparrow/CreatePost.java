@@ -647,7 +647,7 @@ public class CreatePost extends AppCompatActivity{
                 }
                 iv_image.setVisibility(View.VISIBLE);
                 file = new File(selectedMediaUri.toString());
-                    Glide.with(CreatePost.this).load(selectedMediaUri).into(iv_image);
+                Glide.with(CreatePost.this).load(selectedMediaUri).into(iv_image);
 
                 editText.setBackground(getDrawable(R.drawable.plain_bg));
                 rv_colors.setVisibility(View.GONE);

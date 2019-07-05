@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //Apis data
     int post_id;
-    int sender_id;
+    String sender_id;
     String sender_name;
     String sender_pic;
     String content;
@@ -287,6 +287,7 @@ public class HomeActivity extends AppCompatActivity {
                     String resString = response.body().string();
                     JSONObject resJson = new JSONObject(resString);
                     total_pages = resJson.getInt("total_pages");
+                    has_next = resJson.getBoolean("has_next");
                     Log.e("TAG", "total_pages " + total_pages);
                     JSONArray array = resJson.getJSONArray("posts");
                     Log.e("TAG", "ok");
@@ -312,7 +313,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
                         post_id = product.getInt("post_id");
-                        sender_id = product.getInt("sender_id");
+                        sender_id = String.valueOf(product.getInt("sender_id"));
                         sender_name = product.getString("sender_name");
                         sender_pic = product.getString("sender_pic");
                         content = product.getString("content");
@@ -328,7 +329,7 @@ public class HomeActivity extends AppCompatActivity {
                         //simpleProgressBar.setVisibility(View.GONE);
                         Log.i("url", "https://s3.amazonaws.com/social-funda-bucket/" + attachment);
                         Log.i("senderpic", "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic);
-                        StatusPostingModel statusPostingModel = new StatusPostingModel(sender_name, "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic, content, "https://social-funda-bucket.s3.amazonaws.com/" + attachment_url, total_likes,
+                        StatusPostingModel statusPostingModel = new StatusPostingModel(sender_name,sender_id, "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic, content, "https://social-funda-bucket.s3.amazonaws.com/" + attachment_url, total_likes,
                                 total_comments, total_views,post_id,attachment_type);
 
 //                        simpleProgressBar.setVisibility(View.GONE);
