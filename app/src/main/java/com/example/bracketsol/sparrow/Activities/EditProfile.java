@@ -70,7 +70,7 @@ public class EditProfile extends AppCompatActivity {
         gender = true;
         bt_boy = findViewById(R.id.bt_boy);
         bt_girl = findViewById(R.id.bt_girl);
-        tick = findViewById(R.id.iv_tick);
+        tick = findViewById(R.id.iv_tickk);
 
         name = findViewById(R.id.et_name);
         bio = findViewById(R.id.et_bio);
@@ -143,19 +143,15 @@ public class EditProfile extends AppCompatActivity {
                     // Get the Image from data
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
                     Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                     assert cursor != null;
                     cursor.moveToFirst();
-
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String mediaPath = cursor.getString(columnIndex);
                     // Set the Image in ImageView for Previewing the Media
                     //imageView.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                     Glide.with(EditProfile.this).load(BitmapFactory.decodeFile(mediaPath)).into(civ);
                     cursor.close();
-
-
                     postPath = mediaPath;
                 }
 

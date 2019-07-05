@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.bracketsol.sparrow.Activities.HomeActivity;
+import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Retrofit.ApiClient;
 import com.example.bracketsol.sparrow.Retrofit.ApiInterface;
@@ -47,14 +49,19 @@ public class SocialLifeFragment extends Fragment {
     LinearLayout getSocial_layout, getAlert_layout;
     boolean isfirsttime_social = true;
     boolean isfirsttime_alert = true;
-    private ArrayList<ModelSocial> socialArrayList;
+    private ArrayList<StatusPostingModel> socialArrayList;
     private RecyclerView recyclerView_alert;
     private AdapterAlertNotificationSocial alertadapter;
     private ArrayList<ModelAlertSocial> alertArrayList;
     private RecyclerView recyclerView_social;
-    private AdapterSocialLife socialadapter;
+    private SocialPostAdapter socialadapter;
+    SwipeRefreshLayout swipe_container;
+
+    Boolean has_next = true;
+    int total_pages = 0;
 
     int page = 1;
+    int post_id;
 
     @Nullable
     @Override
@@ -63,6 +70,7 @@ public class SocialLifeFragment extends Fragment {
         view = (View) inflater.inflate(R.layout.social_liffe_fragment, container, false);
         init();
         Listeners();
+        onScrollListener();
         return view;
     }
 
@@ -74,11 +82,12 @@ public class SocialLifeFragment extends Fragment {
         social_layout = view.findViewById(R.id.social_layout);
         simpleProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
+        swipe_container = view.findViewById(R.id.swipe_container);
         recyclerView_social = (RecyclerView) view.findViewById(R.id.social_recycler);
         recyclerView_alert = (RecyclerView) view.findViewById(R.id.alert_recycler);
         alertArrayList = new ArrayList<>();
         socialArrayList = new ArrayList<>();
-        socialadapter = new AdapterSocialLife(getContext(), socialArrayList);
+        socialadapter = new SocialPostAdapter(getContext(), socialArrayList);
 
         recyclerView_social.setAdapter(socialadapter);
         LinearLayoutManager ll_manager = new LinearLayoutManager(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL, true);
@@ -93,8 +102,29 @@ public class SocialLifeFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.fab);
         fabalert = view.findViewById(R.id.fab_alert);
 
-        prepareSocialData();
+
+        fetchData();
         prepareAlertData();
+
+    }
+
+    private void swipeListener() {
+
+        swipe_container.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 0;
+                socialArrayList.clear();
+                fetchData();
+            }
+        });
+
+    }
+    private void fetchData() {
+        page++;
+        //progressBar.setVisibility(View.VISIBLE);
+        swipe_container.setRefreshing(true);
+        prepareSocialData();
 
     }
 
@@ -170,12 +200,17 @@ public class SocialLifeFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+                    swipe_container.setRefreshing(false);
                     String resString = response.body().string();
                     JSONObject resJson = new JSONObject(resString);
                     Log.e("TAG", "resString: " + resString);
                     JSONArray array = resJson.getJSONArray("announcements");
                     Log.e("TAG", "ok");
 
+                    total_pages = resJson.getInt("total_pages");
+
+
+                    has_next  = resJson.getBoolean("has_next");
 
                     for (int i = 0; i < array.length(); i++) {
                         //getting product object from json array
@@ -205,6 +240,8 @@ public class SocialLifeFragment extends Fragment {
                         String url = product.getString("attachment_url");
                         int is_active = product.getInt("is_active");
                         String type = product.getString("type");
+                        String attachment_type = product.getString("attachment_type");
+                        String attachment_url = product.getString("attachment_url");
                         int attachment_id = product.getInt("attachment_id");
                         String start_data = product.getString("start_date");
                         String end_date = product.getString("end_date");
@@ -212,12 +249,14 @@ public class SocialLifeFragment extends Fragment {
                         int total_comments = product.getInt("total_comments");
                         int total_views= product.getInt("total_views");
                         String created_at = product.getString("created_at");
+
                         //simpleProgressBar.setVisibility(View.GONE);
                         Log.i("url", "https://s3.amazonaws.com/social-funda-bucket/" + url);
-                        ModelSocial modelSocial = new ModelSocial(announcement_id, attachment_id,
-                                sender_id, is_active, type, statement, "https://s3.amazonaws.com/social-funda-bucket/" + url, start_data, end_date, created_at, sender_name, "https://s3.amazonaws.com/social-funda-bucket/" + profile_pic, total_likes, total_comments,total_views);
-                        //.setVisibility(View.GONE);
-                        socialArrayList.add(modelSocial);
+                        StatusPostingModel statusPostingModel = new StatusPostingModel(sender_name, "https://social-funda-bucket.s3.amazonaws.com/" + profile_pic, statement, "https://social-funda-bucket.s3.amazonaws.com/" + attachment_url, total_likes,
+                                total_comments, total_views,post_id,attachment_type);
+
+//                        simpleProgressBar.setVisibility(View.GONE);
+                        socialArrayList.add(statusPostingModel);
                     }
                     recyclerView_social.setAdapter(socialadapter);
                     recyclerView_social.scrollToPosition(socialArrayList.size());
@@ -234,11 +273,13 @@ public class SocialLifeFragment extends Fragment {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    swipe_container.setRefreshing(false);
                     Log.e("TAG", "checkval " + e.getMessage());
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    swipe_container.setRefreshing(false);
                     Log.e("TAG", "checkval onresponse" + e.getMessage());
 
                 }
@@ -247,6 +288,7 @@ public class SocialLifeFragment extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                swipe_container.setRefreshing(false);
             }
         });
     }
@@ -451,7 +493,37 @@ public class SocialLifeFragment extends Fragment {
             }
         }
     }
+    private void onScrollListener() {
+        recyclerView_social.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                Log.e("Page", "onScrolledstate");
 
+                LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisible = layoutManager.findLastVisibleItemPosition();
+
+                boolean endHasBeenReached = lastVisible <= totalItemCount;
+                if (totalItemCount > 0 && endHasBeenReached) {
+                    //you have reached to the bottom of your recycler view
+                    Log.e("Page", "islastitem");
+                    if (has_next) {
+                        Log.e("Page", "hasnext");
+                        if (page <= total_pages) {
+                            Log.e("Page", "page<totalpage");
+                            fetchData();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            }
+        });
+        socialadapter.notifyDataSetChanged();
+
+    }
 
 
 }

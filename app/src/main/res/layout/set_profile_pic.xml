@@ -67,6 +67,7 @@
                     android:textColor="@color/colorWhite"
                     android:layout_marginRight="10dp"/>
 
+                android:textColor="@color/colorWhite"
                 <TextView
                     android:id="@+id/gallery_textview"
                     android:layout_width="match_parent"
@@ -78,7 +79,6 @@
                     android:gravity="center"
                     android:text="@string/gallery"
                     android:textSize="18dp"
-                    android:textColor="@color/colorWhite"
                     android:layout_marginLeft="10dp"/>
 
             </LinearLayout>

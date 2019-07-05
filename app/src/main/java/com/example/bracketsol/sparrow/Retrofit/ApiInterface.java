@@ -56,6 +56,11 @@ public interface ApiInterface {
     @POST("api/posts/like")
     Call<ResponseBody> hitLike(@Field("post_id") int post_id);
 
+
+    @FormUrlEncoded
+    @POST("api/announcements/like")
+    Call<ResponseBody> hitLikeSocial(@Field("post_id") int post_id);
+
     @DELETE("api/posts/like")
     Call<ResponseBody> hitDisLike(@Query("post_id") int post_id);
 

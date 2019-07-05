@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/layout"
-    android:orientation="vertical">
+    app:cardUseCompatPadding="true"
+    card_view:cardElevation="@dimen/cardview_default_elevation">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,135 +14,172 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view"
+            android:id="@+id/cardview_social"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            card_view:cardCornerRadius="4dp">
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="true"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
 
-            <LinearLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-
-                >
+                android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/image_post_social"
-                    android:layout_width="match_parent"
+                    android:id="@+id/iv_social_like"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/demo"
-                    android:scaleType="fitXY" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#52DBDBDB" />
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/heart_off" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="5dp">
+                    android:orientation="vertical"
 
+                    >
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/userprofile_social"
-                        android:layout_width="50dp"
-                        android:src="@drawable/ic_seo"
-                        android:layout_height="50dp" />
-
-                    <TextView
-                        android:id="@+id/username_social"
+                    <com.yuyakaido.android.squareimageview.SquareImageView
+                        android:id="@+id/posted_social_img"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="@string/user"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/demo" />
+
+                    <VideoView
+                        android:id="@+id/vv_social_posted"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#52DBDBDB" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/post_social_uimg"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_seo" />
+
+                        <TextView
+                            android:id="@+id/username_social_post"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/user"
+                            android:textSize="16sp" />
+
+                        <ImageButton
+                            android:id="@+id/more_social_imgbtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            app:srcCompat="@drawable/ic_more_horiz_black_24dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/content_social"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        android:text="@string/signing"
                         android:textSize="16sp" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_social_like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:orientation="horizontal">
+
+
+                            <ImageButton
+                                android:id="@+id/like_social_imgbtn"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="15dp"
+                                android:background="@null"
+                                android:src="@drawable/ic_dislike" />
+
+                            <TextView
+                                android:id="@+id/like_social_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="2k" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_social_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="60dp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/coment_social_imgbtn"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="15dp"
+                                android:background="@null"
+                                android:src="@drawable/ic_comment" />
+
+                            <TextView
+                                android:id="@+id/coment_social_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="40k" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="60dp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="15dp"
+                                android:background="@null"
+                                android:src="@drawable/ic_remove_red_eye_black_24dp" />
+
+                            <TextView
+                                android:id="@+id/views_social_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="40k" />
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/desc_tv_social"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:text="@string/signing"
-                    android:textSize="16sp" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:orientation="horizontal">
-
-
-                        <ImageButton
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:background="@null"
-                            android:layout_marginRight="15dp"
-                            android:src="@drawable/ic_dislike" />
-
-                        <TextView
-                            android:id="@+id/likess_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="2k" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:orientation="horizontal">
-
-                        <ImageButton
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@null"
-                            android:src="@drawable/ic_comment" />
-
-                        <TextView
-                            android:id="@+id/coments_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="40k" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="60dp"
-                        android:orientation="horizontal">
-
-                        <ImageButton
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@null"
-                            android:src="@drawable/ic_remove_red_eye_black_24dp" />
-
-                        <TextView
-                            android:id="@+id/views_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="40k" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
 
     </LinearLayout>
-</LinearLayout>
+</android.support.v7.widget.CardView>

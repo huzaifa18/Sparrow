@@ -1,9 +1,10 @@
 package com.example.bracketsol.sparrow.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
@@ -25,8 +26,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.bracketsol.sparrow.AppDatabase;
+import com.example.bracketsol.sparrow.AppExecutors;
+import com.example.bracketsol.sparrow.Model.RoomItem;
 import com.example.bracketsol.sparrow.R;
-import com.example.bracketsol.sparrow.Tryy.PhoneAuth;
+import com.example.bracketsol.sparrow.Service.BackgroundService;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
@@ -39,6 +43,7 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,18 +59,27 @@ public class Login extends AppCompatActivity {
     EditText username, password;
     Button nextButton, fb_btn;
     TextView createAccounttxt;
-    String getname, getpass;
+    String getname, getpass,email,phone,getusername,getpassword,getfullname,getprofession;
     ProgressBar simpleProgressBar;
     CheckBox passwordchk;
     Handler handler;
+    Animation animShake;
+    Intent intent;
+    AppDatabase database;
     private Socket mSocket;
-    Animation animShake ;
+    int internalId,userid;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login);
+        database = AppDatabase.getInstance(this);
+        intent = getIntent();
+        //database.getItemDAO().getItems();
+        Toast.makeText(this, "" + Prefs.getUserNameFromPref(Login.this), Toast.LENGTH_SHORT).show();
+
         //init
         username = findViewById(R.id.phone);
         password = findViewById(R.id.passwordd);
@@ -73,20 +87,20 @@ public class Login extends AppCompatActivity {
         passwordchk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 } else {
                     password.setInputType(129);
                 }
             }
         });
-
         fb_btn = findViewById(R.id.facebook_btn_signin);
 
         try {
             mSocket = IO.socket("https://social-funda.herokuapp.com/");
         } catch (URISyntaxException e) {
         }
+
         createAccounttxt = findViewById(R.id.create_account_textview);
         createAccounttxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +117,6 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         username.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -125,7 +138,6 @@ public class Login extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 getname = username.getText().toString();
                 getpass = password.getText().toString();
                 simpleProgressBar.setVisibility(View.VISIBLE);
@@ -136,7 +148,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void callLoginService(final String user, final String pass) {
-
+        startService(new Intent(this, BackgroundService.class));
         String cancel_req_tag = "register";
         StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/auth/login", new Response.Listener<String>() {
             @Override
@@ -147,13 +159,11 @@ public class Login extends AppCompatActivity {
                     JSONObject jObj = new JSONObject(response);
                     String message = jObj.getString("message");
                     Log.e("TAG", "Message: " + message);
-
-
                     animShake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                    if(message.equals("username or email is invalid.")){
+                    if (message.equals("username or email is invalid.")) {
                         username.setAnimation(animShake);
                         username.setError(message);
-                    }else if(message.equals("Password is incorrect")){
+                    } else if (message.equals("Password is incorrect")) {
                         password.setAnimation(animShake);
                         password.setError(message);
                     }
@@ -162,16 +172,17 @@ public class Login extends AppCompatActivity {
                     String user = jObj.getString("user");
                     Log.e("TAG", "Message: " + user);
                     JSONObject userdata = jObj.getJSONObject("user");
-                    int userid = userdata.getInt("_id");
-                    String username = userdata.getString("username");
-                    String email = userdata.getString("email");
-                    String phone = userdata.getString("phone_no");
-                    String password = userdata.getString("password");
-
+                    userid = userdata.getInt("_id");
+                    getusername = userdata.getString("username");
+                    getfullname= userdata.getString("full_name");
+                    email = userdata.getString("email");
+                    phone = userdata.getString("phone_no");
+                    getprofession = userdata.getString("profession");
                     String auth = jObj.getString("token");
                     Log.e("TAG", "" + auth);
 
-                    Prefs.addPrefsForLogin(getApplicationContext(), userid, username, email, phone, password, auth);
+                    Prefs.addPrefsForLogin(getApplicationContext(), userid, getusername, getfullname,email, phone, getprofession,auth);
+                    database.InsertDataToInternalDatabase(internalId,userid,getusername,getfullname,email,phone,getprofession);
 
                     mSocket.connect();
                     JSONObject getUnameforOnline = new JSONObject();
@@ -183,10 +194,10 @@ public class Login extends AppCompatActivity {
                     }
                     mSocket.emit("online", getUnameforOnline);
                     Log.i("TAG", "sendMessage: 1" + mSocket.emit("join private chat", getUnameforOnline));
-
                     Log.e("TAG", "" + Prefs.getUserIDFromPref(Login.this));
                     Toast.makeText(Login.this, "" + userdata.getInt("_id"), Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(Login.this, PhoneAuth.class);
+                    LongOperation longOperation = new LongOperation();
+                    longOperation.execute("");
                     Intent intent = new Intent(Login.this, HomeActivity.class);
                     startActivity(intent);
 
@@ -220,30 +231,54 @@ public class Login extends AppCompatActivity {
                 20000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        // Adding request to request queue
+                // Adding request to request queue
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
     }
-
 
     private void checkValidate() {
         Pattern p = Pattern.compile(Utils.regEx);
         Matcher m = p.matcher(getname);
-
-        // Check if all strings are null or not
+       // Check if all strings are null or not
         if (getname.equals("") || getname.length() == 0
                 || getpass.equals("") || getpass.length() == 0) {
-
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             simpleProgressBar.setVisibility(View.GONE);
             nextButton.setEnabled(true);
-
         } else {
-            Toast.makeText(this, "Ok auth.", Toast.LENGTH_SHORT)
-                    .show();
+            Log.i("Tag", "Ok auth.");
             callLoginService(username.getText().toString(), password.getText().toString());
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private class LongOperation extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            database.getUsersData(Login.this);
+            Log.i("userInternal",""+database.gettUserIDFromDB(Login.this));
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(Login.this, "executed", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacksAndMessages(null);
+        super.onPause();
+    }
 }
 
 

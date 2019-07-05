@@ -36,6 +36,7 @@ import com.example.bracketsol.sparrow.Retrofit.ApiClient;
 import com.example.bracketsol.sparrow.Retrofit.ApiInterface;
 import com.example.bracketsol.sparrow.SocialLife.SocialLifeFragment;
 
+import org.appspot.apprtc.ui.SettingsFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
     Boolean isScrolling = false;
     Boolean has_next = true;
     int page, total_pages = 0;
+    ImageButton plus;
 
     //Apis data
     int post_id;
@@ -86,6 +88,7 @@ public class HomeActivity extends AppCompatActivity {
     int total_views;
     String created_at;
     SwipeRefreshLayout swipeRefreshLayout;
+    FragmentTransaction fragmentTransaction;
 
 
     int currentItems, totalItems, scrollOutItems;
@@ -93,7 +96,7 @@ public class HomeActivity extends AppCompatActivity {
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+           fragmentTransaction = getSupportFragmentManager().beginTransaction();
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
@@ -143,10 +146,20 @@ public class HomeActivity extends AppCompatActivity {
 
         init();
         onScrollListener();
+        Listener();
         getStoryData();
         fetchData();
         GoToChat();
         swipeListener();
+    }
+
+    private void Listener() {
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
+            }
+        });
     }
 
     private void init() {
@@ -161,6 +174,7 @@ public class HomeActivity extends AppCompatActivity {
         storyRecyclerview = findViewById(R.id.story_recyclerview);
         statuspostRecyclerview = findViewById(R.id.status_recyclerview);
         progressBar = findViewById(R.id.progressBarstatus);
+        plus = findViewById(R.id.plus);
         chatbtn = findViewById(R.id.chat_ib);
         storyArraylist = new ArrayList<StoryModel>();
         statusArraylist = new ArrayList<StatusPostingModel>();
@@ -173,10 +187,6 @@ public class HomeActivity extends AppCompatActivity {
         statuspostRecyclerview.setAdapter(statusPostAdapter);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         statuspostRecyclerview.setLayoutManager(manager);
-
-//        statusArraylist.add(new StatusPostingModel("Ali Irfan", "sender pic", "Content",
-//                "Attachment", 43, 21, 32));
-//        statusPostAdapter.notifyDataSetChanged();
 
 
     }
@@ -232,6 +242,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         statusPostAdapter.notifyDataSetChanged();
 
+
     }
 
 
@@ -269,6 +280,7 @@ public class HomeActivity extends AppCompatActivity {
         storyArraylist.add(new StoryModel(R.drawable.ic_seo, "hassan ali"));
         storyArraylist.add(new StoryModel(R.drawable.ic_target, "hassan ali"));
         storyArraylist.add(new StoryModel(R.drawable.ic_girl, "Maria"));
+
 
         Collections.reverse(storyArraylist);
         storyAdapter.notifyDataSetChanged();
