@@ -23,20 +23,20 @@ public class Prefs {
     }
 
     public static void addPrefsForLogin(Context context, final int user_id,
-                                        final String name, final String username,
-                                        final String email, final String phone, String auth) {
+                                        final String username,
+                                        final String fullname,
+                                        final String email, final String phone,final String profession, String auth) {
 
         SharedPreferences userLoginPref = context.getSharedPreferences("betaar_user", 0);
         SharedPreferences.Editor editor = userLoginPref.edit();
         editor.putInt("_id", user_id);
-        editor.putString("name", name);
         editor.putString("username", username);
+        editor.putString("full_name", fullname);
         editor.putString("email", email);
         editor.putString("phone_no", phone);
+        editor.putString("profession", profession);
         editor.putString("token", auth);
         editor.commit();
-
-
     }
 
     public static void addPrefsForUserId(Context context, final int user_id) {

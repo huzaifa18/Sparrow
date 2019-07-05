@@ -62,7 +62,6 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
         this.statusarraylistAdapter = statusarraylistAdapter;
         this.mContext = mContext;
         dialog = new Dialog(mContext);
-
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
     }
@@ -70,7 +69,6 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
     @Override
     public StatusPostAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.status_posting_row_layout, parent, false);
-
         return new ViewHolder(view);
     }
 

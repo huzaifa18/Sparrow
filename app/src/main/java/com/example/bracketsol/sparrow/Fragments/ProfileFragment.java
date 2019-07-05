@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -66,7 +67,8 @@ public class ProfileFragment extends Fragment {
     Dialog settingsDialog;
     boolean zoomOut = true;
 
-    Button bt_edit;
+
+    Button bt_edit,btn_logout;
 
     TextView username, bio, profession, blog, email;
 
@@ -90,6 +92,7 @@ public class ProfileFragment extends Fragment {
         arrayList = new ArrayList<>();
 
         bt_edit = view.findViewById(R.id.bt_edit);
+        btn_logout = view.findViewById(R.id.logout);
 
         profileAdapter = new ProfileAdapter(arrayList);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -139,6 +142,13 @@ public class ProfileFragment extends Fragment {
 
         });
 
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Prefs.clearPrefData(getContext());
+                System.exit(0);
+            }
+        });
         bt_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

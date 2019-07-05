@@ -339,4 +339,8 @@
     <string name="pref_use_legacy_audio_device_default">false</string>
     <string name="sparrow">Sparrow</string>
 
+    <string name="facebook_app_id">1118182648370677</string>
+    <string name="fb_login_protocol_scheme">fb1118182648370677</string>
+
+
 </resources>
