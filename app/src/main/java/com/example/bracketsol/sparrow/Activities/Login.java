@@ -3,6 +3,7 @@ package com.example.bracketsol.sparrow.Activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import com.example.bracketsol.sparrow.AppExecutors;
 import com.example.bracketsol.sparrow.Model.RoomItem;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Service.BackgroundService;
+import com.example.bracketsol.sparrow.Service.DummyService;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 import com.example.bracketsol.sparrow.Utils.Utils;
 import com.example.bracketsol.sparrow.Volley.AppSingleton;
@@ -148,7 +150,12 @@ public class Login extends AppCompatActivity {
     }
 
     private void callLoginService(final String user, final String pass) {
-        startService(new Intent(this, BackgroundService.class));
+        //startService(new Intent(this, BackgroundService.class));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            this.startForegroundService(new Intent(Login.this, DummyService.class));
+        else
+            this.startService(new Intent(Login.this, DummyService.class));
+
         String cancel_req_tag = "register";
         StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/auth/login", new Response.Listener<String>() {
             @Override

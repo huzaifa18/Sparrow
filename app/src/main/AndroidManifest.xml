@@ -37,10 +37,11 @@
         <activity android:name=".Activities.CommentActivity" />
         <activity android:name=".Tryy.PhoneAuth" />
         <activity android:name=".Activities.showPicture" />
-        <service
-            android:name=".Service.BackgroundService"
-            >
-        </service>
+
+        <service android:name=".Service.BackgroundService"></service>
+
+        <service android:name=".Service.DummyService" />
+
         <activity
             android:name=".Activities.MyPreferencesActivity"
             android:theme="@style/AppTheme" />
