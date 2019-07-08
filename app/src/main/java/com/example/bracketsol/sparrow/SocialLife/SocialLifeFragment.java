@@ -216,7 +216,6 @@ public class SocialLifeFragment extends Fragment {
                     JSONObject resJson = new JSONObject(resString);
                     Log.e("TAG", "resString: " + resString);
                     JSONArray array = resJson.getJSONArray("announcements");
-                    Log.e("TAG", "ok");
 
                     total_pages = resJson.getInt("total_pages");
                     has_next = resJson.getBoolean("has_next");
@@ -224,47 +223,55 @@ public class SocialLifeFragment extends Fragment {
                     for (int i = 0; i < array.length(); i++) {
                         //getting product object from json array
                         JSONObject product = array.getJSONObject(i);
-                        Log.e("TAG", "announcement_id" + product.getInt("announcement_id"));
-                        Log.e("TAG", "sender_id" + product.getInt("sender_id"));
-                        Log.e("TAG", "sender_name" + product.getString("sender_name"));
-                        Log.e("TAG", "profile_pic" + product.getString("profile_pic"));
-                        Log.e("TAG", "statement" + product.getString("statement"));
-                        Log.e("TAG", "attachment_url" + product.getString("attachment_url"));
-                        Log.e("TAG", "attachment_url" + product.getString("attachment_url"));
-                        Log.e("TAG", "is_active" + product.getInt("is_active"));
-                        Log.e("TAG", "type" + product.getString("type"));
-                        Log.e("TAG", "start_date" + product.getString("start_date"));
-                        Log.e("TAG", "end_date" + product.getString("end_date"));
-                        Log.e("TAG", "total_likes" + product.getInt("total_likes"));
-                        Log.e("TAG", "total_comments" + product.getInt("total_comments"));
-                        Log.e("TAG", "total_views" + product.getInt("total_views"));
-                        Log.e("TAG", "created_at" + product.getString("created_at"));
+                        Log.e("TAG", "announcement_id " + product.getInt("announcement_id"));
+                        Log.e("TAG", "sender_id " + product.getInt("sender_id"));
+                        Log.e("TAG", "sender_name " + product.getString("sender_name"));
+                        Log.e("TAG", "sender_pic " + product.getString("sender_pic"));
+                        Log.e("TAG", "statement " + product.getString("statement"));
+                        Log.e("TAG", "attachment_id " + product.getString("attachment_id"));
+                        Log.e("TAG", "attachment_url " + product.getString("attachment_url"));
+                        Log.e("TAG", "attachment_type " + product.getString("attachment_type"));
+                        Log.e("TAG", "is_active " + product.getInt("is_active"));
+                        Log.e("TAG", "type " + product.getString("type"));
+                        Log.e("TAG", "start_date " + product.getString("start_date"));
+                        Log.e("TAG", "end_date " + product.getString("end_date"));
+                        Log.e("TAG", "total_likes " + product.getInt("total_likes"));
+                        Log.e("TAG", "has_liked " + product.getInt("has_liked"));
+                        Log.e("TAG", "total_comments " + product.getInt("total_comments"));
+                        Log.e("TAG", "total_views " + product.getInt("total_views"));
+                        Log.e("TAG", "has_viewed " + product.getInt("has_viewed"));
+                        Log.e("TAG", "created_at " + product.getString("created_at"));
 
+                        Log.e("TAG", "ok: " +i);
 
                         int announcement_id = product.getInt("announcement_id");
                         int sender_id = product.getInt("sender_id");
                         String sender_name = product.getString("sender_name");
-                        String profile_pic = product.getString("profile_pic");
+                        String profile_pic = product.getString("sender_pic");
                         String statement = product.getString("statement");
                         String url = product.getString("attachment_url");
                         int is_active = product.getInt("is_active");
                         String type = product.getString("type");
                         int attachment_id = product.getInt("attachment_id");
+                        String attachment_type = product.getString("attachment_type");
                         String start_data = product.getString("start_date");
                         String end_date = product.getString("end_date");
                         int total_likes = product.getInt("total_likes");
+                        int has_viewed = product.getInt("has_viewed");
+                        int has_liked = product.getInt("has_liked");
                         int total_comments = product.getInt("total_comments");
                         int total_views= product.getInt("total_views");
                         String created_at = product.getString("created_at");
                         //simpleProgressBar.setVisibility(View.GONE);
-                        Log.i("url", "https://s3.amazonaws.com/social-funda-bucket/" + url);
-                        ModelSocial modelSocial = new ModelSocial(announcement_id, attachment_id,
-                                sender_id, is_active, type, statement, "https://s3.amazonaws.com/social-funda-bucket/" + url, start_data, end_date, created_at, sender_name, "https://s3.amazonaws.com/social-funda-bucket/" + profile_pic, total_likes, total_comments,total_views);
+                        Log.e("url", "https://s3.amazonaws.com/social-funda-bucket/" + url);
+                        ModelSocial modelSocial = new ModelSocial(announcement_id, attachment_id,attachment_type,
+                                sender_id,has_liked,has_viewed, is_active, type, statement, "https://s3.amazonaws.com/social-funda-bucket/" + url, start_data, end_date, created_at, sender_name, "https://s3.amazonaws.com/social-funda-bucket/" + profile_pic, total_likes, total_comments,total_views);
                         //.setVisibility(View.GONE);
                         socialArrayList.add(modelSocial);
                     }
 
                     socialadapter.notifyDataSetChanged();
+                    Log.e("TAG", "ok");
 
                     /*if (currentPage != PAGE_START) socialadapter.removeLoading();
                     mAdapter.addAll(items);

@@ -106,15 +106,19 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
-        myViewHolder.setData(list.get(i));
-        ModelSocial data = list.get(i);
-        ModelSocial mAccount = list.get(i);
+        ModelSocial item = list.get(i);
 
-        myViewHolder.content.setText(mAccount.getStatement());
-        myViewHolder.sender_name.setText(mAccount.getSender_name());
-        myViewHolder.total_likes.setText("" + mAccount.getLikes());
-        myViewHolder.total_comments.setText("" + mAccount.getComments());
-        myViewHolder.total_views.setText("" + mAccount.getTotal_views());
+        myViewHolder.sender_name.setText(item.getSender_name());
+        myViewHolder.total_likes.setText(String.valueOf(item.getLikes()));
+        myViewHolder.total_comments.setText(String.valueOf(item.getComments()));
+        myViewHolder.total_views.setText(String.valueOf(item.getTotal_views()));
+        myViewHolder.content.setText(item.getStatement());
+
+        myViewHolder.content.setText(item.getStatement());
+        myViewHolder.sender_name.setText(item.getSender_name());
+        myViewHolder.total_likes.setText("" + item.getLikes());
+        myViewHolder.total_comments.setText("" + item.getComments());
+        myViewHolder.total_views.setText("" + item.getTotal_views());
 
         if (islike) {
 
@@ -152,10 +156,10 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
 
 
         Glide.with(conl)
-                .load(mAccount.getProfile_pic())
+                .load(item.getProfile_pic())
                 .into(myViewHolder.sender_pic);
         Glide.with(conl)
-                .load(mAccount.getUrl())
+                .load(item.getUrl())
                 .into(myViewHolder.attachment);
 
         myViewHolder.attachment.setOnTouchListener(new View.OnTouchListener() {
@@ -206,34 +210,24 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
         public MyViewHolder(View view) {
             super(view);
 
-            vv_posted = itemView.findViewById(R.id.vv_posted);
-            ll_like = itemView.findViewById(R.id.ll_like);
-            ll_comment = itemView.findViewById(R.id.ll_comment);
-            iv_like = itemView.findViewById(R.id.iv_like);
-            sender_pic = itemView.findViewById(R.id.post_uimg);
-            sender_name = itemView.findViewById(R.id.username_social);
-            total_likes = itemView.findViewById(R.id.like_tv);
-            total_comments = itemView.findViewById(R.id.coment_tv);
-            total_views = itemView.findViewById(R.id.views_tv);
-            attachment = itemView.findViewById(R.id.posted_img);
-            content = itemView.findViewById(R.id.content);
+            vv_posted = itemView.findViewById(R.id.vv_social_posted);
+            ll_like = itemView.findViewById(R.id.ll_social_like);
+            ll_comment = itemView.findViewById(R.id.ll_social_comment);
+            iv_like = itemView.findViewById(R.id.iv_social_like);
+            sender_pic = itemView.findViewById(R.id.post_social_uimg);
+            sender_name = itemView.findViewById(R.id.username_social_post);
+            total_likes = itemView.findViewById(R.id.like_social_tv);
+            total_comments = itemView.findViewById(R.id.coment_social_tv);
+            total_views = itemView.findViewById(R.id.views_social_tv);
+            attachment = itemView.findViewById(R.id.posted_social_img);
+            content = itemView.findViewById(R.id.content_social);
 
-            more = itemView.findViewById(R.id.more_imgbtn);
-            like = itemView.findViewById(R.id.like_imgbtn);
-            coment = itemView.findViewById(R.id.coment_imgbtn);
+            more = itemView.findViewById(R.id.more_social_imgbtn);
+            like = itemView.findViewById(R.id.like_social_imgbtn);
+            coment = itemView.findViewById(R.id.coment_social_imgbtn);
             save = itemView.findViewById(R.id.save_imgbtn);
 
             cardView = itemView.findViewById(R.id.cardview);
-
-        }
-        public void setData(ModelSocial item) {
-            this.item = item;
-
-            sender_name.setText(item.getSender_name());
-            total_likes.setText(String.valueOf(item.getLikes()));
-            total_comments.setText(String.valueOf(item.getComments()));
-            total_views.setText(String.valueOf(item.getTotal_views()));
-            content.setText(item.getStatement());
 
         }
 

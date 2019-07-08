@@ -2,13 +2,16 @@ package com.example.bracketsol.sparrow.SocialLife;
 
 public class ModelSocial {
 
-    int announcement_id,attachment_id,sender_id,is_active,likes,comments,total_views;
-    String statement,url,start_date,end_date,created_at,sender_name,profile_pic,type;
+    int announcement_id,attachment_id,has_liked,has_viewed,sender_id,is_active,likes,comments,total_views;
+    String attachment_type,statement,url,start_date,end_date,created_at,sender_name,profile_pic,type;
 
-    public ModelSocial(int announcement_id, int attachment_id, int sender_id, int is_active, String type, String statement, String url, String start_date, String end_date, String created_at, String sender_name, String profile_pic,int likes,int comments,int total_views) {
+    public ModelSocial(int announcement_id, int attachment_id, String attachment_type, int sender_id, int has_liked, int has_viewed, int is_active, String type, String statement, String url, String start_date, String end_date, String created_at, String sender_name, String profile_pic,int likes,int comments,int total_views) {
         this.announcement_id = announcement_id;
         this.attachment_id = attachment_id;
+        this.attachment_type = attachment_type;
         this.sender_id = sender_id;
+        this.has_liked = has_liked;
+        this.has_viewed = has_viewed;
         this.is_active = is_active;
         this.type = type;
         this.statement = statement;
@@ -151,5 +154,29 @@ public class ModelSocial {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public int getHas_liked() {
+        return has_liked;
+    }
+
+    public void setHas_liked(int has_liked) {
+        this.has_liked = has_liked;
+    }
+
+    public int getHas_viewed() {
+        return has_viewed;
+    }
+
+    public void setHas_viewed(int has_viewed) {
+        this.has_viewed = has_viewed;
+    }
+
+    public String getAttachment_type() {
+        return attachment_type;
+    }
+
+    public void setAttachment_type(String attachment_type) {
+        this.attachment_type = attachment_type;
     }
 }
