@@ -180,7 +180,7 @@
                 android:layout_margin="20dp"
                 android:gravity="left"
                 android:layout_gravity="bottom"
-                android:text="@string/create"
+                android:text="@string/createAccount"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 

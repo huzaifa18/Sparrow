@@ -590,7 +590,8 @@ public class CreatePost extends AppCompatActivity{
 
         }
 
-        Call<ResponseBody> call = apiInterface.sendAnnouncement(sp_announcement_type.getSelectedItem().toString(), editText.getText().toString(),startdate,enddate, Integer.parseInt(hasFile), backGround.toString(),filePart);
+        //Call<ResponseBody> call = apiInterface.sendAnnouncement(sp_announcement_type.getSelectedItem().toString(), editText.getText().toString(),startdate,enddate, Integer.parseInt(hasFile), backGround.toString(),filePart);
+        Call<ResponseBody> call = apiInterface.sendAnnouncement(editText.getText().toString(),startdate,enddate, Integer.parseInt(hasFile), 0,0,filePart);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

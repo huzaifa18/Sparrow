@@ -257,7 +257,8 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void sendPostComment(String toString) {
-        addComment = apiInterface.addAnnouncementComment(getPostId ,coment_edittext.getText().toString());
+
+        addComment = apiInterface.addPostComment(getPostId ,coment_edittext.getText().toString());
         coment_edittext.setText("");
         addComment.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -269,6 +270,7 @@ public class CommentActivity extends AppCompatActivity {
                     String getmessage = resJson.getString("error");
                     String getmes = resJson.getString("message");
                     Log.i("TAG", "" + getmessage + getmes);
+
                     if (api_to_call.equals("post")) {
 
                         getAllPostComments();
@@ -307,6 +309,7 @@ public class CommentActivity extends AppCompatActivity {
                     String getmessage = resJson.getString("error");
                     String getmes = resJson.getString("message");
                     Log.i("TAG", "" + getmessage + getmes);
+
                     if (api_to_call.equals("post")) {
 
                         getAllPostComments();

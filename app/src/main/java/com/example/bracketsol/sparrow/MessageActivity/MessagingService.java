@@ -31,31 +31,30 @@ public class MessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        showNotifications(remoteMessage.getNotification().getBody());
+        showNotifications(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
         Log.i(TAG,"dat:"+remoteMessage.getData());
         Log.i(TAG,"sender_name:"+remoteMessage.getData().get("sender_name"));
 
         //Displaying data in log
         //It is optional
-        Log.e(TAG, "The message is " + remoteMessage.getData().get("title") );
+        Log.e(TAG, "The message is " + remoteMessage.getNotification().getTitle() );
         // Log.e(TAG, "From: " + remoteMessage.getFrom());
         //Log.e(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody().toString());
-        Log.e(TAG, "Notification Message Body: " + remoteMessage.getData().get("body"));
+        Log.e(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
         Log.e(TAG, "Notification Message type: " + remoteMessage.getData().get("type"));
         Log.e(TAG, "Notification Message detail: " + remoteMessage.getData().get("detail"));
 
 
-
-
     }
 
-    public void showNotifications(String message) {
+    public void showNotifications(String title,String message) {
         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_dislike)
+                .setSmallIcon(R.drawable.sparrow_logo)
                 .setSound(uri)
                 .setContentText(message)
+                .setContentTitle(title)
                 .setAutoCancel(true);
         Intent intent = new Intent(this, HomeActivity.class);
         @SuppressLint("WrongConstant") PendingIntent pi = PendingIntent.getActivity(this, 0, intent, Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -5,26 +5,22 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.bracketsol.sparrow.CreatePost;
-import com.example.bracketsol.sparrow.MyApp;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Retrofit.ApiClient;
 import com.example.bracketsol.sparrow.Retrofit.ApiInterface;
-import com.example.bracketsol.sparrow.Utils.Prefs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,8 +36,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
-import retrofit2.http.Part;
 
 public class EditProfile extends AppCompatActivity {
 
@@ -74,7 +68,7 @@ public class EditProfile extends AppCompatActivity {
 
     private void getPreviousData() {
         Intent intent = getIntent();
-        getName = intent.getStringExtra("name");
+        getName = intent.getStringExtra("full_name");
         getBio = intent.getStringExtra("statement");
         getBlog = intent.getStringExtra("blog");
         getEmail = intent.getStringExtra("email");
@@ -84,6 +78,12 @@ public class EditProfile extends AppCompatActivity {
         getGender = intent.getStringExtra("gender");
         getStatement = intent.getStringExtra("statement");
         getPicurl = intent.getStringExtra("picurl");
+
+        if (getGender.equals("N-A")){
+
+            getGender = "male";
+
+        }
 
     }
 
@@ -118,18 +118,19 @@ public class EditProfile extends AppCompatActivity {
         dob.setText(getDob);
         et_phone.setText(getPhonenumber);
 
-
         Glide.with(EditProfile.this)
                 .load("https://s3.amazonaws.com/social-funda-bucket/" + getPicurl)
                 .into(civ);
 
-        if (getGender.equals("male")) {
+        if (getGender.equals("male") || getGender.equals("N-A")) {
 
             genderBool = true;
+            getGender = "male";
 
         } else {
 
             genderBool = false;
+            getGender = "female";
 
         }
 
@@ -225,7 +226,7 @@ public class EditProfile extends AppCompatActivity {
         Log.e("UP", "getMimeType(fileUp.getName()): " + getMimeType(fileUp.getName()));
 
         uploadData = apiInterface.updataProfileData(getName, getEmail, getPhonenumber, getProfession,
-                getStatement, getBlog, getDob, getGender);
+                getStatement, getBlog, getDob, getGender, Integer.parseInt(hasFile),filePart);
 
         uploadData.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -284,6 +285,7 @@ public class EditProfile extends AppCompatActivity {
                     Glide.with(EditProfile.this).load(BitmapFactory.decodeFile(mediaPath)).into(civ);
                     cursor.close();
                     postPath = mediaPath;
+                    hasFile = "1";
                 }
 
             }

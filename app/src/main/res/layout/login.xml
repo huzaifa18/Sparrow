@@ -154,7 +154,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="15dp"
         android:gravity="bottom"
-        android:text="@string/create"
+        android:text="@string/createAccount"
         android:textAlignment="center"
         android:textColor="@color/colorBlack"
         android:textSize="18dp"

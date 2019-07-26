@@ -11,5 +11,9 @@
 
     <color name="colorchoose">#83ceed</color>
     <color name="colorGray">#949494</color>
+    <color name="colorGrayLight">#B2CACACA</color>
+    <color name="colorGrayDark">#555555</color>
     <color name="colorBackgrounGray">#DFDFDF</color>
+    <color name="colorTransparent">#00FFFFFF</color>
+
 </resources>

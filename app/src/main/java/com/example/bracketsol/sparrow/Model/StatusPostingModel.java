@@ -3,9 +3,9 @@ package com.example.bracketsol.sparrow.Model;
 public class StatusPostingModel {
 
     String sender_name,sender_id,sender_pic,content,attachment,attachment_type;
-    int total_likes,total_comments,total_views,post_id;
+    int total_likes,total_comments,total_views,post_id,has_liked;
 
-    public StatusPostingModel(String sender_name,String sender_id, String sender_pic, String content, String attachment, int total_likes, int total_comments, int total_views, int post_id,String attachment_type) {
+    public StatusPostingModel(String sender_name,String sender_id, String sender_pic, String content, String attachment, int total_likes, int total_comments, int total_views,int has_liked, int post_id,String attachment_type) {
         this.sender_name = sender_name;
         this.sender_id = sender_id;
         this.sender_pic = sender_pic;
@@ -14,6 +14,7 @@ public class StatusPostingModel {
         this.total_likes = total_likes;
         this.total_comments = total_comments;
         this.total_views = total_views;
+        this.has_liked = has_liked;
         this.post_id = post_id;
         this.attachment_type = attachment_type;
     }
@@ -88,6 +89,14 @@ public class StatusPostingModel {
 
     public void setTotal_views(int total_views) {
         this.total_views = total_views;
+    }
+
+    public int getHas_liked() {
+        return has_liked;
+    }
+
+    public void setHas_liked(int has_liked) {
+        this.has_liked = has_liked;
     }
 
     public String getAttachment_type() {

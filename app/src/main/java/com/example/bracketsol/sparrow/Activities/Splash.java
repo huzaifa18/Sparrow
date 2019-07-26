@@ -16,12 +16,14 @@ public class Splash extends AppCompatActivity {
     ProgressBar mprogressBar;
     public final  int SPLASH_LENGTH = 600;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         mprogressBar = new ProgressBar(this);
         mprogressBar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
 
@@ -45,4 +47,5 @@ public class Splash extends AppCompatActivity {
         }, SPLASH_LENGTH);
 
     }
+
 }

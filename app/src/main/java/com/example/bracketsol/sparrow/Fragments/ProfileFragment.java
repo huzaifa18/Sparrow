@@ -153,12 +153,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), EditProfile.class);
-                intent.putExtra("username", getUsername);
+                intent.putExtra("username", getName);
                 intent.putExtra("email", getEmil);
                 intent.putExtra("phonenumber", getPhonenumber);
                 intent.putExtra("profession", getProfession);
                 intent.putExtra("picurl", getPicurl);
-                intent.putExtra("name", getName);
+                intent.putExtra("full_name", getName);
                 intent.putExtra("blog", getBlog);
                 intent.putExtra("dob", getDob);
                 intent.putExtra("gender", getGender);
@@ -231,7 +231,7 @@ public class ProfileFragment extends Fragment {
                     getPhonenumber = profileData.getString("phone_no");
                     getProfession = profileData.getString("profession");
                     getPicurl = profileData.getString("picture_url");
-                    getName = profileData.getString("name");
+                    getName = profileData.getString("full_name");
                     getDob = profileData.getString("date_of_birth");
                     getBlog = profileData.getString("blog");
                     getGender = profileData.getString("gender");

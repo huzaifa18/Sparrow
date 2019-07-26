@@ -28,10 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.bracketsol.sparrow.AppDatabase;
-import com.example.bracketsol.sparrow.AppExecutors;
-import com.example.bracketsol.sparrow.Model.RoomItem;
 import com.example.bracketsol.sparrow.R;
-import com.example.bracketsol.sparrow.Service.BackgroundService;
 import com.example.bracketsol.sparrow.Service.DummyService;
 import com.example.bracketsol.sparrow.Utils.Prefs;
 import com.example.bracketsol.sparrow.Utils.Utils;
@@ -45,7 +42,6 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +57,7 @@ public class Login extends AppCompatActivity {
     EditText username, password;
     Button nextButton, fb_btn;
     TextView createAccounttxt;
-    String getname, getpass,email,phone,getusername,getpassword,getfullname,getprofession;
+    String getname, getpass, email, phone, getusername, getpassword, getfullname, getprofession;
     ProgressBar simpleProgressBar;
     CheckBox passwordchk;
     Handler handler;
@@ -69,8 +65,7 @@ public class Login extends AppCompatActivity {
     Intent intent;
     AppDatabase database;
     private Socket mSocket;
-    int internalId,userid;
-
+    int internalId, userid;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -107,7 +102,7 @@ public class Login extends AppCompatActivity {
         createAccounttxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mainIntent = new Intent(Login.this, VerificationDetails.class);
+                Intent mainIntent = new Intent(Login.this, SignUp.class);
                 startActivity(mainIntent);
             }
         });
@@ -136,7 +131,7 @@ public class Login extends AppCompatActivity {
         nextButton = findViewById(R.id.login_button);
         handler = new Handler();
 
-        simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar = findViewById(R.id.simpleProgressBar);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,24 +175,26 @@ public class Login extends AppCompatActivity {
                     JSONObject userdata = jObj.getJSONObject("user");
                     userid = userdata.getInt("_id");
                     getusername = userdata.getString("username");
-                    getfullname= userdata.getString("full_name");
+                    getfullname = userdata.getString("full_name");
                     email = userdata.getString("email");
                     phone = userdata.getString("phone_no");
                     getprofession = userdata.getString("profession");
                     String auth = jObj.getString("token");
                     Log.e("TAG", "" + auth);
 
-                    Prefs.addPrefsForLogin(getApplicationContext(), userid, getusername, getfullname,email, phone, getprofession,auth);
-                    database.InsertDataToInternalDatabase(internalId,userid,getusername,getfullname,email,phone,getprofession);
+                    Prefs.addPrefsForLogin(getApplicationContext(), userid, getusername, getfullname, email, phone, getprofession, auth);
+                    database.InsertDataToInternalDatabase(internalId, userid, getusername, getfullname, email, phone, getprofession);
 
                     mSocket.connect();
                     JSONObject getUnameforOnline = new JSONObject();
+
                     try {
                         getUnameforOnline.put("room", "global");
                         getUnameforOnline.put("user", username);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                     mSocket.emit("online", getUnameforOnline);
                     Log.i("TAG", "sendMessage: 1" + mSocket.emit("join private chat", getUnameforOnline));
                     Log.e("TAG", "" + Prefs.getUserIDFromPref(Login.this));
@@ -237,14 +234,14 @@ public class Login extends AppCompatActivity {
                 20000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                // Adding request to request queue
+        // Adding request to request queue
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
     }
 
     private void checkValidate() {
         Pattern p = Pattern.compile(Utils.regEx);
         Matcher m = p.matcher(getname);
-       // Check if all strings are null or not
+        // Check if all strings are null or not
         if (getname.equals("") || getname.length() == 0
                 || getpass.equals("") || getpass.length() == 0) {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
@@ -261,7 +258,7 @@ public class Login extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             database.getUsersData(Login.this);
-            Log.i("userInternal",""+database.gettUserIDFromDB(Login.this));
+            Log.i("userInternal", "" + database.gettUserIDFromDB(Login.this));
             return "Executed";
         }
 

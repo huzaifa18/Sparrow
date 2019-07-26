@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <item
         android:id="@+id/navigation_notification"
-        android:icon="@drawable/ic_notification"
-        android:title="@string/title_notifications" />
+        android:icon="@drawable/ic_bell"
+        android:title="" />
 
     <item
         android:id="@+id/navigation_account"
-        android:icon="@drawable/ic_use"
-        android:title="@string/account" />
+        android:icon="@drawable/ic_man"
+        android:title="" />
+
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
-        android:title="@string/title_home" />
-
+        android:title="" />
 
     <item
         android:id="@+id/navigation_social"
         android:icon="@drawable/ic_collaboration"
-        android:title="Social" />
+        android:title="" />
+
     <item
         android:id="@+id/navigation_discussion"
         android:icon="@drawable/ic_group"
-        android:title="@string/discussion" />
+        android:title="" />
+
 </menu>

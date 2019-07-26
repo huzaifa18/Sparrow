@@ -1,13 +1,11 @@
 package com.example.bracketsol.sparrow.Activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -52,7 +50,7 @@ import retrofit2.Callback;
  * Created by bracketsol on 4/12/2019.
  */
 
-public class VerificationDetails extends AppCompatActivity {
+public class SignUp extends AppCompatActivity {
 
     ImageButton nextButton;
     Animation animShake;
@@ -68,7 +66,7 @@ public class VerificationDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.verification_details);
+        setContentView(R.layout.sign_up);
 
         inititialize();
 
@@ -152,19 +150,19 @@ public class VerificationDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                Intent intent = new Intent(VerificationDetails.this,Login.class);
+//                Intent intent = new Intent(SignUp.this,Login.class);
 //                startActivity(intent);
 
-                Toast.makeText(VerificationDetails.this, "" + username.getText().toString() + phone.getText().toString() + email.getText().toString() + password.getText().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUp.this, "" + username.getText().toString() + phone.getText().toString() + email.getText().toString() + password.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 String getuname = username.getText().toString();
                 String getemail = email.getText().toString();
                 String getpasword = password.getText().toString();
                 String getphone = phone.getText().toString();
 
-                Intent intent = new Intent(VerificationDetails.this, SetProfilePicture.class);
-                startActivity(intent);
-                //checkValidate();
+                /*Intent intent = new Intent(SignUp.this, SetProfilePicture.class);
+                startActivity(intent);*/
+                checkValidate();
 
             }
         });
@@ -195,7 +193,7 @@ public class VerificationDetails extends AppCompatActivity {
             password.setAnimation(animShake);
             password.setError("Password is required");
         } else if (failFlag == false) {
-            //new VerificationDetails.MyTask().execute();
+            //new SignUp.MyTask().execute();
             SignUp(username.getText().toString(), email.getText().toString(), phone.getText().toString(), password.getText().toString());
         }
 
@@ -228,14 +226,14 @@ public class VerificationDetails extends AppCompatActivity {
 
                     if (message.equals("0")) {
 
-                        Toast.makeText(VerificationDetails.this, "Successfully registered" + message_two, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUp.this, "Successfully registered" + message_two, Toast.LENGTH_SHORT).show();
                         int userid = jObj.getInt("user_id");
-                        Prefs.addPrefsForUserId(VerificationDetails.this, userid);
+                        Prefs.addPrefsForUserId(SignUp.this, userid);
                         Log.i("token", "userid" + userid);
 
-                        if (Prefs.getUserIDFromPref(VerificationDetails.this) != -1 && Prefs.gettUserUDID(VerificationDetails.this) != null) {
+                        if (Prefs.getUserIDFromPref(SignUp.this) != -1 && Prefs.gettUserUDID(SignUp.this) != null) {
 
-                            sendRegistrationToServer(token, Prefs.getUserIDFromPref(VerificationDetails.this));
+                            sendRegistrationToServer(token, Prefs.getUserIDFromPref(SignUp.this));
 
                         } else {
 
@@ -244,7 +242,8 @@ public class VerificationDetails extends AppCompatActivity {
                         }
                     } else {
 
-                        Toast.makeText(VerificationDetails.this, ""+message_two, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUp.this, ""+message_two, Toast.LENGTH_SHORT).show();
+                        progressBarHolder.setVisibility(View.GONE);
 
                     }
                 } catch (JSONException e) {
@@ -301,7 +300,7 @@ public class VerificationDetails extends AppCompatActivity {
                     String message = jsonObject.getString("message");
                     Log.i("token", "userid" + message);
 
-                    Intent intent = new Intent(VerificationDetails.this, SetProfilePicture.class);
+                    Intent intent = new Intent(SignUp.this, PhoneAuth.class);
                     startActivity(intent);
 
                 } catch (JSONException e) {
@@ -312,7 +311,7 @@ public class VerificationDetails extends AppCompatActivity {
                     progressBarHolder.setVisibility(View.GONE);
                 }
 
-                /*Intent intent = new Intent(VerificationDetails.this, Login.class);
+                /*Intent intent = new Intent(SignUp.this, Login.class);
                 startActivity(intent);*/
             }
 

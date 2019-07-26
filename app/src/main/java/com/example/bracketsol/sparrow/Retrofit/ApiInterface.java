@@ -6,6 +6,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -25,8 +26,6 @@ public interface ApiInterface {
                                    @Field("sender_id") int sender_id,
                                    @Field("receiver_id") int receiver_id);
 
-
-
     @POST("api/messages/chat/")
     Call<ResponseBody> sendMessageWithFile(
                                             @Field("content") String content,
@@ -34,7 +33,6 @@ public interface ApiInterface {
                                             @Field("receiver_id") int receiver_id,
                                             @Field("token") String token,
                                             @Field("msgData") String msgData);
-
     @Multipart
     @POST("api/messages/chat/")
     Call<UploadObject> uploadFile(
@@ -57,6 +55,9 @@ public interface ApiInterface {
     @POST("api/posts/like")
     Call<ResponseBody> hitLikePost(@Field("post_id") int post_id);
 
+    @FormUrlEncoded
+    @POST("api/friends")
+    Call<ResponseBody> addFriend(@Field("receiverid") int receiver_id);
 
     @FormUrlEncoded
     @POST("api/announcements/like")
@@ -100,7 +101,7 @@ public interface ApiInterface {
                                 @Part("background") String background,
                                 @Part MultipartBody.Part fileUpload);
 
-    @Multipart
+    /*@Multipart
     @POST("api/announcements/announcement")
     Call<ResponseBody> sendAnnouncement(@Part("type") String type,
                                         @Part("statement") String statement,
@@ -108,11 +109,22 @@ public interface ApiInterface {
                                         @Part("end_date") String end_date,
                                         @Part("hasFile") int hasFile,
                                         @Part("background") String background,
+                                        @Part MultipartBody.Part fileUpload);*/
+
+    @Multipart
+    @POST("api/announcements/announcement")
+    Call<ResponseBody> sendAnnouncement(
+                                        @Part("statement") String statement,
+                                        @Part("start_date") String start_date,
+                                        @Part("end_date") String end_date,
+                                        @Part("hasFile") int hasFile,
+                                        @Part("is_share") int is_share,
+                                        @Part("is_repeat") int is_repeat,
                                         @Part MultipartBody.Part fileUpload);
 
     @Multipart
     @PUT("api/users/")
-    Call<ResponseBody> updataProfileData(@Part("name") String name,
+    Call<ResponseBody> updataProfileData(@Part("full_name") String name,
                                          @Part("email") String email,
                                          @Part("phone_no") String phone_no,
                                          @Part("profession") String profession,
@@ -123,6 +135,7 @@ public interface ApiInterface {
                                          @Part("hasFile") int hasFile,
                                          @Part MultipartBody.Part fileUpload);
 
+    @FormUrlEncoded
     @PUT("api/users/")
     Call<ResponseBody> updataProfileData(@Field("name") String name,
                                          @Field("email") String email,
@@ -131,7 +144,8 @@ public interface ApiInterface {
                                          @Field("statement") String statement,
                                          @Field("blog") String blog,
                                          @Field("date_of_birth") String date_of_birth,
-                                         @Field("gender") String gender);
+                                         @Field("gender") String gender,
+                                         @Field("hasFile") int hasFile);
 
     @FormUrlEncoded
     @POST("api/announcements/like")
@@ -144,5 +158,19 @@ public interface ApiInterface {
     @POST("api/announcements/comment")
     Call<ResponseBody> addAnnouncementComment(@Field("announcement_id") int announcement_id,
                                       @Field("content") String content);
+
+    @GET("api/notifications")
+    Call<ResponseBody> getAllNoti(@Query("page") int page);
+
+    @FormUrlEncoded
+    @POST("api/users/change-password")
+    Call<ResponseBody> getChangePassword(@Field("old_password") String old_password,
+    @Field("new_password") String new_password);
+
+    @FormUrlEncoded
+    @POST("api/users/response/")
+    Call<ResponseBody> getfeedbackAndComplaint(@Field("content") String content,
+                                               @Field("sub_content") String sub_content,
+                                               @Field("type") String type);
 
 }

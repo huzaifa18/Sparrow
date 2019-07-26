@@ -142,6 +142,8 @@ public class OthersActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                addFriend();
+
                 /*Intent intent = new Intent(OthersActivity.this, EditProfile.class);
                 intent.putExtra("username", getUsername);
                 intent.putExtra("email", getEmil);
@@ -179,8 +181,11 @@ public class OthersActivity extends AppCompatActivity {
         getProfile.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
                 String resString = null;
+
                 try {
+
                     resString = response.body().string();
                     JSONObject resJson = new JSONObject(resString);
                     geterror = resJson.getString("error");
@@ -230,6 +235,44 @@ public class OthersActivity extends AppCompatActivity {
 
     }
 
+    private void addFriend() {
+
+        Log.e("TAG", "Add User ID: " + userId);
+
+        apiInterface.addFriend(userId).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                String resString = null;
+
+                try {
+
+                    resString = response.body().string();
+                    JSONObject resJson = new JSONObject(resString);
+                    geterror = resJson.getString("error");
+                    getmessage = resJson.getString("message");
+                    Log.e("TAG", "Error: "+geterror);
+                    Log.e("TAG", "Message: "+ getmessage);
+
+                    bt_add_friend.setText("Request Already Sent!");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+    }
+
     private void setData() {
 
         username.setText(getName);
@@ -238,7 +281,7 @@ public class OthersActivity extends AppCompatActivity {
         email.setText(getEmil);
         blog.setText(getBlog);
         Glide.with(getContext())
-                .load("https://s3.amazonaws.com/social-funda-bucket/"+getPicurl)
+                .load("https://s3.amazonaws.com/social-funda-bucket/" + getPicurl)
                 .into(pro_img);
 
     }

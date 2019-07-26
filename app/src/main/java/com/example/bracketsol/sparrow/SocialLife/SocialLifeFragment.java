@@ -206,6 +206,7 @@ public class SocialLifeFragment extends Fragment {
     }
 
     private void prepareSocialData() {
+
         socialCall = apiInterface.getSocialLife(page);
         socialCall.enqueue(new Callback<ResponseBody>() {
             @Override

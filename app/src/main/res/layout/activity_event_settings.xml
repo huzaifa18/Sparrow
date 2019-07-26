@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/home_toolbar"
+        layout="@layout/home_toolbar" />
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/sparrow_logo"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/home_toolbar"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Event Settings"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/avatar"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <CheckBox
+        android:id="@+id/cb_mute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turn Push Notifications Mute"
+        android:buttonTint="@color/colorBlack"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"/>
+
+    <CheckBox
+        android:id="@+id/cb_noti_on_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turn Notifications On/Off"
+        android:buttonTint="@color/colorBlack"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/cb_mute"
+        android:layout_margin="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_above="@+id/ll_btns"
+        android:background="@color/colorGray"/>
+
+    <LinearLayout
+        android:id="@+id/ll_btns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:drawableLeft="@drawable/ic_check_black_24dp"
+            android:id="@+id/yesCall"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorGray"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:drawableLeft="@drawable/ic_close_black_24dp"
+            android:id="@+id/noCall"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

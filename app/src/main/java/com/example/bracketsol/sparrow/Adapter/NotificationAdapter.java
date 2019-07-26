@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.bracketsol.sparrow.Model.NotificationModel;
 import com.example.bracketsol.sparrow.R;
 
@@ -73,7 +75,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         TextView post_noti,time_noti;
         ImageButton more_noti;
         CircleImageView profile_noti;
-        LinearLayout linearLayout;
+        RelativeLayout linearLayout;
         NotificationModel item;
 
         public ViewHolder(View v) {
@@ -84,17 +86,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             more_noti = v.findViewById(R.id.more_imgbtn_noti);
             profile_noti = v.findViewById(R.id.noti_image);
-            linearLayout = (LinearLayout) v.findViewById(R.id.linear_layoutnoti_row);
+            linearLayout = v.findViewById(R.id.rv_main);
         }
 
         public void setData(NotificationModel item) {
             this.item = item;
 
-            post_noti.setText(item.getPost_noti());
-            time_noti.setText(item.getTime_noti());
-
-            profile_noti.setImageResource(item.getImg_user_noti());
-            more_noti.setBackgroundResource(item.getMore_noti());
+            post_noti.setText(item.getContent());
+            time_noti.setText(item.getCreated_at());
+            Glide.with(mContext).load(item.getPicture_url()).into(profile_noti);
+            //more_noti.setBackgroundResource(item.getMore_noti());
 
         }
 

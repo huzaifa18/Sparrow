@@ -29,6 +29,7 @@ import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.example.bracketsol.sparrow.Activities.CommentActivity;
 import com.example.bracketsol.sparrow.Activities.OthersActivity;
+import com.example.bracketsol.sparrow.Activities.PostDetailPage;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Retrofit.ApiClient;
@@ -95,10 +96,23 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
                 }
             });
         }
+
         if (statusPostingModel.getAttachment().equals("N-A")) {
 
             holder.attachment.setVisibility(View.GONE);
             holder.vv_posted.setVisibility(View.GONE);
+
+        }
+
+        if (statusPostingModel.getHas_liked() == 1){
+
+            holder.like.setImageResource(R.drawable.ic_like);
+            holder.islike = true;
+
+        } else {
+
+            holder.like.setImageResource(R.drawable.ic_dislike);
+            holder.islike = false;
 
         }
 
@@ -111,6 +125,15 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
     }
 
     private void clickListeners(ViewHolder holder , int position) {
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, PostDetailPage.class);
+                intent.putExtra("post_id",statusarraylistAdapter.get(position).getPost_id());
+                mContext.startActivity(intent);
+            }
+        });
 
         holder.ll_comment.setOnClickListener(new View.OnClickListener() {
             @Override

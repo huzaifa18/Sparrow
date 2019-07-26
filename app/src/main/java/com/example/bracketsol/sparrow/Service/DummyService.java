@@ -45,9 +45,9 @@ public class DummyService extends Service {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String CHANNEL_ID = "Secure Channel";
+            String CHANNEL_ID = "Sirius";
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, "Hesecurity", NotificationManager.IMPORTANCE_MIN);
-            mChannel.setDescription("He Security");
+            mChannel.setDescription("Running");
             mChannel.enableLights(true);
             mChannel.setLightColor(Color.RED);
             mChannel.enableVibration(true);

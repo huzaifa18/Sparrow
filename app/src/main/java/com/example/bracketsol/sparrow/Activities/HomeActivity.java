@@ -17,13 +17,17 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.bracketsol.sparrow.Adapter.StatusPostAdapter;
 import com.example.bracketsol.sparrow.Adapter.StoryAdapter;
 import com.example.bracketsol.sparrow.Classes.BottomNavigationViewHelper;
+import com.example.bracketsol.sparrow.CreatePost;
 import com.example.bracketsol.sparrow.DisFragment;
 import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
 import com.example.bracketsol.sparrow.Fragments.ProfileFragment;
@@ -72,6 +76,9 @@ public class HomeActivity extends AppCompatActivity {
     int page, total_pages = 0;
     ImageButton plus;
 
+    RelativeLayout rl_linear_create_post;
+    EditText et_create_post;
+
     //Apis data
     int post_id;
     String sender_id;
@@ -86,6 +93,7 @@ public class HomeActivity extends AppCompatActivity {
     int total_likes;
     int total_comments;
     int total_views;
+    int has_liked;
     String created_at;
     SwipeRefreshLayout swipeRefreshLayout;
     FragmentTransaction fragmentTransaction;
@@ -153,15 +161,6 @@ public class HomeActivity extends AppCompatActivity {
         swipeListener();
     }
 
-    private void Listener() {
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
-            }
-        });
-    }
-
     private void init() {
 
         swipeRefreshLayout = findViewById(R.id.swipe_container);
@@ -175,6 +174,9 @@ public class HomeActivity extends AppCompatActivity {
         statuspostRecyclerview = findViewById(R.id.status_recyclerview);
         progressBar = findViewById(R.id.progressBarstatus);
         plus = findViewById(R.id.plus);
+        rl_linear_create_post = findViewById(R.id.rl_linear_create_post);
+        et_create_post = findViewById(R.id.et_create_post);
+
         chatbtn = findViewById(R.id.chat_ib);
         storyArraylist = new ArrayList<StoryModel>();
         statusArraylist = new ArrayList<StatusPostingModel>();
@@ -188,6 +190,30 @@ public class HomeActivity extends AppCompatActivity {
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         statuspostRecyclerview.setLayoutManager(manager);
 
+
+    }
+
+    private void Listener() {
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
+            }
+        });
+
+        rl_linear_create_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, CreatePost.class));
+            }
+        });
+
+        et_create_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, CreatePost.class));
+            }
+        });
 
     }
 
@@ -297,6 +323,7 @@ public class HomeActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
                 try {
                     String resString = response.body().string();
+                    Log.e("TAG", "Response: " + resString);
                     JSONObject resJson = new JSONObject(resString);
                     total_pages = resJson.getInt("total_pages");
                     has_next = resJson.getBoolean("has_next");
@@ -321,6 +348,7 @@ public class HomeActivity extends AppCompatActivity {
                         Log.e("TAG", "total_likes" + product.getInt("total_likes"));
                         Log.e("TAG", "total_comments" + product.getInt("total_comments"));
                         Log.e("TAG", "total_views" + product.getInt("total_views"));
+                        Log.e("TAG", "has_liked" + product.getInt("has_liked"));
                         Log.e("TAG", "created_at" + product.getString("created_at"));
 
 
@@ -337,12 +365,13 @@ public class HomeActivity extends AppCompatActivity {
                         total_likes = product.getInt("total_likes");
                         total_comments = product.getInt("total_comments");
                         total_views = product.getInt("total_views");
+                        has_liked = product.getInt("has_liked");
                         created_at = product.getString("created_at");
                         //simpleProgressBar.setVisibility(View.GONE);
                         Log.i("url", "https://s3.amazonaws.com/social-funda-bucket/" + attachment);
                         Log.i("senderpic", "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic);
                         StatusPostingModel statusPostingModel = new StatusPostingModel(sender_name,sender_id, "https://social-funda-bucket.s3.amazonaws.com/" + sender_pic, content, "https://social-funda-bucket.s3.amazonaws.com/" + attachment_url, total_likes,
-                                total_comments, total_views,post_id,attachment_type);
+                                total_comments, total_views,has_liked,post_id,attachment_type);
 
 //                        simpleProgressBar.setVisibility(View.GONE);
                         statusArraylist.add(statusPostingModel);

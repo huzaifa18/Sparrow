@@ -1,19 +1,33 @@
-package com.example.bracketsol.sparrow.Tryy;
+package com.example.bracketsol.sparrow.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bracketsol.sparrow.Activities.HomeActivity;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.bracketsol.sparrow.R;
+import com.example.bracketsol.sparrow.Service.DummyService;
+import com.example.bracketsol.sparrow.Utils.Prefs;
+import com.example.bracketsol.sparrow.Volley.AppSingleton;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -26,6 +40,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class PhoneAuth extends AppCompatActivity {
@@ -41,6 +61,8 @@ public class PhoneAuth extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private String mVerificationId;
+    private Socket mSocket;
+    Animation animShake;
 
     @Override
     protected void onStart() {
@@ -58,6 +80,11 @@ public class PhoneAuth extends AppCompatActivity {
     }
 
     private void init() {
+
+        try {
+            mSocket = IO.socket("https://social-funda.herokuapp.com/");
+        } catch (URISyntaxException e) {
+        }
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         et_phone = (EditText) findViewById(R.id.et_phoneNumber);
@@ -184,9 +211,10 @@ public class PhoneAuth extends AppCompatActivity {
                             Log.e(TAG, "Provider ID: " + user.getProviderId());
                             Log.e(TAG, "UID: " + user.getUid());
                             Log.e(TAG, "Last Sign In: " + user.getMetadata().getLastSignInTimestamp());
-                            Intent intent = new Intent(PhoneAuth.this, HomeActivity.class);
+                            callLoginService(Prefs.getUserNameFromPref(PhoneAuth.this),Prefs.getPasswordFromPref(PhoneAuth.this));
+                            /*Intent intent = new Intent(PhoneAuth.this, HomeActivity.class);
                             startActivity(intent);
-                            finish();
+                            finish();*/
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -200,5 +228,132 @@ public class PhoneAuth extends AppCompatActivity {
                     }
                 });
     }
+
+    private void callLoginService(final String user, final String pass) {
+        //startService(new Intent(this, BackgroundService.class));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            this.startForegroundService(new Intent(PhoneAuth.this, DummyService.class));
+        else
+            this.startService(new Intent(PhoneAuth.this, DummyService.class));
+
+        String cancel_req_tag = "register";
+        StringRequest strReq = new StringRequest(Request.Method.POST, "https://social-funda.herokuapp.com/api/auth/login", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressBar.setVisibility(View.GONE);
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    String message = jObj.getString("message");
+                    Log.e("TAG", "Message: " + message);
+                    animShake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                    if (message.equals("username or email is invalid.")) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(PhoneAuth.this, "" + message, Toast.LENGTH_LONG).show();
+                        //username.setAnimation(animShake);
+                       //username.setError(message);
+                    } else if (message.equals("Password is incorrect")) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(PhoneAuth.this, "" + message, Toast.LENGTH_LONG).show();
+                        //password.setAnimation(animShake);
+                        //password.setError(message);
+                    }
+
+                    String user = jObj.getString("user");
+                    Log.e("TAG", "Message: " + user);
+                    JSONObject userdata = jObj.getJSONObject("user");
+                    int userid = userdata.getInt("_id");
+                    String getusername = userdata.getString("username");
+                    String getfullname = userdata.getString("full_name");
+                    String email = userdata.getString("email");
+                    String phone = userdata.getString("phone_no");
+                    String getprofession = userdata.getString("profession");
+                    String auth = jObj.getString("token");
+                    Log.e("TAG", "" + auth);
+
+                    Prefs.addPrefsForLogin(getApplicationContext(), userid, getusername, getfullname, email, phone, getprofession, auth);
+                    //database.InsertDataToInternalDatabase(internalId, userid, getusername, getfullname, email, phone, getprofession);
+
+                    mSocket.connect();
+                    JSONObject getUnameforOnline = new JSONObject();
+
+                    try {
+                        getUnameforOnline.put("room", "global");
+                        getUnameforOnline.put("user", getusername);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    mSocket.emit("online", getUnameforOnline);
+                    Log.i("TAG", "sendMessage: 1" + mSocket.emit("join private chat", getUnameforOnline));
+                    Log.e("TAG", "" + Prefs.getUserIDFromPref(PhoneAuth.this));
+                    Toast.makeText(PhoneAuth.this, "" + userdata.getInt("_id"), Toast.LENGTH_SHORT).show();
+                    /*Login.LongOperation longOperation = new Login.LongOperation();
+                    longOperation.execute("");*/
+                    Intent intent = new Intent(PhoneAuth.this, HomeActivity.class);
+                    startActivity(intent);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                //nextButton.setEnabled(true);
+                Log.e("TAG", "Error: " + error);
+                Toast.makeText(getApplicationContext(),
+                        "No internet, Please try again later", Toast.LENGTH_LONG).show();
+                //hid pregress here
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", user);
+                params.put("password", pass);
+                return params;
+            }
+        };
+
+        strReq.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // Adding request to request queue
+        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(strReq, cancel_req_tag);
+    }
+
+    /*@SuppressLint("StaticFieldLeak")
+    private class LongOperation extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            database.getUsersData(Login.this);
+            Log.i("userInternal", "" + database.gettUserIDFromDB(Login.this));
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(Login.this, "executed", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacksAndMessages(null);
+        super.onPause();
+    }*/
 
 }

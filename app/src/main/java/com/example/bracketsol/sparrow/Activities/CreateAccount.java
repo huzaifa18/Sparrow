@@ -14,19 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.bracketsol.sparrow.R;
-import com.example.bracketsol.sparrow.Volley.AppSingleton;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -34,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class CreateAccount extends AppCompatActivity {
+
     Toolbar toolbar;
 
     ImageButton nextButton;
@@ -74,7 +64,7 @@ public class CreateAccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new MyTask().execute();
-                Intent intent = new Intent(CreateAccount.this, VerificationDetails.class);
+                Intent intent = new Intent(CreateAccount.this, SignUp.class);
                 startActivity(intent);
             }
         });

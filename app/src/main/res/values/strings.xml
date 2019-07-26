@@ -27,12 +27,15 @@
     <string name="friendship">Friendship</string>
     <string name="login">Login</string>
     <string name="fb_login">Facebook Login</string>
-    <string name="create">Create Account</string>
+    <string name="createAccount">Create Account</string>
+    <string name="createPost">Create Post</string>
     <string name="creating">Creating a new Account</string>
     <string name="acount_detail">Account Detail</string>
 
     <string name="namee">Name</string>
     <string name="name">Faisal Razzaq commented on a post that you are tagged in</string>
+    <string name="folow_req">Follow Requests</string>
+    <string name="approve_ignore">Approve or Ignore</string>
     <string name="post">Yesterday 19:26</string>
     <string name="otp">Verification Code</string>
     <string name="seet">Set profile picture</string>
@@ -43,6 +46,7 @@
 
     <string name="verify">Account Verification Details</string>
     <string name="sign_up">Sign Up</string>
+    <string name="confirm">Confirm</string>
 
     <string name="confirm_detail">The code sent your mobile for confirming this contact number belong to you or not</string>
 
