@@ -1,5 +1,6 @@
 package com.example.bracketsol.sparrow.SocialLife;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -104,6 +105,7 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
         return list.get(position);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
         myViewHolder.setData(list.get(i));
@@ -142,6 +144,13 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
             }
         });
 
+        myViewHolder.ll_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareAnnouncement();
+            }
+        });
+
         myViewHolder.ll_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,7 +164,13 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
                 .load(mAccount.getProfile_pic())
                 .into(myViewHolder.sender_pic);
         Glide.with(conl)
+                .load(R.drawable.story1)
+                .into(myViewHolder.sender_pic);
+        Glide.with(conl)
                 .load(mAccount.getUrl())
+                .into(myViewHolder.attachment);
+        Glide.with(conl)
+                .load(R.drawable.story1)
                 .into(myViewHolder.attachment);
 
         myViewHolder.attachment.setOnTouchListener(new View.OnTouchListener() {
@@ -180,6 +195,12 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
 
     }
 
+    private void shareAnnouncement() {
+
+
+
+    }
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -197,7 +218,7 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
         CardView cardView;
         ImageView iv_like;
         boolean islike = false;
-        LinearLayout ll_like,ll_comment;
+        LinearLayout ll_like,ll_comment,ll_share;
         VideoView vv_posted;
 
         ModelSocial item;
@@ -209,6 +230,7 @@ public class AdapterSocialLife extends RecyclerView.Adapter<AdapterSocialLife.My
             vv_posted = itemView.findViewById(R.id.vv_posted);
             ll_like = itemView.findViewById(R.id.ll_like);
             ll_comment = itemView.findViewById(R.id.ll_comment);
+            ll_share = itemView.findViewById(R.id.ll_share);
             iv_like = itemView.findViewById(R.id.iv_like);
             sender_pic = itemView.findViewById(R.id.post_uimg);
             sender_name = itemView.findViewById(R.id.username_social);

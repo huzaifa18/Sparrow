@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackgrounGray"
@@ -13,60 +14,79 @@
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
+        android:visibility="gone"
         app:backgroundTint="#00695C"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:visibility="gone"/>
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fab">
+        android:layout_below="@+id/fab"
+        android:padding="5dp">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="true"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
 
             <LinearLayout
-                android:id="@+id/social_layout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="2">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/social_recycler"
+                <LinearLayout
+                    android:id="@+id/social_layout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:scrollbars="vertical" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/alert_layout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/alert_recycler"
+                        android:id="@+id/social_recycler"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scrollbars="vertical" />
 
-                </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/alert_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardUseCompatPadding="true"
+                        card_view:cardElevation="@dimen/cardview_default_elevation">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:paddingBottom="50dp">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/alert_recycler"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -83,17 +103,18 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
+            android:src="@drawable/ic_arrow_down_grey_24dp"
             android:visibility="gone"
-            app:backgroundTint="#000000" />
+            app:backgroundTint="@color/colorPrimary" />
 
-        <TextView
+        <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:elevation="16dp"
             android:text="3"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF" />-->
     </FrameLayout>
 
     <ProgressBar

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_ringtone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_music_note_black_24dp"
+                android:drawableRight="@drawable/ic_arrow_down_grey_24dp"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:text="Ringtones" />
+
+        </android.support.v7.widget.CardView>
+
+        <CheckBox
+            android:id="@+id/cb_mul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:buttonTint="@color/colorBlack"
+            android:text="Battery Mode" />
+
+        <CheckBox
+            android:id="@+id/cb_dis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_mute"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:buttonTint="@color/colorBlack"
+            android:text="Data Mode" />
+
+    </LinearLayout>
+
+</LinearLayout>

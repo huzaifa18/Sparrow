@@ -162,6 +162,9 @@ public interface ApiInterface {
     @GET("api/notifications")
     Call<ResponseBody> getAllNoti(@Query("page") int page);
 
+    @GET("api/announcements/notification")
+    Call<ResponseBody> getAllSocialAlerts();
+
     @FormUrlEncoded
     @POST("api/users/change-password")
     Call<ResponseBody> getChangePassword(@Field("old_password") String old_password,
@@ -172,5 +175,11 @@ public interface ApiInterface {
     Call<ResponseBody> getfeedbackAndComplaint(@Field("content") String content,
                                                @Field("sub_content") String sub_content,
                                                @Field("type") String type);
+
+    @FormUrlEncoded
+    @POST("api/settings/post")
+    Call<ResponseBody> getPostSettings(@Field("post_id") int post_id,
+                                               @Field("is_hide") int is_hide,
+                                               @Field("is_notify") int is_notify);
 
 }

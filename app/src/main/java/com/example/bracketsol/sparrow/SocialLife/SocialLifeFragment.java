@@ -20,6 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.bracketsol.sparrow.Activities.HomeActivity;
+import com.example.bracketsol.sparrow.Adapter.NotificationAdapter;
+import com.example.bracketsol.sparrow.Fragments.NotificationFragment;
+import com.example.bracketsol.sparrow.Model.NotificationModel;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Retrofit.ApiClient;
 import com.example.bracketsol.sparrow.Retrofit.ApiInterface;
@@ -43,6 +46,7 @@ public class SocialLifeFragment extends Fragment {
 
     private static View view;
     ApiInterface apiInterface;
+    Call<ResponseBody> getNotiCall;
     LinearLayoutManager mLayoutManager;
     Call<ResponseBody> socialCall, alertCall;
     ProgressBar simpleProgressBar;
@@ -53,8 +57,8 @@ public class SocialLifeFragment extends Fragment {
     boolean isfirsttime_alert = true;
     private ArrayList<ModelSocial> socialArrayList;
     private RecyclerView recyclerView_alert;
-    private AdapterAlertNotificationSocial alertadapter;
-    private ArrayList<ModelAlertSocial> alertArrayList;
+    private NotificationAdapter alertadapter;
+    private ArrayList<NotificationModel> alertArrayList;
     private RecyclerView recyclerView_social;
     private AdapterSocialLife socialadapter;
 
@@ -155,6 +159,7 @@ public class SocialLifeFragment extends Fragment {
                             1.99f
                     );
                     social_layout.setLayoutParams(param);
+                    fabalert.setImageResource(R.drawable.ic_arrow_down_grey_24dp);
                 }else if(social_layout.getVisibility()==View.VISIBLE){
                     alert_layout.setVisibility(View.VISIBLE);
                     social_layout.setVisibility(View.GONE);
@@ -166,6 +171,7 @@ public class SocialLifeFragment extends Fragment {
                             1.99f
                     );
                     alert_layout.setLayoutParams(param);
+                    fabalert.setImageResource(R.drawable.ic_up_grey_24dp);
                 }
 
             }
@@ -190,7 +196,9 @@ public class SocialLifeFragment extends Fragment {
                 page = PAGE_START;
                 isLastPage = false;
                 socialArrayList.clear();
+                alertArrayList.clear();
                 fetchData();
+                prepareAlertData();
 
             }
         });
@@ -212,6 +220,7 @@ public class SocialLifeFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+
                     swipe_container.setRefreshing(false);
                     String resString = response.body().string();
                     JSONObject resJson = new JSONObject(resString);
@@ -295,14 +304,17 @@ public class SocialLifeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+
                 swipe_container.setRefreshing(false);
+
             }
         });
     }
 
 
     private void prepareAlertData() {
-        alertadapter = new AdapterAlertNotificationSocial(getContext(), alertArrayList);
+
+        alertadapter = new NotificationAdapter(getContext(), alertArrayList);
 
         recyclerView_alert.setAdapter(alertadapter);
         mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext(), LinearLayoutManager.VERTICAL, false);
@@ -310,18 +322,89 @@ public class SocialLifeFragment extends Fragment {
         mLayoutManager.setStackFromEnd(true);*/
         recyclerView_alert.setLayoutManager(mLayoutManager);
 
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
-        alertArrayList.add(new ModelAlertSocial(R.drawable.ic_girl, R.drawable.ic_more_horiz_black_24dp, "Yesterday 19:25", "We are <b><i>so</i></b> glad to see you"));
+        swipe_container.setRefreshing(true);
+        getAlerts();
+
+    }
+
+    private void getAlerts() {
+
+        swipe_container.setRefreshing(false);
+
+        getNotiCall = apiInterface.getAllSocialAlerts();
+        getNotiCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //progressBar.setVisibility(View.GONE);
+                swipe_container.setRefreshing(false);
+                try {
+                    String resString = response.body().string();
+                    Log.e("TAG", "Res: " + resString);
+                    JSONObject resJson = new JSONObject(resString);
+                    //total_pages = resJson.getInt("total_pages");
+                    //has_next = resJson.getBoolean("has_next");
+                    //Log.e("TAG", "total_pages " + total_pages);
+                    JSONArray array = resJson.getJSONArray("notifications");
+                    Log.e("TAG", "ok");
+
+
+                    for (int i = 0; i < array.length(); i++) {
+                        //getting product object from json array
+                        JSONObject product = array.getJSONObject(i);
+                        Log.e("TAG", "_id" + product.getInt("_id"));
+                        //Log.e("TAG", "receiver_id" + product.getInt("receiver_id"));
+                        Log.e("TAG", "user_id" + product.getString("user_id"));
+                        Log.e("TAG", "username" + product.getString("username"));
+                        Log.e("TAG", "picture_url" + product.getString("picture_url"));
+                        Log.e("TAG", "content" + product.getString("content"));
+                        //Log.e("TAG", "is_read" + product.getString("is_read"));
+                        //Log.e("TAG", "date" + product.getString("date"));
+                        Log.e("TAG", "announcement_id" + product.getString("announcement_id"));
+                        //Log.e("TAG", "type" + product.getString("type"));
+                        Log.e("TAG", "created_at" + product.getString("created_at"));
+
+                        int _id = product.getInt("_id");
+                        int user_id = product.getInt("user_id");
+                        String username = product.getString("username");
+                        String picture_url = "https://s3.amazonaws.com/social-funda-bucket/" + product.getString("picture_url");
+                        String content = product.getString("content");
+                        //String is_read = product.getString("is_read");
+                        String is_read = "0";
+                        int announcement_id = product.getInt("announcement_id");
+                        //int type = product.getInt("type");
+                        int type = 1;
+                        String created_at = product.getString("created_at");
+
+                        alertArrayList.add(new NotificationModel(_id,user_id,username,picture_url,username+" "+content,is_read,announcement_id,type,created_at));
+
+                    }
+
+                    alertadapter.notifyDataSetChanged();
+
+                } catch (IOException e) {
+                    //progressBar.setVisibility(View.GONE);
+                    swipe_container.setRefreshing(false);
+                    e.printStackTrace();
+                    Log.e("TAG", "checkval " + e.getMessage());
+
+
+                } catch (JSONException e) {
+                    //progressBar.setVisibility(View.GONE);
+                    swipe_container.setRefreshing(false);
+                    e.printStackTrace();
+                    Log.e("TAG", "checkval onresponse" + e.getMessage());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //progressBar.setVisibility(View.GONE);
+                swipe_container.setRefreshing(false);
+                Toast.makeText(getContext(), "Failed To Retrieve Data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 //    public void startSlideDownAnimation() {

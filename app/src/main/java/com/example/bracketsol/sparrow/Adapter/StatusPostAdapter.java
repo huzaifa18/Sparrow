@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
@@ -18,10 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -30,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.example.bracketsol.sparrow.Activities.CommentActivity;
 import com.example.bracketsol.sparrow.Activities.OthersActivity;
 import com.example.bracketsol.sparrow.Activities.PostDetailPage;
+import com.example.bracketsol.sparrow.Activities.SettingsActivity;
 import com.example.bracketsol.sparrow.Model.StatusPostingModel;
 import com.example.bracketsol.sparrow.R;
 import com.example.bracketsol.sparrow.Retrofit.ApiClient;
@@ -58,6 +64,8 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
     ApiInterface apiInterface;
     Call<ResponseBody> hitLike,hitDisLike;
 
+    int is_hide = 0;
+    int is_notify = 0;
 
     public StatusPostAdapter(Context mContext, ArrayList<StatusPostingModel> statusarraylistAdapter) {
         this.statusarraylistAdapter = statusarraylistAdapter;
@@ -124,6 +132,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
         clickListeners(holder,position);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void clickListeners(ViewHolder holder , int position) {
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +151,13 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
                 intent.putExtra("post_id",statusarraylistAdapter.get(position).getPost_id());
                 intent.putExtra("api","post");
                 mContext.startActivity(intent);
+            }
+        });
+
+        holder.ll_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareApi();
             }
         });
 
@@ -190,10 +206,12 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+                /*AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
                 alertDialog.setMessage("Report Post!");
 
-                alertDialog.show();
+                alertDialog.show();*/
+
+                optionsDialog(position);
 
             }
         });
@@ -208,6 +226,12 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
 
             }
         });
+
+    }
+
+    private void shareApi() {
+
+
 
     }
 
@@ -232,7 +256,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
         CardView cardView;
         ImageView iv_like;
         boolean islike = false;
-        LinearLayout ll_like,ll_comment;
+        LinearLayout ll_like,ll_comment,ll_share;
         VideoView vv_posted;
 
         RelativeLayout rl_profile;
@@ -247,6 +271,7 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             vv_posted = itemView.findViewById(R.id.vv_posted);
             ll_like = itemView.findViewById(R.id.ll_like);
             ll_comment = itemView.findViewById(R.id.ll_comment);
+            ll_share = itemView.findViewById(R.id.ll_share);
             iv_like = itemView.findViewById(R.id.iv_like);
             sender_pic = itemView.findViewById(R.id.post_uimg);
             sender_name = itemView.findViewById(R.id.username_post);
@@ -288,10 +313,13 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             }
 
         }
+
     }
 
     public void hitLikeBtn(ViewHolder holder, int position){
+
         if (holder.islike) {
+
             holder.like.setImageResource(R.drawable.ic_dislike);
             holder.iv_like.setVisibility(View.VISIBLE);
             holder.iv_like.setImageResource(R.drawable.ic_dislike);
@@ -304,7 +332,9 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             }, 500);
             holder.islike = false;
             hitDisLikeApi(holder,position,holder.islike);
+
         } else {
+
             holder.like.setImageResource(R.drawable.ic_like);
             holder.iv_like.setVisibility(View.VISIBLE);
             holder.iv_like.setImageResource(R.drawable.ic_like);
@@ -317,8 +347,8 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             }, 500);
             holder.islike = true;
             hitLikeApi(holder, position, holder.islike);
-        }
 
+        }
 
     }
 
@@ -369,7 +399,6 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             }
         });
 
-
     }
 
     public void hitDisLikeApi(ViewHolder Apiholder, int position, final boolean like) {
@@ -417,6 +446,140 @@ public class StatusPostAdapter extends RecyclerView.Adapter<StatusPostAdapter.Vi
             }
         });
 
+
+    }
+
+    public void optionsDialog(int position) {
+
+        final Dialog dialog = new Dialog(mContext);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_dialog_more_post);
+
+        TextView tv_hide = (TextView) dialog.findViewById(R.id.tv_hide);
+        TextView tv_noti = (TextView) dialog.findViewById(R.id.tv_noti);
+        TextView tv_report = (TextView) dialog.findViewById(R.id.tv_report);
+        TextView tv_unfollow = (TextView) dialog.findViewById(R.id.tv_unfollow);
+        dialog.show();
+
+        tv_hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                is_hide = 1;
+                hidePost(position,is_hide,is_notify);
+
+                dialog.dismiss();
+            }
+        });
+
+        tv_noti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                is_notify = 1;
+                hidePost(position,is_hide,is_notify);
+
+                dialog.dismiss();
+            }
+        });
+
+        tv_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportDialog();
+                dialog.dismiss();
+            }
+        });
+
+        tv_unfollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    private void hidePost(int position,int hide,int noti) {
+
+        hitLike = apiInterface.getPostSettings(statusarraylistAdapter.get(position).getPost_id(),hide, noti);
+        hitLike.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+
+                    String resString = response.body().string();
+                    JSONObject resJson = new JSONObject(resString);
+                    String getmessage = resJson.getString("error");
+                    String getmes = resJson.getString("message");
+                    Log.e("TAG", "" + getmessage + getmes);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void ReportDialog() {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_dialog_report);
+
+        /*Spinner sp_type_spinner = dialog.findViewById(R.id.sp_type);
+        String[] years = {"Suggestion", "Complaint"};
+        ArrayAdapter<CharSequence> langAdapter = new ArrayAdapter<CharSequence>(mContext, R.layout.spinner_text, years);
+        langAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+        sp_type_spinner.setAdapter(langAdapter);*/
+
+        TextView yes = (TextView) dialog.findViewById(R.id.yesCall);
+        TextView no = (TextView) dialog.findViewById(R.id.noCall);
+        dialog.show();
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        /*sp_type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e("TAG", "Spinner: " + i);
+
+                if (i == 0) {
+
+
+                } else {
+
+
+                }
+
+                //selectedItem = String.valueOf(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });*/
 
     }
 

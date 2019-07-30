@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_hide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hide"
+        android:textColor="@color/colorBlack"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/ic_hide"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/tv_noti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Turn Notifications off"
+        android:textColor="@color/colorBlack"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/ic_notification_off"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/tv_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Report"
+        android:textColor="@color/colorBlack"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/ic_report_black_24dp"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/tv_unfollow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Unfollow this user"
+        android:textColor="@color/colorBlack"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/ic_unfollow"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"/>
+
+</LinearLayout>

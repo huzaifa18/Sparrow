@@ -341,10 +341,17 @@
     <string name="pref_use_legacy_audio_device_key">use_legacy_audio_device_key</string>
     <string name="pref_use_legacy_audio_device_title">Use legacy audio device.</string>
     <string name="pref_use_legacy_audio_device_default">false</string>
-    <string name="sparrow">Sparrow</string>
+    <string name="sparrow">Sirius</string>
 
     <string name="facebook_app_id">1118182648370677</string>
     <string name="fb_login_protocol_scheme">fb1118182648370677</string>
+
+    <string name="description_bracketsol">Bracketsol is a leading development and Technology Company based in Lahore.
+        We produce intelligent and powerful software which completely maneuvers our client’s job competently.
+        We are committed to continuous advancement in our intellect and expertise and thus accomplishing our success
+        through the pursuit of elevated performance and quality. We believe that our job is to listen, research and
+        understand the requirements unique to each individual business. In fact, it is the long-term relationships
+        with our clients that has served as a solid foundation for our company</string>
 
 
 </resources>

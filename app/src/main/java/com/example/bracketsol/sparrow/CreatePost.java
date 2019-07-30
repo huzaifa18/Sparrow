@@ -155,6 +155,9 @@ public class CreatePost extends AppCompatActivity{
         rv_colors.setLayoutManager(llM);
         arrColors = new ArrayList<>();
         arrColors.add(new ColorsModel(getDrawable(R.drawable.background_splash_color)));
+        arrColors.add(new ColorsModel(getDrawable(R.drawable.bg_minion)));
+        arrColors.add(new ColorsModel(getDrawable(R.drawable.bg_hearts)));
+        arrColors.add(new ColorsModel(getDrawable(R.drawable.bg_water_toons)));
         arrColors.add(new ColorsModel(getDrawable(R.drawable.black_white_gradient)));
         arrColors.add(new ColorsModel(getDrawable(R.drawable.blue_white_gradient)));
         arrColors.add(new ColorsModel(getDrawable(R.drawable.bg1)));

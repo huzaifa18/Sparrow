@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,12 +27,16 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    LinearLayout ll_account, ll_invite, ll_policy, ll_timeline, ll_live, ll_events, ll_multimedia_display,
-            ll_noti, ll_report, ll_help, ll_term_server, ll_about, ll_change_password, logout;
+    LinearLayout ll_invite, ll_policy, ll_timeline, ll_live, ll_report, ll_help, ll_term_server,
+            ll_about, ll_change_password, logout;
 
-    CardView cv_noti;
+    RelativeLayout ll_account,ll_events,ll_multimedia_display,ll_noti;
 
-    ExpandableLayout el_events,el_multi,el_noti;
+    CardView cv_noti,cv_ringtone;
+
+    ExpandableLayout el_account,el_events,el_multi,el_noti,el_ringtone;
+
+    ImageView iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +65,50 @@ public class SettingsActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout);
 
         cv_noti = findViewById(R.id.cv_noti);
+        cv_ringtone = findViewById(R.id.cv_ringtone);
+
+
+        el_ringtone = findViewById(R.id.el_ringtone);
         el_noti = findViewById(R.id.el_noti);
         el_events = findViewById(R.id.el_events);
+        el_account = findViewById(R.id.el_account);
         el_multi = findViewById(R.id.el_multimedia_and_display);
+
+        iv_back = findViewById(R.id.iv_back);
 
     }
 
     private void Listeners() {
 
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         ll_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(SettingsActivity.this, OthersActivity.class);
+                /*Intent intent = new Intent(SettingsActivity.this, OthersActivity.class);
                 intent.putExtra("user_id", Prefs.getUserIDFromPref(SettingsActivity.this));
-                startActivity(intent);
+                startActivity(intent);*/
+
+                el_account.toggle();
+
+            }
+        });
+
+        cv_ringtone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                /*Intent intent = new Intent(SettingsActivity.this, OthersActivity.class);
+                intent.putExtra("user_id", Prefs.getUserIDFromPref(SettingsActivity.this));
+                startActivity(intent);*/
+
+                el_ringtone.toggle();
 
             }
         });

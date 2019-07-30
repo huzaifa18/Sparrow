@@ -95,6 +95,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             post_noti.setText(item.getContent());
             time_noti.setText(item.getCreated_at());
             Glide.with(mContext).load(item.getPicture_url()).into(profile_noti);
+            Glide.with(mContext).load(R.drawable.story1).into(profile_noti);
             //more_noti.setBackgroundResource(item.getMore_noti());
 
         }
