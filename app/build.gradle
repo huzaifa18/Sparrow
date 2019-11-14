@@ -117,8 +117,8 @@ dependencies {
 
     //facebook login
 
-    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
-    implementation 'com.facebook.android:facebook-login:[5,6)'
+    /*implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
+    implementation 'com.facebook.android:facebook-login:[5,6)'*/
 
     //room databse
     implementation "android.arch.persistence.room:runtime:1.1.1"
